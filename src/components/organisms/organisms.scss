@@ -1,16 +1,24 @@
 @use "../../App.scss";
-header,footer{
+nav,footer{
   height:3rem;
   background-color:App.$primary;
-  padding:0.25rem;
+  padding:0.25rem 0.5rem;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
 
 }
-header{
+nav{
   box-shadow: 3px -5px 8px 8px rgba(0,0,0,0.35);
+  .icon{
+    height:2rem;
+    width:2rem;
+    margin-left:0.5rem;
+    &:hover{
+      transform: scale(1.05);
+    }
+  }
 }
 footer{
   box-shadow: 3px 5px 8px 8px rgba(0,0,0,0.35);
