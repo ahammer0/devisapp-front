@@ -1,9 +1,9 @@
-@import "../../App.scss";
+@use "../../App.scss";
 .menuBurgerButton{
   transition: all 0.3s ease-in-out;
   &-item{
     height:5px;
-    background-color: $textDark;
+    background-color: App.$textDark;
     border-radius: 9999px;
   }
   &.container{

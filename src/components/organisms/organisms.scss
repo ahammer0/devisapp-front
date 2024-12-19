@@ -1,7 +1,7 @@
-@import "../../App.scss";
+@use "../../App.scss";
 header,footer{
   height:3rem;
-  background-color:$primary;
+  background-color:App.$primary;
   padding:0.25rem;
   display: flex;
   flex-direction: row;

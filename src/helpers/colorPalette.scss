@@ -1,47 +1,47 @@
-@import "../App.scss";
+@use "../App.scss";
 .bg-primary{
-  background-color: $primary;
+  background-color: App.$primary;
 }
 .bg-secondary{
-  background-color: $secondary;
+  background-color: App.$secondary;
 }
 .bg-danger{
-  background-color: $danger;
+  background-color: App.$danger;
 }
 .bg-light{
-  background-color: $light;
+  background-color: App.$light;
 }
 .bg-dark{
-  background-color: $dark;
+  background-color: App.$dark;
 }
 .bg-bgDark{
-  background-color: $bgDark;
+  background-color: App.$bgDark;
 }
 .bg-bgLight{
-  background-color: $bgLight;
+  background-color: App.$bgLight;
 }
 
 .text-primary{
-  color: $primary;
+  color: App.$primary;
 }
 .text-secondary{
-  color: $secondary;
+  color: App.$secondary;
 }
 .text-danger{
-  color: $danger;
+  color: App.$danger;
 }
 .text-light{
-  color: $light;
+  color: App.$light;
 }
 .text-dark{
-  color: $dark;
+  color: App.$dark;
 }
 
 .text-textDark{
-  color: $textDark;
+  color: App.$textDark;
 }
 .text-textLight{
-  color: $textLight;
+  color: App.$textLight;
 }
 .testDiv{
   width: 100px;

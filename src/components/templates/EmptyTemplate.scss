@@ -1,7 +1,7 @@
-@import "../../App.scss";
+@use "../../App.scss";
 .emptyTemplate{
   min-height: 100vh;
-  background-color:$bgLight;
+  background-color: App.$bgLight;
   display: flex;
   flex-direction: column;
 }
