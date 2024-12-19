@@ -4,60 +4,59 @@
 //////                                      //////
 //////////////////////////////////////////////////
 // Couleurs
-$bgLight:#E7E8EA;
-$bgDark:#ACB4B7;
+$bgLight: #e7e8ea;
+$bgDark: #acb4b7;
 
-$textLight:#ffffff;
-$textDark:#000000;
+$textLight: #ffffff;
+$textDark: #000000;
 
-$primary:#ED7A29; //orange 
-$secondary:#ACB4B7; //gris clair
-$danger:#FF0000; //Rouge primaire
-$light:#ACB4B7; //gris très clair
-$dark:#222D37; //gris moyen léger rouge
+$primary: #ed7a29; //orange
+$secondary: #acb4b7; //gris clair
+$danger: #ff0000; //Rouge primaire
+$light: #acb4b7; //gris très clair
+$dark: #222d37; //gris moyen léger rouge
 
-$colorsMap:(
-  "primary":$primary,
-  "secondary":$secondary,
-  "danger":$danger,
+$colorsMap: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "danger": $danger,
 );
-
 
 // Radius
 $radius-small: 5px;
 $radius-large: 15px;
 // Shadows
-$shadow-sm: 2px 2px 2px 0px rgba(0,0,0,0.30);
-$shadow-md: 2px 5px 7px 0px rgba(0,0,0,0.30);
-$shadow-lg: 2px 5px 10px 0px rgba(0,0,0,0.54);
-$shadow-inset-light :4px -4px 8px 1px rgba(255,255,255,0.2) inset;
+$shadow-sm: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
+$shadow-md: 2px 5px 7px 0px rgba(0, 0, 0, 0.3);
+$shadow-lg: 2px 5px 10px 0px rgba(0, 0, 0, 0.54);
+$shadow-inset-light: 4px -4px 8px 1px rgba(255, 255, 255, 0.2) inset;
 //////////////////////////////////////////////////
 //////                                      //////
 //////           Fonts                      //////
 //////                                      //////
 //////////////////////////////////////////////////
 @font-face {
-    font-family: poppins;
-    src: url(./assets/fonts/Poppins/Poppins-Regular.ttf) format("truetype");
-    font-weight: normal;
-    font-style: normal;
+  font-family: poppins;
+  src: url(./assets/fonts/Poppins/Poppins-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
 .font-poppins {
-    font-family: poppins, sans-serif;
+  font-family: poppins, sans-serif;
 }
-*{
+* {
   font-family: poppins, sans-serif;
   background-color: $bgLight;
 }
 @font-face {
-    font-family: bungee;
-    src: url(./assets/fonts/Bungee_Tint/BungeeTint-Regular.ttf) format("truetype");
-    font-weight: normal;
-    font-style: normal;
+  font-family: bungee;
+  src: url(./assets/fonts/Bungee_Tint/BungeeTint-Regular.ttf) format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 .font-bungee {
-    font-family: bungee, sans-serif;
+  font-family: bungee, sans-serif;
 }
 //////////////////////////////////////////////////
 //////                                      //////
@@ -92,54 +91,53 @@ $shadow-inset-light :4px -4px 8px 1px rgba(255,255,255,0.2) inset;
   margin-bottom: $margin;
 }
 
-
 //////////////////////////////////////////////////
 //////                                      //////
 //////           Headers                    //////
 //////                                      //////
 //////////////////////////////////////////////////
 
-h1{
+h1 {
   @extend .font-bungee;
   font-size: 3rem;
   text-align: center;
 }
-h2{
+h2 {
   font-size: 2rem;
   @include mx(1rem);
   // text-align: center;
-  position:relative;
-  display:inline-block;
-  margin-left:1.7rem;
-  &:before{
-    content:"";
-    display:inline-block;
-    height:0.5rem;
-    width:0.5rem;
-    background-color:$primary;
-    border-radius:100%;
-    position:absolute;
-    top:45%;
+  position: relative;
+  display: inline-block;
+  margin-left: 1.7rem;
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 0.5rem;
+    width: 0.5rem;
+    background-color: $primary;
+    border-radius: 100%;
+    position: absolute;
+    top: 45%;
     // left:-0.85rem;
-    margin-left:-1rem;
+    margin-left: -1rem;
   }
-  &:after{
-    content:"";
-    display:inline-block;
-    height:0.5rem;
-    width:0.5rem;
-    background-color:$primary;
-    border-radius:100%;
-    position:absolute;
-    top:45%;
-    margin-left:0.3rem;
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 0.5rem;
+    width: 0.5rem;
+    background-color: $primary;
+    border-radius: 100%;
+    position: absolute;
+    top: 45%;
+    margin-left: 0.3rem;
   }
 }
-h3{
+h3 {
   font-size: 1.5rem;
   @include mx(1rem);
 }
-h4{
+h4 {
   font-size: 1rem;
   @include mx(1rem);
 }
@@ -158,7 +156,7 @@ h4{
   // filter: drop-shadow(1px 5px 5px rgba(0,0,0,0.54));
 }
 @mixin shadow-inner {
-  box-shadow: inset 2px 5px 7px 0px rgba(0,0,0,0.30);
+  box-shadow: inset 2px 5px 7px 0px rgba(0, 0, 0, 0.3);
 }
 
 //////////////////////////////////////////////////
@@ -166,79 +164,121 @@ h4{
 //////           Buttons                    //////
 //////                                      //////
 //////////////////////////////////////////////////
-.btn{
+.btn {
   $px: 3px;
-  $py:7px;
+  $py: 7px;
 
   display: inline-block;
   padding: $px $py;
   border-radius: $radius-small;
   border: none;
   cursor: pointer;
-  margin:0.25rem;
+  margin: 0.25rem;
   transition: all 0.2s ease-in-out;
-  font-weight:550;
-  box-shadow: $shadow-sm,$shadow-inset-light;
+  font-weight: 550;
+  box-shadow: $shadow-sm, $shadow-inset-light;
 
-
-  @mixin outline($color){
-    &.btn-outline{
-      padding:($px - 2px) ($py - 2px);
+  @mixin outline($color) {
+    &.btn-outline {
+      padding: ($px - 2px) ($py - 2px);
       border-radius: $radius-small;
       border: 2px solid $color;
-      background-color:transparent;
+      background-color: transparent;
       color: $color;
     }
   }
 
   @each $name, $color in $colorsMap {
-    &.btn-#{$name}{
+    &.btn-#{$name} {
       background-color: $color;
       color: $textLight;
       @include outline($color);
     }
   }
 
-  &.btn-cta{
-    padding:($px + 8px) ($py + 14px);
-    box-shadow: $shadow-md,$shadow-inset-light;
+  &.btn-cta {
+    padding: ($px + 8px) ($py + 14px);
+    box-shadow: $shadow-md, $shadow-inset-light;
     font-size: 1.2rem;
     font-weight: bold;
     border-radius: 9999px;
     @include outline($primary);
   }
 
-  &:hover{
+  &:hover {
     transform: scale(1.02);
     @include shadow-lg;
   }
-  &:focus{
+  &:focus {
     outline-color: $primary;
     outline-style: solid;
     outline-width: 2px;
-    outline-offset:1.5px;
+    outline-offset: 1.5px;
   }
-  &:active{
+  &:active {
     transform: scale(0.98);
     transition: all 0.1s ease-in-out;
     @include shadow-inner;
   }
+}
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Inputs                     //////
+//////                                      //////
+//////////////////////////////////////////////////
+input {
+  border-radius: $radius-small;
+  border: none;
+  padding: 0.5rem;
+  margin: 0.25rem;
+  font-size: 1rem;
+  box-shadow: $shadow-sm inset;
+  background-color: white;
+  transition: all 0.2s ease-in-out;
 
+  &:focus {
+    outline-color: $secondary;
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset: 1.5px;
+  }
+}
+label {
+  font-size: 1rem;
+  margin: 0.25rem;
+}
 
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Tables                    //////
+//////                                      //////
+//////////////////////////////////////////////////  
+td,th{
+  padding:0.25rem;
+  transition: all 0.2s ease-in-out;
+  cursor:default;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
+th{
+  border-bottom: 1px solid $secondary;
+  text-align:left;
+}
+tr{
+  &:nth-child(even) td{
+    background-color: $secondary;
+  }
+  &:hover td{
+    filter: brightness(1.1);
+  }
+}
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Utilities                 //////
+//////                                      //////
+//////////////////////////////////////////////////  
+.card {
+  @include shadow-md;
+  border-radius: $radius-small;
+  padding: 0.75rem;
+  margin: 0.5rem;
 }
