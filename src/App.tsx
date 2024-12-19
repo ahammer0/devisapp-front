@@ -8,8 +8,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<ColorPalette />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/palette" element={<ColorPalette />} />
+        <Route path="/" element={<Home />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </>

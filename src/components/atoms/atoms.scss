@@ -1,0 +1,30 @@
+@import "../../App.scss";
+.menuBurgerButton{
+  transition: all 0.3s ease-in-out;
+  &-item{
+    height:5px;
+    background-color: $textDark;
+    border-radius: 9999px;
+  }
+  &.container{
+    padding:2px;
+    width:2rem;
+    height:2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+  }
+  &-active  {
+    :nth-child(1){
+      transform: translateY(11.5px) rotate(180deg+45deg);
+    }
+    :nth-child(2){
+      filter: opacity(0);
+      transform: rotate(-180deg);
+    }
+    :nth-child(3){
+      transform: translateY(-11.5px) rotate(180deg-45deg);
+    }
+  }
+}
