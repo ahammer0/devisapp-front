@@ -15,7 +15,7 @@ const Header = () => {
         <p>header</p>
         <div>
           <Link to="/"><FontAwesomeIcon icon={faHouse} className="icon"/></Link>
-          <Link to="/login">
+          <Link to="/connection">
             <FontAwesomeIcon icon={faRightToBracket} className="icon"/>
           </Link>
         </div>

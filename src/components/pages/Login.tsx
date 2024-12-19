@@ -19,12 +19,12 @@ const Login = () => {
         </div>
         <div className="flex-center">
           <button type="submit" className="btn btn-primary btn-cta">
-            Login
+            Se connecter
           </button>
         </div>
           <p className="flex-center">
             <small>
-              Pas encore inscrit ? <Link to="/register">Register</Link>
+              Pas encore inscrit ? <Link to="/inscription">S'inscrire</Link>
             </small>
           </p>
       </form>
