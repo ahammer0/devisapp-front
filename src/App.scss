@@ -275,9 +275,38 @@ tr{
 //////           Utilities                 //////
 //////                                      //////
 //////////////////////////////////////////////////  
+a{
+  text-decoration: underline;
+  cursor: pointer;
+}
 .card {
   @include shadow-md;
   border-radius: $radius-small;
   padding: 0.75rem;
   margin: 0.5rem;
+}
+/// Flex
+.justify-center{
+  justify-content: center;
+}
+.justify-between{
+  justify-content: space-between;
+}
+.justify-end{
+  justify-content: flex-end;
+}
+.justify-start{
+  justify-content: flex-start;
+}
+.flex-col {
+  @include flexColumn;
+}
+.flex-row {
+  @include flexRow;
+}
+.flex-center {
+  @include flexCenter;
+}
+.flex-between {
+  @include flexBetween;
 }

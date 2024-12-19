@@ -1,4 +1,4 @@
-import "./EmptyTemplate.scss"
+import "./Template.scss"
 const EmptyTemplate=({children}:{children:React.ReactNode}) => {
   return (
     <div className="emptyTemplate">

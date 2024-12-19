@@ -1,0 +1,17 @@
+@use "../../App.scss";
+.mainTemplate__main {
+  flex-grow: 1;
+}
+.emptyTemplate {
+  min-height: 100vh;
+  background-color: App.$bgLight;
+  display: flex;
+  flex-direction: column;
+}
+.centerCardTemplate__main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

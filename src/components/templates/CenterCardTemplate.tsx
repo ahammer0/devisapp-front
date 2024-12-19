@@ -3,15 +3,15 @@ import Footer from "../organisms/Footer"
 import EmptyTemplate from "./EmptyTemplate"
 import "./Template.scss";
 
-const MainTemplate =({children}:{children:React.ReactNode}) => {
+const CenterCardTemplate =({children}:{children:React.ReactNode}) => {
   return (
     <EmptyTemplate>
       <Header />
-      <main className="mainTemplate__main">
+      <main className="centerCardTemplate__main">
         {children}
       </main>
       <Footer/>
     </EmptyTemplate>
   )
 }
-export default MainTemplate
+export default CenterCardTemplate
