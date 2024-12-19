@@ -1,0 +1,40 @@
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Variables                  //////
+//////                                      //////
+//////////////////////////////////////////////////
+$bgLight:#E7E8EA;
+$bgDark:#ACB4B7;
+
+$textLight:#ffffff;
+$textDark:#000000;
+
+$primary:#ED7A29; //orange 
+$secondary:#ACB4B7; //gris clair
+$danger:#FF1818; //Rouge primaire
+$light:#ACB4B7; //gris très clair
+$dark:#222D37; //gris moyen léger rouge
+
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Mixins flex                //////
+//////                                      //////
+//////////////////////////////////////////////////
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@mixin flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+@mixin flexRow {
+  display: flex;
+  flex-direction: row;
+}

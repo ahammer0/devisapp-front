@@ -1,0 +1,78 @@
+@import "../App.scss";
+.bg-primary{
+  background-color: $primary;
+}
+.bg-secondary{
+  background-color: $secondary;
+}
+.bg-danger{
+  background-color: $danger;
+}
+.bg-light{
+  background-color: $light;
+}
+.bg-dark{
+  background-color: $dark;
+}
+.bg-bgDark{
+  background-color: $bgDark;
+}
+.bg-bgLight{
+  background-color: $bgLight;
+}
+
+.text-primary{
+  color: $primary;
+}
+.text-secondary{
+  color: $secondary;
+}
+.text-danger{
+  color: $danger;
+}
+.text-light{
+  color: $light;
+}
+.text-dark{
+  color: $dark;
+}
+
+.text-textDark{
+  color: $textDark;
+}
+.text-textLight{
+  color: $textLight;
+}
+.testDiv{
+  width: 100px;
+  height: 100px;
+}
+
+.flex{
+  display: flex;
+}
+.flex-col{
+  flex-direction: column;
+}
+.flex-row{
+  flex-direction: row;
+} 
+.flex-wrap{
+  flex-wrap: wrap;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
