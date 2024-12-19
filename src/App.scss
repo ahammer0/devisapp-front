@@ -3,6 +3,7 @@
 //////           Variables                  //////
 //////                                      //////
 //////////////////////////////////////////////////
+// Couleurs
 $bgLight:#E7E8EA;
 $bgDark:#ACB4B7;
 
@@ -11,10 +12,53 @@ $textDark:#000000;
 
 $primary:#ED7A29; //orange 
 $secondary:#ACB4B7; //gris clair
-$danger:#FF1818; //Rouge primaire
+$danger:#FF0000; //Rouge primaire
 $light:#ACB4B7; //gris très clair
 $dark:#222D37; //gris moyen léger rouge
 
+$colorsMap:(
+  "primary":$primary,
+  "secondary":$secondary,
+  "danger":$danger,
+);
+
+
+// Radius
+$radius-small: 5px;
+$radius-large: 15px;
+// Shadows
+$shadow-sm: 2px 2px 2px 0px rgba(0,0,0,0.30);
+$shadow-md: 2px 5px 7px 0px rgba(0,0,0,0.30);
+$shadow-lg: 2px 5px 10px 0px rgba(0,0,0,0.54);
+$shadow-inset-light :4px -4px 8px 1px rgba(255,255,255,0.2) inset;
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Fonts                      //////
+//////                                      //////
+//////////////////////////////////////////////////
+@font-face {
+    font-family: poppins;
+    src: url(./assets/fonts/Poppins/Poppins-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+.font-poppins {
+    font-family: poppins, sans-serif;
+}
+*{
+  font-family: poppins, sans-serif;
+  background-color: $bgLight;
+}
+@font-face {
+    font-family: bungee;
+    src: url(./assets/fonts/Bungee_Tint/BungeeTint-Regular.ttf) format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+.font-bungee {
+    font-family: bungee, sans-serif;
+}
 //////////////////////////////////////////////////
 //////                                      //////
 //////           Mixins flex                //////
@@ -37,4 +81,164 @@ $dark:#222D37; //gris moyen léger rouge
 @mixin flexRow {
   display: flex;
   flex-direction: row;
+}
+
+@mixin mx($margin) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+@mixin my($margin) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+
+
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Headers                    //////
+//////                                      //////
+//////////////////////////////////////////////////
+
+h1{
+  @extend .font-bungee;
+  font-size: 3rem;
+  text-align: center;
+}
+h2{
+  font-size: 2rem;
+  @include mx(1rem);
+  // text-align: center;
+  position:relative;
+  display:inline-block;
+  margin-left:1.7rem;
+  &:before{
+    content:"";
+    display:inline-block;
+    height:0.5rem;
+    width:0.5rem;
+    background-color:$primary;
+    border-radius:100%;
+    position:absolute;
+    top:45%;
+    // left:-0.85rem;
+    margin-left:-1rem;
+  }
+  &:after{
+    content:"";
+    display:inline-block;
+    height:0.5rem;
+    width:0.5rem;
+    background-color:$primary;
+    border-radius:100%;
+    position:absolute;
+    top:45%;
+    margin-left:0.3rem;
+  }
+}
+h3{
+  font-size: 1.5rem;
+  @include mx(1rem);
+}
+h4{
+  font-size: 1rem;
+  @include mx(1rem);
+}
+
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Shadows                    //////
+//////                                      //////
+//////////////////////////////////////////////////
+@mixin shadow-md {
+  box-shadow: $shadow-md;
+  // filter: drop-shadow(1px 2px 5px rgba(0,0,0,0.30));
+}
+@mixin shadow-lg {
+  box-shadow: $shadow-lg;
+  // filter: drop-shadow(1px 5px 5px rgba(0,0,0,0.54));
+}
+@mixin shadow-inner {
+  box-shadow: inset 2px 5px 7px 0px rgba(0,0,0,0.30);
+}
+
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Buttons                    //////
+//////                                      //////
+//////////////////////////////////////////////////
+.btn{
+  $px: 3px;
+  $py:7px;
+
+  display: inline-block;
+  padding: $px $py;
+  border-radius: $radius-small;
+  border: none;
+  cursor: pointer;
+  margin:0.25rem;
+  transition: all 0.2s ease-in-out;
+  font-weight:550;
+  box-shadow: $shadow-sm,$shadow-inset-light;
+
+
+  @mixin outline($color){
+    &.btn-outline{
+      padding:($px - 2px) ($py - 2px);
+      border-radius: $radius-small;
+      border: 2px solid $color;
+      background-color:transparent;
+      color: $color;
+    }
+  }
+
+  @each $name, $color in $colorsMap {
+    &.btn-#{$name}{
+      background-color: $color;
+      color: $textLight;
+      @include outline($color);
+    }
+  }
+
+  &.btn-cta{
+    padding:($px + 8px) ($py + 14px);
+    box-shadow: $shadow-md,$shadow-inset-light;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border-radius: 9999px;
+    @include outline($primary);
+  }
+
+  &:hover{
+    transform: scale(1.02);
+    @include shadow-lg;
+  }
+  &:focus{
+    outline-color: $primary;
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset:1.5px;
+  }
+  &:active{
+    transform: scale(0.98);
+    transition: all 0.1s ease-in-out;
+    @include shadow-inner;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
