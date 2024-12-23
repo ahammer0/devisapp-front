@@ -35,7 +35,6 @@ const Login = () => {
           navigate("/");
         })
         .catch((error) => {
-          console.log(error)
           setError("Connection Impossible");
           setSubmitting(false);
         });
@@ -62,7 +61,9 @@ const Login = () => {
             id="email"
             name="email"
             value={email}
+            autoComplete="username"
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div className="flex-col">
@@ -73,7 +74,9 @@ const Login = () => {
               id="password"
               name="password"
               value={password}
+              autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <span
               onClick={() => setShowPassword(!showPassword)}

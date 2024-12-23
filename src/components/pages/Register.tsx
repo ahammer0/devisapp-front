@@ -39,8 +39,10 @@ const Register = () => {
             type="email"
             id="email"
             name="email"
+            autoComplete="username"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            required
           />
         </div>
         <div className="flex-col">
@@ -51,7 +53,9 @@ const Register = () => {
               id="password"
               name="password"
               value={password}
+              autoComplete="new-password"
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
             <span onClick={() => setShowPassword(!showPassword)} className="input-eye">
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
@@ -65,8 +69,10 @@ const Register = () => {
               type={showPassword ? "text" : "password"}
               id="password"
               name="password"
+              autoComplete="new-password"
               value={passwordConfirm}
               onChange={(e) => setPasswordConfirm(e.target.value)}
+              required
             />
             <span onClick={() => setShowPassword(!showPassword)} className="input-eye">
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
