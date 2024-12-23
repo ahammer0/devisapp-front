@@ -25,6 +25,6 @@ export const userSlice = createSlice({
 
 export const { setUser, resetUser } = userSlice.actions
 
-export const selectCount = (state: RootState) => state.user.user
+export const selectUser = (state: RootState) => state.user.user
 
 export default userSlice.reducer

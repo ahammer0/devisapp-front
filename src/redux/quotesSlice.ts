@@ -25,6 +25,6 @@ export const quotesSlice = createSlice({
 
 export const { setQuotes, resetQuotes } = quotesSlice.actions
 
-export const selectCount = (state: RootState) => state.quotes.quotes
+export const selectQuotes = (state: RootState) => state.quotes.quotes
 
 export default quotesSlice.reducer
