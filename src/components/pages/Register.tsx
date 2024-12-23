@@ -1,9 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch,useAppSelector } from "../../redux/hooks";
 
 import CenterCardTemplate from "../templates/CenterCardTemplate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+import { registerUser } from "../../api/userApi";
+import { selectUser,setUser } from "../../redux/userSlice";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -11,6 +16,11 @@ const Register = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);  
+
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector(selectUser);
 
   useEffect(() => {
     if (passwordConfirm.length > 0) {
@@ -27,7 +37,21 @@ const Register = () => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setIsSubmitting(true);
   };
+
+  useEffect(() => {
+    if (isSubmitting) {
+      registerUser({ email, password })
+        .then((res) => {
+          navigate("/connection");
+        })
+        .catch((error) => {
+          setError("Une erreur est survenue");
+          setIsSubmitting(false);
+        });
+    }
+  }, [isSubmitting]);
 
   return (
     <CenterCardTemplate>

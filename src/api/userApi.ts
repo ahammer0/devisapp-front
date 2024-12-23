@@ -6,11 +6,16 @@ if (!api) {
   throw new Error("VITE_API_URL is not defined");
 }
 
-function getToken(){
-  return localStorage.getItem('token')
+function getToken() {
+  return localStorage.getItem("token");
 }
 
-export async function registerUser(user: userCreate): Promise<user> {
+export async function registerUser(
+  user: Partial<userCreate> & {
+    email: userCreate["email"];
+    password: userCreate["password"];
+  }
+): Promise<user> {
   const res = await fetch(`${api}/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -35,7 +40,7 @@ export async function loginUser(
   }
   return res.json();
 }
-export async function editUser(user:Partial<userCreate>):Promise<user>{
+export async function editUser(user: Partial<userCreate>): Promise<user> {
   const res = await fetch(`${api}/user`, {
     method: "PUT",
     headers: {

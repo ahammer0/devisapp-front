@@ -3,6 +3,7 @@ import Home from "./components/pages/Home";
 import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import ColorPalette from "./helpers/ColorPalette";
+import Profile from "./components/pages/Profile";
 import "./reset.css";
 import "./App.scss";
 
@@ -13,6 +14,7 @@ function App() {
         <Route path="/palette" element={<ColorPalette />} />
         <Route path="/connection" element={<Login />} />
         <Route path="/inscription" element={<Register />} />
+        <Route path="/profile" element={<Profile/>}/>
         <Route path="/" element={<Home />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

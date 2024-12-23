@@ -14,7 +14,7 @@ export type user = {
   account_status: "valid" | "blocked" | "deleted" | "waiting";
   subscription_plan: "free" | "paid";
   created_at: Date; //timestamp
-  updated_at: Date; //timestamp
+  expires_at: Date; //timestamp
   quote_infos: string;
 };
 export type userCreate = {

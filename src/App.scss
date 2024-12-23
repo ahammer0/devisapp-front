@@ -229,7 +229,7 @@ h4 {
 //////           Inputs                     //////
 //////                                      //////
 //////////////////////////////////////////////////
-input {
+input,select {
   border-radius: $radius-small;
   border: none;
   padding: 0.5rem;
