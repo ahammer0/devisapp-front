@@ -1,7 +1,7 @@
 import { userCreate, user } from "../types/users";
 import { FetchError } from "../helpers/customErrors/FetchError";
 
-const api = process.env.VITE_API_URL;
+const api = import.meta.env.VITE_API_URL;
 if (!api) {
   throw new Error("VITE_API_URL is not defined");
 }
