@@ -12,6 +12,7 @@ import {
 
 import "./organisms.scss";
 import MenuBurgerIcon from "../atoms/MenuBurgerIcon";
+import Nav from "./Nav";
 import { selectUser, resetUser } from "../../redux/userSlice";
 
 const Header = () => {
@@ -31,6 +32,7 @@ const Header = () => {
           isActive={isActive}
           toggle={() => setIsActive(!isActive)}
         />
+        <Nav isActive={isActive} setIsActive={setIsActive} />
         <p>{user && user.company_name}</p>
         <div>
           <Link to="/">
