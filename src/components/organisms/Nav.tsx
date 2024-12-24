@@ -47,7 +47,7 @@ const Nav = ({
         <Link to="/profile" className="item">
           <FontAwesomeIcon icon={faUser} className="icon" /> Profile
         </Link>
-        <Link to="/" className="item">
+        <Link to="/works" className="item">
           <FontAwesomeIcon icon={faHammer} className="icon" /> Éléments de devis
         </Link>
         <Link to="/" className="item">

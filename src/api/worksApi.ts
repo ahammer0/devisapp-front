@@ -57,7 +57,7 @@ export async function getWork(id:number):Promise<work> {
   return res.json();
 }
 
-export async function editWork(id:number,work:Partial<work>):Promise<work> {
+export async function editWork(id:number,work:Partial<workCreate>):Promise<work> {
   const res = await fetch(`${api}/works/${id.toString()}`, {
     method: "PUT",
     headers: {
