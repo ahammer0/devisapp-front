@@ -2,11 +2,11 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
 import {full_quote} from '../types/quotes'
 
-interface CounterState {
+interface QuotesState {
   quotes: full_quote[]
 }
 
-const initialState: CounterState = {
+const initialState: QuotesState = {
   quotes: []
 }
 

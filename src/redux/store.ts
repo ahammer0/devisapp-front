@@ -1,11 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 import quotesReducer from './quotesSlice'
 import userReducer from './userSlice'
+import worksReducer from './worksSlice'
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    quotes: quotesReducer
+    quotes: quotesReducer,
+    works: worksReducer
   }
 })
 
