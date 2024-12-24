@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from './store'
 import { work } from '../types/works'
+import { useAppDispatch } from './hooks'
+import { getAllWorks } from '../api/worksApi'
 
 interface WorksState {
   works: work[]
