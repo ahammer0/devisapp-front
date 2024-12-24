@@ -15,8 +15,8 @@ function App() {
         <Route path="/palette" element={<ColorPalette />} />
         <Route path="/connection" element={<Login />} />
         <Route path="/inscription" element={<Register />} />
-        <Route path="/profile" element={<Profile/>}/>
-        <Route path="/works" element={<Works/>}/>
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/works" element={<Works />} />
         <Route path="/" element={<Home />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

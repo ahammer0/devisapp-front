@@ -32,7 +32,7 @@ const WorkForm = ({ defaultWork }: { defaultWork?: work }) => {
 
   function changeWork<K extends keyof workCreate>(
     key: K,
-    value: workCreate[K]
+    value: workCreate[K],
   ) {
     setWorkToSave({ ...workToSave, [key]: value });
   }
@@ -143,7 +143,7 @@ const WorkForm = ({ defaultWork }: { defaultWork?: work }) => {
               onChange={(e) =>
                 changeWork(
                   "type",
-                  e.target.value === "template" ? "template" : "custom"
+                  e.target.value === "template" ? "template" : "custom",
                 )
               }
             >

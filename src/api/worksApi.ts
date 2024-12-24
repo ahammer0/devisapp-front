@@ -1,4 +1,4 @@
-import {FetchError} from "../helpers/customErrors/FetchError";
+import { FetchError } from "../helpers/customErrors/FetchError";
 import { workCreate, work } from "../types/works";
 
 const api = import.meta.env.VITE_API_URL;
@@ -7,11 +7,11 @@ if (!api) {
   throw new Error("VITE_API_URL is not defined");
 }
 
-function getToken(){
-  return localStorage.getItem('token')
+function getToken() {
+  return localStorage.getItem("token");
 }
 
-export async function addWork(work: workCreate):Promise<work> {
+export async function addWork(work: workCreate): Promise<work> {
   const res = await fetch(`${api}/works/add`, {
     method: "POST",
     headers: {
@@ -20,14 +20,13 @@ export async function addWork(work: workCreate):Promise<work> {
     },
     body: JSON.stringify(work),
   });
-  if (res.status!==201)
-  {
-    throw new FetchError(res)
+  if (res.status !== 201) {
+    throw new FetchError(res);
   }
   return res.json();
 }
 
-export async function getAllWorks():Promise<work[]> {
+export async function getAllWorks(): Promise<work[]> {
   const res = await fetch(`${api}/works/all`, {
     method: "GET",
     headers: {
@@ -35,14 +34,13 @@ export async function getAllWorks():Promise<work[]> {
       Authorization: `Bearer ${getToken()}`,
     },
   });
-  if (res.status!==200)
-  {
-    throw new FetchError(res)
+  if (res.status !== 200) {
+    throw new FetchError(res);
   }
   return res.json();
 }
 
-export async function getWork(id:number):Promise<work> {
+export async function getWork(id: number): Promise<work> {
   const res = await fetch(`${api}/works/${id.toString()}`, {
     method: "GET",
     headers: {
@@ -50,14 +48,16 @@ export async function getWork(id:number):Promise<work> {
       Authorization: `Bearer ${getToken()}`,
     },
   });
-  if (res.status!==200)
-  {
-    throw new FetchError(res)
+  if (res.status !== 200) {
+    throw new FetchError(res);
   }
   return res.json();
 }
 
-export async function editWork(id:number,work:Partial<workCreate>):Promise<work> {
+export async function editWork(
+  id: number,
+  work: Partial<workCreate>,
+): Promise<work> {
   const res = await fetch(`${api}/works/${id.toString()}`, {
     method: "PUT",
     headers: {
@@ -66,14 +66,13 @@ export async function editWork(id:number,work:Partial<workCreate>):Promise<work>
     },
     body: JSON.stringify(work),
   });
-  if (res.status!==200)
-  {
-    throw new FetchError(res)
+  if (res.status !== 200) {
+    throw new FetchError(res);
   }
   return res.json();
 }
 
-export async function deleteWork(id:number):Promise<boolean> {
+export async function deleteWork(id: number): Promise<boolean> {
   const res = await fetch(`${api}/works/${id.toString()}`, {
     method: "DELETE",
     headers: {
@@ -81,9 +80,8 @@ export async function deleteWork(id:number):Promise<boolean> {
       Authorization: `Bearer ${getToken()}`,
     },
   });
-  if (res.status!==200)
-  {
-    throw new FetchError(res)
+  if (res.status !== 200) {
+    throw new FetchError(res);
   }
   return res.json();
 }

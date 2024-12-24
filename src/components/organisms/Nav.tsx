@@ -43,18 +43,18 @@ const Nav = ({
         </Link>
       )}
       {user && (
-      <>
-        <Link to="/profile" className="item">
-          <FontAwesomeIcon icon={faUser} className="icon" /> Profile
-        </Link>
-        <Link to="/works" className="item">
-          <FontAwesomeIcon icon={faHammer} className="icon" /> Éléments de devis
-        </Link>
-        <Link to="/" className="item">
-          <FontAwesomeIcon icon={faNewspaper} className="icon" /> Liste des Devis
-        </Link>
-
-
+        <>
+          <Link to="/profile" className="item">
+            <FontAwesomeIcon icon={faUser} className="icon" /> Profile
+          </Link>
+          <Link to="/works" className="item">
+            <FontAwesomeIcon icon={faHammer} className="icon" /> Éléments de
+            devis
+          </Link>
+          <Link to="/" className="item">
+            <FontAwesomeIcon icon={faNewspaper} className="icon" /> Liste des
+            Devis
+          </Link>
         </>
       )}
       {user && (
@@ -62,9 +62,9 @@ const Nav = ({
           <FontAwesomeIcon icon={faDoorOpen} className="icon" /> Deconnection
         </Link>
       )}
-        <Link to="/palette" className="item">
-          <FontAwesomeIcon icon={faPalette} className="icon" /> Palette
-        </Link>
+      <Link to="/palette" className="item">
+        <FontAwesomeIcon icon={faPalette} className="icon" /> Palette
+      </Link>
     </div>
   );
 };

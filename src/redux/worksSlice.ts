@@ -1,32 +1,32 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import type { RootState } from './store'
-import { work } from '../types/works'
-import { useAppDispatch } from './hooks'
-import { getAllWorks } from '../api/worksApi'
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import type { RootState } from "./store";
+import { work } from "../types/works";
+import { useAppDispatch } from "./hooks";
+import { getAllWorks } from "../api/worksApi";
 
 interface WorksState {
-  works: work[]
+  works: work[];
 }
 
 const initialState: WorksState = {
-  works: []
-}
+  works: [],
+};
 
 export const worksSlice = createSlice({
-  name: 'works',
+  name: "works",
   initialState,
   reducers: {
-    setWorks: (state,action:PayloadAction<work[]>) => {
-      state.works = action.payload
+    setWorks: (state, action: PayloadAction<work[]>) => {
+      state.works = action.payload;
     },
-    resetWorks: state => {
-      state.works = initialState.works
-    }
-  }
-})
+    resetWorks: (state) => {
+      state.works = initialState.works;
+    },
+  },
+});
 
-export const { setWorks, resetWorks } = worksSlice.actions
+export const { setWorks, resetWorks } = worksSlice.actions;
 
-export const selectWorks = (state: RootState) => state.works.works
+export const selectWorks = (state: RootState) => state.works.works;
 
-export default worksSlice.reducer
+export default worksSlice.reducer;

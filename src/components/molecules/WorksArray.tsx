@@ -20,12 +20,12 @@ const WorksArray = () => {
     }
   }, []);
   useEffect(() => {
-    if(!error) return;
+    if (!error) return;
     const timer = setTimeout(() => {
       setError("");
     }, 5000);
     return () => clearTimeout(timer);
-  },[error])
+  }, [error]);
 
   useEffect(() => {
     if (!isNeedingRefresh) {

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch,useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
 import CenterCardTemplate from "../templates/CenterCardTemplate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 import { registerUser } from "../../api/userApi";
-import { selectUser,setUser } from "../../redux/userSlice";
+import { selectUser, setUser } from "../../redux/userSlice";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ const Register = () => {
   const [passwordConfirm, setPasswordConfirm] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -27,7 +27,7 @@ const Register = () => {
       if (password !== passwordConfirm) {
         const timeoutId = setTimeout(() => {
           setError("Les mots de passe ne correspondent pas.");
-        },500)
+        }, 500);
         return () => clearTimeout(timeoutId);
       } else {
         setError("");
@@ -81,7 +81,10 @@ const Register = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <span onClick={() => setShowPassword(!showPassword)} className="input-eye">
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="input-eye"
+            >
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </span>
           </div>
@@ -98,7 +101,10 @@ const Register = () => {
               onChange={(e) => setPasswordConfirm(e.target.value)}
               required
             />
-            <span onClick={() => setShowPassword(!showPassword)} className="input-eye">
+            <span
+              onClick={() => setShowPassword(!showPassword)}
+              className="input-eye"
+            >
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </span>
           </div>

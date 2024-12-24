@@ -29,10 +29,7 @@ const Popup = ({
     >
       <PopupContext.Provider value={setIsActive}>
         <div className="popup-card">
-          <div
-            className="popup-popup"
-            onClick={onClickInside}
-          >
+          <div className="popup-popup" onClick={onClickInside}>
             {children}
           </div>
         </div>

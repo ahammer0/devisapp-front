@@ -1,78 +1,62 @@
 @use "../App.scss";
-.bg-primary{
+.bg-primary {
   background-color: App.$primary;
 }
-.bg-secondary{
+.bg-secondary {
   background-color: App.$secondary;
 }
-.bg-danger{
+.bg-danger {
   background-color: App.$danger;
 }
-.bg-light{
+.bg-light {
   background-color: App.$light;
 }
-.bg-dark{
+.bg-dark {
   background-color: App.$dark;
 }
-.bg-bgDark{
+.bg-bgDark {
   background-color: App.$bgDark;
 }
-.bg-bgLight{
+.bg-bgLight {
   background-color: App.$bgLight;
 }
 
-.text-primary{
+.text-primary {
   color: App.$primary;
 }
-.text-secondary{
+.text-secondary {
   color: App.$secondary;
 }
-.text-danger{
+.text-danger {
   color: App.$danger;
 }
-.text-light{
+.text-light {
   color: App.$light;
 }
-.text-dark{
+.text-dark {
   color: App.$dark;
 }
 
-.text-textDark{
+.text-textDark {
   color: App.$textDark;
 }
-.text-textLight{
+.text-textLight {
   color: App.$textLight;
 }
-.testDiv{
+.testDiv {
   width: 100px;
   height: 100px;
 }
 
-.flex{
+.flex {
   display: flex;
 }
-.flex-col{
+.flex-col {
   flex-direction: column;
 }
-.flex-row{
+.flex-row {
   flex-direction: row;
-} 
-.flex-wrap{
+}
+.flex-wrap {
   flex-wrap: wrap;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

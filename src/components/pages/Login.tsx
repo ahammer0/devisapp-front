@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch } from "../../redux/hooks";
@@ -31,7 +30,7 @@ const Login = () => {
       loginUser(email, password)
         .then((res) => {
           localStorage.setItem("token", res.token);
-          dispatch(setUser(res.user))
+          dispatch(setUser(res.user));
           navigate("/");
         })
         .catch((error) => {

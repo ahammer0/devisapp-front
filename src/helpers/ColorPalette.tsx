@@ -41,17 +41,19 @@ const ColorPalette = () => {
       </div>
       <form action="">
         <label htmlFor="monChamp">label du champ</label>
-        <input type="text" name="monChamp" id="monChamp"/>
+        <input type="text" name="monChamp" id="monChamp" />
         <button type="submit" className="btn btn-primary">
           submit
         </button>
       </form>
-      <div className="flex flex-row" style={{justifyContent:"center"}}>
-        <div className="card" style={{width: "300px"}}>
-        Ipsum animi ipsum esse corrupti voluptas? Voluptate a ossimus sint nemo rerum
+      <div className="flex flex-row" style={{ justifyContent: "center" }}>
+        <div className="card" style={{ width: "300px" }}>
+          Ipsum animi ipsum esse corrupti voluptas? Voluptate a ossimus sint
+          nemo rerum
         </div>
-        <div className="card" style={{width: "300px"}}>
-        Ipsum animi ipsum esse corrupti voluptas? Voluptate a ossimus sint nemo rerum
+        <div className="card" style={{ width: "300px" }}>
+          Ipsum animi ipsum esse corrupti voluptas? Voluptate a ossimus sint
+          nemo rerum
         </div>
       </div>
       <table>

@@ -14,7 +14,7 @@ export async function registerUser(
   user: Partial<userCreate> & {
     email: userCreate["email"];
     password: userCreate["password"];
-  }
+  },
 ): Promise<user> {
   const res = await fetch(`${api}/register`, {
     method: "POST",
@@ -28,7 +28,7 @@ export async function registerUser(
 }
 export async function loginUser(
   email: string,
-  password: string
+  password: string,
 ): Promise<{ user: user; token: string }> {
   const res = await fetch(`${api}/login`, {
     method: "POST",

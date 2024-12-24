@@ -200,7 +200,7 @@ h4 {
     margin: {
       top: 1rem;
       bottom: 1rem;
-    };
+    }
     box-shadow: $shadow-md, $shadow-inset-light;
     font-size: 1.2rem;
     font-weight: bold;
@@ -229,7 +229,8 @@ h4 {
 //////           Inputs                     //////
 //////                                      //////
 //////////////////////////////////////////////////
-input,select {
+input,
+select {
   border-radius: $radius-small;
   border: none;
   padding: 0.5rem;
@@ -245,7 +246,7 @@ input,select {
     outline-width: 2px;
     outline-offset: 1.5px;
   }
-  &+.input-eye{
+  & + .input-eye {
     margin-left: -2rem;
   }
 }
@@ -258,22 +259,22 @@ label {
 //////                                      //////
 //////           Tables                    //////
 //////                                      //////
-//////////////////////////////////////////////////  
-td,th{
-  padding:0.25rem;
+//////////////////////////////////////////////////
+td,
+th {
+  padding: 0.25rem;
   transition: all 0.2s ease-in-out;
-  cursor:default;
-
+  cursor: default;
 }
-th{
+th {
   border-bottom: 1px solid $secondary;
-  text-align:left;
+  text-align: left;
 }
-tr{
-  &:nth-child(even) td{
+tr {
+  &:nth-child(even) td {
     background-color: $secondary;
   }
-  &:hover td{
+  &:hover td {
     filter: brightness(1.1);
   }
 }
@@ -281,8 +282,8 @@ tr{
 //////                                      //////
 //////           Utilities                 //////
 //////                                      //////
-//////////////////////////////////////////////////  
-a{
+//////////////////////////////////////////////////
+a {
   text-decoration: underline;
   cursor: pointer;
 }
@@ -293,19 +294,19 @@ a{
   margin: 0.5rem;
 }
 /// Flex
-.justify-center{
+.justify-center {
   justify-content: center;
 }
-.items-center{
+.items-center {
   align-items: center;
 }
-.justify-between{
+.justify-between {
   justify-content: space-between;
 }
-.justify-end{
+.justify-end {
   justify-content: flex-end;
 }
-.justify-start{
+.justify-start {
   justify-content: flex-start;
 }
 .flex-col {

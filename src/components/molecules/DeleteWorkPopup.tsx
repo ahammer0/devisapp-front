@@ -30,7 +30,7 @@ const DeleteWorkPopup = ({ workToDelete }: { workToDelete: work | null }) => {
           .catch(() => {
             setError("Une erreur est survenue");
           });
-        })
+      })
       .catch(() => {
         setError("Une erreur est survenue");
       });
@@ -39,8 +39,15 @@ const DeleteWorkPopup = ({ workToDelete }: { workToDelete: work | null }) => {
   return (
     <Popup isActive={isActive} setIsActive={setIsActive}>
       <p>Supprimer {workToDelete?.name} ?</p>
-      <button className="btn btn-secondary btn-outline"onClick={() => setIsActive(false)}>Annuler</button>
-      <button className="btn btn-danger"onClick={handleDelete}>Confirmer</button>
+      <button
+        className="btn btn-secondary btn-outline"
+        onClick={() => setIsActive(false)}
+      >
+        Annuler
+      </button>
+      <button className="btn btn-danger" onClick={handleDelete}>
+        Confirmer
+      </button>
       {error && <p className="text-danger">{error}</p>}
     </Popup>
   );
