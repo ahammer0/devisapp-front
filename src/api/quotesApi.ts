@@ -1,5 +1,4 @@
 import { FetchError } from "../helpers/customErrors/FetchError";
-import { workCreate, work } from "../types/works";
 import { full_quote, quote } from "../types/quotes";
 
 const api = import.meta.env.VITE_API_URL;

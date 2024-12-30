@@ -1,79 +1,82 @@
 import { useEffect, useState } from "react";
 
-const EditableText = ({
+interface EditableTextProps<T> {
+  isEditMode: boolean;
+  onModeSwitch: (a: T) => void;
+  startValue: T;
+  children: React.ReactNode;
+  type?: T extends string
+    ? "text" | "select"
+    : T extends boolean
+      ? "checkbox"
+      : T extends number
+        ? "date" | "number"
+        : never;
+  selectOptions?: string[];
+}
+
+function EditableText<T extends string | number | boolean>({
   isEditMode = false,
   onModeSwitch,
   startValue,
   children,
-  type = "",
+  type,
   selectOptions = [],
-}: {
-  isEditMode: boolean;
-  onModeSwitch: (a: typeof startValue) => void;
-  startValue: string | number | boolean;
-  children: React.ReactNode;
-  type?: "" | "date" | "text" | "number" | "checkbox" | "select";
-  selectOptions?: string[];
-}) => {
+}: EditableTextProps<T>) {
   const [value, setValue] = useState(startValue);
   const [inputType, setInputType] = useState("text");
 
+  // set input type
   useEffect(() => {
-    switch (type) {
-      case "date":
-        setInputType("date");
-        break;
-      case "text":
+    if (type) {
+      setInputType(type);
+      return;
+    }
+    switch (typeof startValue) {
+      case "string":
         setInputType("text");
         break;
       case "number":
         setInputType("number");
         break;
-      case "checkbox":
+      case "boolean":
         setInputType("checkbox");
         break;
-      case "select":
-        setInputType("select");
-        break;
-      default:
-        switch (typeof startValue) {
-          case "string":
-            setInputType("text");
-            break;
-          case "number":
-            setInputType("number");
-            break;
-          case "boolean":
-            setInputType("checkbox");
-            break;
-        }
-        break;
     }
-  }, [startValue]);
+  }, [startValue, type]);
 
+  // set value to parent component
   useEffect(() => {
     onModeSwitch(value);
     if (!isEditMode) {
       setValue(startValue);
     }
-  }, [isEditMode, startValue, value]);
+  }, [isEditMode, startValue, value, onModeSwitch]);
 
+  // change handlers
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (inputType) {
       case "date":
-        setValue(new Date(e.target.value).getTime());
+        if (typeof startValue !== "number") {
+          throw new Error("value is not a number when input type is date");
+        }
+        setValue(new Date(e.target.value).getTime() as T);
         break;
       case "checkbox":
-        setValue(e.target.checked);
+        if (typeof startValue !== "boolean") {
+          throw new Error("value is not a boolean when input type is checkbox");
+        }
+        setValue(e.target.checked as T);
         break;
       default:
-        setValue(e.target.value);
+        setValue(e.target.value as T);
     }
   };
   const handleChangeSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setValue(e.target.value);
+    setValue(e.target.value as T);
   };
 
+  // utility to format value into string
   const formatValue = (value: typeof startValue) => {
     switch (inputType) {
       case "date":
@@ -87,28 +90,27 @@ const EditableText = ({
     }
   };
 
-  if (isEditMode) {
-    if (inputType === "select") {
-      return (
-        <select value={value.toString()} onChange={handleChangeSelect}>
-          {selectOptions.map((option) => (
-            <option key={option} value={option}>
-              {option}
-            </option>
-          ))}
-        </select>
-      );
-    }
-    return (
-      <input
-        value={formatValue(value)}
-        type={inputType}
-        onChange={handleChange}
-        checked={inputType === "checkbox" && value === true}
-      />
-    );
-  } else {
+  if (!isEditMode) {
     return <>{children}</>;
   }
-};
+  if (inputType === "select") {
+    return (
+      <select value={value.toString()} onChange={handleChangeSelect}>
+        {selectOptions.map((option) => (
+          <option key={option} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    );
+  }
+  return (
+    <input
+      value={formatValue(value)}
+      type={inputType}
+      onChange={handleChange}
+      checked={inputType === "checkbox" && value === true}
+    />
+  );
+}
 export default EditableText;

@@ -28,7 +28,7 @@ const Profile = () => {
     if (!user) {
       navigate("/login");
     }
-  }, [user]);
+  }, [user, navigate]);
 
   const handleAbort = () => {
     setIsEditing(false);
@@ -54,7 +54,7 @@ const Profile = () => {
           setIsSaving(false);
         });
     }
-  }, [isSaving]);
+  }, [isSaving, dispatch, userToSave]);
 
   useEffect(() => {
     if (error) {
@@ -96,7 +96,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(email: any) =>
+                  onModeSwitch={(email) =>
                     setUserToSave({ ...userToSave, email })
                   }
                   startValue={userToSave.email}
@@ -110,7 +110,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(first_name: any) =>
+                  onModeSwitch={(first_name) =>
                     setUserToSave({ ...userToSave, first_name })
                   }
                   startValue={userToSave.first_name}
@@ -124,7 +124,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(last_name: any) =>
+                  onModeSwitch={(last_name) =>
                     setUserToSave({ ...userToSave, last_name })
                   }
                   startValue={userToSave.last_name}
@@ -138,7 +138,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(company_name: any) =>
+                  onModeSwitch={(company_name) =>
                     setUserToSave({ ...userToSave, company_name })
                   }
                   startValue={userToSave.company_name}
@@ -152,7 +152,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(company_address: any) =>
+                  onModeSwitch={(company_address) =>
                     setUserToSave({ ...userToSave, company_address })
                   }
                   startValue={userToSave.company_address}
@@ -166,7 +166,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(siret: any) =>
+                  onModeSwitch={(siret) =>
                     setUserToSave({ ...userToSave, siret })
                   }
                   startValue={userToSave.siret}
@@ -180,7 +180,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(ape_code: any) =>
+                  onModeSwitch={(ape_code) =>
                     setUserToSave({ ...userToSave, ape_code })
                   }
                   startValue={userToSave.ape_code}
@@ -194,7 +194,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(rcs_code: any) =>
+                  onModeSwitch={(rcs_code) =>
                     setUserToSave({ ...userToSave, rcs_code })
                   }
                   startValue={userToSave.rcs_code}
@@ -208,7 +208,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(tva_number: any) =>
+                  onModeSwitch={(tva_number) =>
                     setUserToSave({ ...userToSave, tva_number })
                   }
                   startValue={userToSave.tva_number}
@@ -222,7 +222,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(company_type: any) =>
+                  onModeSwitch={(company_type) =>
                     setUserToSave({ ...userToSave, company_type })
                   }
                   startValue={userToSave.company_type}
@@ -254,7 +254,7 @@ const Profile = () => {
               <td>
                 <EditableText
                   isEditMode={isEditing}
-                  onModeSwitch={(quote_infos: any) =>
+                  onModeSwitch={(quote_infos) =>
                     setUserToSave({ ...userToSave, quote_infos })
                   }
                   startValue={userToSave.quote_infos}

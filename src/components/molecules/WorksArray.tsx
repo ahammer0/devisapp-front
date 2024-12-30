@@ -18,7 +18,7 @@ const WorksArray = () => {
     if (works.length === 0) {
       setIsNeedingRefresh(true);
     }
-  }, []);
+  }, [works]);
   useEffect(() => {
     if (!error) return;
     const timer = setTimeout(() => {
@@ -39,7 +39,7 @@ const WorksArray = () => {
       .catch(() => {
         setError("Une erreur est survenue");
       });
-  }, [isNeedingRefresh]);
+  }, [isNeedingRefresh, dispatch]);
 
   const handleEdit = (workId: number) => {
     console.log("edition de " + workId);

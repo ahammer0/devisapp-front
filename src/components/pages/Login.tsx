@@ -30,7 +30,7 @@ const Login = () => {
       loginUser(email, password)
         .then((res) => {
           localStorage.setItem("token", res.token);
-          dispatch(setUser({ user: res.user, role: 'user'}));
+          dispatch(setUser({ user: res.user, role: "user" }));
           navigate("/");
         })
         .catch(() => {
@@ -38,7 +38,7 @@ const Login = () => {
           setSubmitting(false);
         });
     }
-  }, [submitting]);
+  }, [submitting, email, password, navigate, dispatch]);
 
   useEffect(() => {
     if (error) {

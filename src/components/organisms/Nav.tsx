@@ -5,7 +5,6 @@ import {
   faRightToBracket,
   faDoorOpen,
   faUser,
-  faTable,
   faNewspaper,
   faHammer,
   faPalette,

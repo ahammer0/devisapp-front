@@ -22,6 +22,7 @@ const WorkForm = ({ defaultWork }: { defaultWork?: work }) => {
   }
   const [workToSave, setWorkToSave] = useState<workCreate>(emptyWork);
   const [error, setError] = useState("");
+
   const [isSaving, setIsSaving] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
