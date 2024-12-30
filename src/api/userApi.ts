@@ -6,7 +6,7 @@ if (!api) {
   throw new Error("VITE_API_URL is not defined");
 }
 
-function getToken() {
+export function getToken() {
   return localStorage.getItem("token");
 }
 

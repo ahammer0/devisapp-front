@@ -44,10 +44,10 @@ const Profile = () => {
       if (!userToSave) return;
       editUser(userToSave)
         .then((res) => {
-          dispatch(setUser(res));
+          dispatch(setUser({ user: res, role: "user" }));
           setIsEditing(false);
         })
-        .catch((error) => {
+        .catch(() => {
           setError("Probleme de sauvegarde");
         })
         .finally(() => {

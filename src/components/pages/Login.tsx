@@ -30,10 +30,10 @@ const Login = () => {
       loginUser(email, password)
         .then((res) => {
           localStorage.setItem("token", res.token);
-          dispatch(setUser(res.user));
+          dispatch(setUser({ user: res.user, role: 'user'}));
           navigate("/");
         })
-        .catch((error) => {
+        .catch(() => {
           setError("Connection Impossible");
           setSubmitting(false);
         });
