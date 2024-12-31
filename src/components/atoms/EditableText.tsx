@@ -51,7 +51,8 @@ function EditableText<T extends string | number | boolean>({
     if (!isEditMode) {
       setValue(startValue);
     }
-  }, [isEditMode, startValue, value, onModeSwitch]);
+    // /!\ do not put value in deps
+  }, [isEditMode, startValue]);
 
   // change handlers
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

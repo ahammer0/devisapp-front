@@ -6,19 +6,19 @@ import DeleteWorkPopup from "./DeleteWorkPopup";
 import useWorks from "../../hooks/useWorks";
 
 import { work } from "../../types/works";
+import EditWorkPopup from "./EditWorkPopup";
 
 const WorksArray = () => {
   const [workToDelete, setWorkToDelete] = useState<work | null>(null);
-  const [displayDeletePopup, setDisplayDeletePopup] = useState(false);
+  const [workToEdit, setWorkToEdit] = useState<work | null>(null);
 
   const works = useWorks();
 
-  const handleEdit = (workId: number) => {
-    console.log("edition de " + workId);
-  };
   return (
     <div>
       <h2>WorksArray</h2>
+      {works.error && <p className="error">{works.error}</p>}
+      {works.isLoading && <p>Loading...</p>}
       <table>
         <thead>
           <tr>
@@ -37,7 +37,7 @@ const WorksArray = () => {
               <td>
                 <button
                   className="btn btn-primary"
-                  onClick={() => handleEdit(work.id)}
+                  onClick={() => setWorkToEdit(work)}
                 >
                   <FontAwesomeIcon icon={faPen} />
                 </button>
@@ -52,11 +52,18 @@ const WorksArray = () => {
           ))}
         </tbody>
       </table>
+
+      {/*Popups*/}
       <DeleteWorkPopup
         workToDelete={workToDelete}
         reset={() => {
           setWorkToDelete(null);
-          console.log("reset");
+        }}
+      />
+      <EditWorkPopup
+        workToEdit={workToEdit}
+        reset={() => {
+          setWorkToEdit(null);
         }}
       />
     </div>

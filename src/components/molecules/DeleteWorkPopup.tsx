@@ -1,10 +1,8 @@
 import { deleteWork } from "../../api/worksApi";
 import { work } from "../../types/works";
 import Popup from "../atoms/Popup";
-import { useAppDispatch } from "../../redux/hooks";
-import { setWorks } from "../../redux/worksSlice";
-import { getAllWorks } from "../../api/worksApi";
 import { useState, useEffect } from "react";
+import useWorks from "../../hooks/useWorks";
 
 const DeleteWorkPopup = ({
   workToDelete,
@@ -16,7 +14,7 @@ const DeleteWorkPopup = ({
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState("");
 
-  const dispatch = useAppDispatch();
+  const works = useWorks();
 
   useEffect(() => {
     if (workToDelete) {
@@ -35,14 +33,8 @@ const DeleteWorkPopup = ({
     deleteWork(workToDelete.id)
       .then(() => {
         reset();
+        works.doRefresh();
         setIsActive(false);
-        getAllWorks()
-          .then((works) => {
-            dispatch(setWorks(works));
-          })
-          .catch(() => {
-            setError("Une erreur est survenue");
-          });
       })
       .catch(() => {
         setError("Une erreur est survenue");

@@ -6,6 +6,7 @@ const Works = () => {
   return (
     <MainTemplate>
       <WorksArray />
+      <h1>Ajout d' un travail</h1>
       <WorkForm />
     </MainTemplate>
   );

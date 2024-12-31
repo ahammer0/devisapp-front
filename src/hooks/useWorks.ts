@@ -34,9 +34,11 @@ const useWorks = () => {
     getAllWorks()
       .then((works) => {
         dispatch(setWorks(works));
+        setIsLoading(false);
       })
       .catch(() => {
         setError("Une erreur est survenue");
+        setIsLoading(false);
       });
   }, [isLoading, dispatch]);
 
