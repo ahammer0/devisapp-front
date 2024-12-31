@@ -1,45 +1,17 @@
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { useEffect, useState } from "react";
-import { getAllWorks } from "../../api/worksApi";
-import { setWorks, selectWorks } from "../../redux/worksSlice";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen } from "@fortawesome/free-solid-svg-icons";
-import { work } from "../../types/works";
+
 import DeleteWorkPopup from "./DeleteWorkPopup";
+import useWorks from "../../hooks/useWorks";
+
+import { work } from "../../types/works";
 
 const WorksArray = () => {
-  const [error, setError] = useState("");
-  const [isNeedingRefresh, setIsNeedingRefresh] = useState(false);
   const [workToDelete, setWorkToDelete] = useState<work | null>(null);
-  const dispatch = useAppDispatch();
-  const works = useAppSelector(selectWorks);
+  const [displayDeletePopup, setDisplayDeletePopup] = useState(false);
 
-  useEffect(() => {
-    if (works.length === 0) {
-      setIsNeedingRefresh(true);
-    }
-  }, [works]);
-  useEffect(() => {
-    if (!error) return;
-    const timer = setTimeout(() => {
-      setError("");
-    }, 5000);
-    return () => clearTimeout(timer);
-  }, [error]);
-
-  useEffect(() => {
-    if (!isNeedingRefresh) {
-      return;
-    }
-
-    getAllWorks()
-      .then((works) => {
-        dispatch(setWorks(works));
-      })
-      .catch(() => {
-        setError("Une erreur est survenue");
-      });
-  }, [isNeedingRefresh, dispatch]);
+  const works = useWorks();
 
   const handleEdit = (workId: number) => {
     console.log("edition de " + workId);
@@ -57,7 +29,7 @@ const WorksArray = () => {
           </tr>
         </thead>
         <tbody>
-          {works.map((work) => (
+          {works.works.map((work) => (
             <tr key={work.id}>
               <td>{work.name}</td>
               <td>{work.unit_price}</td>
@@ -80,7 +52,13 @@ const WorksArray = () => {
           ))}
         </tbody>
       </table>
-      <DeleteWorkPopup workToDelete={workToDelete} />
+      <DeleteWorkPopup
+        workToDelete={workToDelete}
+        reset={() => {
+          setWorkToDelete(null);
+          console.log("reset");
+        }}
+      />
     </div>
   );
 };

@@ -6,7 +6,13 @@ import { setWorks } from "../../redux/worksSlice";
 import { getAllWorks } from "../../api/worksApi";
 import { useState, useEffect } from "react";
 
-const DeleteWorkPopup = ({ workToDelete }: { workToDelete: work | null }) => {
+const DeleteWorkPopup = ({
+  workToDelete,
+  reset,
+}: {
+  workToDelete: work | null;
+  reset: () => void;
+}) => {
   const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState("");
 
@@ -18,10 +24,17 @@ const DeleteWorkPopup = ({ workToDelete }: { workToDelete: work | null }) => {
     }
   }, [workToDelete]);
 
+  useEffect(() => {
+    if (!isActive) {
+      reset();
+    }
+  }, [isActive]);
+
   const handleDelete = () => {
     if (!workToDelete) return;
     deleteWork(workToDelete.id)
       .then(() => {
+        reset();
         setIsActive(false);
         getAllWorks()
           .then((works) => {
