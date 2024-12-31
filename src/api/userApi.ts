@@ -54,3 +54,20 @@ export async function editUser(user: Partial<userCreate>): Promise<user> {
   }
   return res.json();
 }
+
+export async function checkToken(): Promise<{
+  role: "user" | "admin";
+  userInfos: user;
+}> {
+  const res = await fetch(`${api}/checkToken`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  if (res.status !== 200) {
+    throw new FetchError(res);
+  }
+  return res.json();
+}

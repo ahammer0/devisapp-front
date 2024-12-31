@@ -1,34 +1,44 @@
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { selectUser, setUser, selectUserRole } from "../redux/userSlice";
+import { setUser, selectUserRole } from "../redux/userSlice";
 import { getToken } from "../api/userApi";
-import { Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { checkToken } from "../api/userApi";
-import { use } from "react";
+import { useEffect } from "react";
+import Loader from "../components/organisms/Loader";
 
 const RequireAuth = (
   props: React.PropsWithChildren & { authLevel: "any" | "user" | "admin" },
 ) => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   // reading redux store
-  const role = useAppSelector(selectUserRole);
-  
-  //reading localstorage
-  if(!role){
-    const token = getToken();
-    if (!token) {
-      return <Navigate to="/login" />;
+  let role = useAppSelector(selectUserRole);
+  const token = getToken();
+
+  //check if we can login the user
+  useEffect(() => {
+    // check if user is logged in
+    if (!role) {
+      if (!token && props.authLevel !== "any") {
+        navigate("/connection");
+        return;
+      }
+      checkToken()
+        .then((res) => {
+          dispatch(setUser({ user: res.userInfos, role: res.role }));
+        })
+        .catch(() => {
+          if (props.authLevel !== "any") {
+            navigate("/connection");
+          }
+        });
     }
+  }, [role]);
 
-    const checkTokenRes = use(checkToken())
-    dispatch(setUser({ user: checkTokenRes.userInfos, role: checkTokenRes.role }));
-  }
- 
-
-
-  if (role===props.authLevel||props.authLevel==="any") {
+  if (role === props.authLevel || props.authLevel === "any") {
     return props.children;
   }
-
-  return <Navigate to="/login" />;
+  return <Loader />;
 };
 export default RequireAuth;
