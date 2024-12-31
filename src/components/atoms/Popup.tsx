@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { createContext } from "react";
 
 export const PopupContext = createContext((a: boolean) => {});
@@ -22,6 +22,21 @@ const Popup = ({
   if (body) {
     body.style.overflow = isActive ? "hidden" : "";
   }
+
+  // Close popup on escape
+  useEffect(() => {
+    if(!isActive) return
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setIsActive(false);
+      }
+    }
+    addEventListener("keydown", handleEscape);
+    return () => {
+      removeEventListener("keydown", handleEscape);
+    }
+  },[isActive])
+
   return (
     <div
       className={isActive ? "popup-background active" : "popup-background"}
