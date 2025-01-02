@@ -16,6 +16,7 @@ export type quote_element = {
   discount: number;
   quantity: number;
 };
+export type quote_element_create = Omit<quote_element, "id" | "quote_id">;
 
 export type quote_media = {
   id: number;
@@ -23,8 +24,14 @@ export type quote_media = {
   alt_text: string;
   quote_id: number;
 };
+export type quote_media_create = Omit<quote_media, "id" | "quote_id">;
 
 export type full_quote = quote & {
   quote_elements: quote_element[];
   quote_medias: quote_media[];
+};
+
+export type quote_full_create = Omit<quote, "id" | "user_id" | "created_at"> & {
+  quote_elements: quote_element_create[];
+  quote_medias: quote_media_create[];
 };

@@ -50,7 +50,7 @@ const Nav = ({
             <FontAwesomeIcon icon={faHammer} className="icon" /> Éléments de
             devis
           </Link>
-          <Link to="/" className="item">
+          <Link to="/quotes" className="item">
             <FontAwesomeIcon icon={faNewspaper} className="icon" /> Liste des
             Devis
           </Link>

@@ -10,6 +10,8 @@ import RequireAuth from "./helpers/RequireAuth";
 
 import "./reset.css";
 import "./App.scss";
+import Quotes from "./components/pages/Quotes";
+import AddQuote from "./components/pages/AddQuote";
 
 function App() {
   return (
@@ -31,6 +33,22 @@ function App() {
           element={
             <RequireAuth authLevel="user">
               <Works />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/quotes"
+          element={
+            <RequireAuth authLevel="user">
+              <Quotes />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/add-quote"
+          element={
+            <RequireAuth authLevel="user">
+              <AddQuote />
             </RequireAuth>
           }
         />
