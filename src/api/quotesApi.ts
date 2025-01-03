@@ -1,5 +1,5 @@
 import { FetchError } from "../helpers/customErrors/FetchError";
-import { full_quote, quote } from "../types/quotes";
+import { full_quote, quote_full_create } from "../types/quotes";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -11,7 +11,7 @@ function getToken() {
   return localStorage.getItem("token");
 }
 
-export async function addQuote(quote: full_quote): Promise<full_quote> {
+export async function addQuote(quote: quote_full_create): Promise<full_quote> {
   const res = await fetch(`${api}/quotes/add`, {
     method: "POST",
     headers: {
@@ -26,7 +26,7 @@ export async function addQuote(quote: full_quote): Promise<full_quote> {
   return res.json();
 }
 
-export async function getAllQuotes(): Promise<quote[]> {
+export async function getAllQuotes(): Promise<full_quote[]> {
   const res = await fetch(`${api}/quotes/all`, {
     method: "GET",
     headers: {

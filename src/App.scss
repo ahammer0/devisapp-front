@@ -230,7 +230,8 @@ h4 {
 //////                                      //////
 //////////////////////////////////////////////////
 input,
-select {
+select,
+textarea {
   border-radius: $radius-small;
   border: none;
   padding: 0.5rem;
@@ -239,6 +240,7 @@ select {
   box-shadow: $shadow-sm inset;
   background-color: white;
   transition: all 0.2s ease-in-out;
+  width: 100%;
 
   &:focus {
     outline-color: $secondary;
