@@ -1,8 +1,9 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo, useRef, useContext } from "react";
 import { quote_full_create, quote_element_create } from "../../types/quotes";
 import WorkTapCards from "../molecules/WorkTapCards";
 import QuoteDetails from "../molecules/QuoteDetails";
 import useQuotes from "../../hooks/useQuotes";
+import QuoteFormContext from "./../../contexts/QuoteFormContext";
 import { work } from "../../types/works";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -125,25 +126,28 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
 
   return (
     <>
+      <QuoteFormContext.Provider value={[quoteToSave, setQuoteToSave]}>
       <WorkTapCards handleTap={(work) => addWork(work)} />
       <hr/>
 
       {/*select existing sections*/}
-        <select onChange={handleChangeSection} value={currentSection}>
-          {categories.map((category) => (
-            <option key={category} value={category}>
-              {category}
-            </option>
-          ))}
-          {!categories.includes(currentSection)&&
-          <option key={currentSection} value={currentSection}>
-            {currentSection}
-          </option>}
-        </select>
+          <form>
+          <select onChange={handleChangeSection} value={currentSection}>
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+            {!categories.includes(currentSection)&&
+            <option key={currentSection} value={currentSection}>
+              {currentSection}
+            </option>}
+          </select>
+          </form>
 
       {/*add new section*/}
       <form onSubmit={handleAddSection}>
-        <input type="text" name="section" placeholder="Nouvelle section" />
+          <input type="text" name="section" placeholder="Nouvelle section" />
         <button className="btn btn-primary" type="submit">
           <FontAwesomeIcon icon={faPlus} />
         </button>
@@ -187,6 +191,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
         {quotes.error && <p className="error">{quotes.error}</p>}
         {quotes.isSaving && <p>Saving...</p>}
       </form>
+      </QuoteFormContext.Provider>
     </>
   );
 };

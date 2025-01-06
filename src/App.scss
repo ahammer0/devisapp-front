@@ -17,6 +17,7 @@
 * {
   font-family: poppins, sans-serif;
 }
+// TODO changer cette font
 @font-face {
   font-family: bungee;
   src: url(./assets/fonts/Bungee_Tint/BungeeTint-Regular.ttf) format("truetype");
@@ -43,7 +44,7 @@ h2 {
   @include mx(1rem);
   // text-align: center;
   position: relative;
-  display: inline-block;
+  display: block;
   margin-top: 1rem;
   margin-bottom: 0.75rem;
   margin-left: 1.7rem;
@@ -74,6 +75,24 @@ h2 {
 h3 {
   font-size: 1.5rem;
   @include mx(1rem);
+
+  // text-align: center;
+  position: relative;
+  display: block;
+  margin-left: 1.7rem;
+
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 0.5rem;
+    width: 0.5rem;
+    background-color: $primary;
+    border-radius: 100%;
+    position: absolute;
+    top: 40%;
+    // left:-0.85rem;
+    margin-left: -1rem;
+  }
 }
 h4 {
   font-size: 1rem;
@@ -127,7 +146,6 @@ h4 {
     box-shadow: $shadow-md, $shadow-inset-light;
     font-size: 1.2rem;
     font-weight: bold;
-    border-radius: 9999px;
     @include outline($primary);
   }
 
@@ -158,13 +176,14 @@ textarea {
   border-radius: $radius-small;
   border: none;
   padding: 0.5rem;
-  margin: 0.25rem;
+  margin: 0.25rem 0;
   font-size: 1rem;
   box-shadow: $shadow-sm inset;
   background-color: white;
   transition: all 0.2s ease-in-out;
+  // margin-left: 0.5rem;
+  // margin-right: 0.5rem;
   width: 100%;
-  margin-right: 0.5rem;
 
   &:focus {
     outline-color: $secondary;
@@ -184,6 +203,7 @@ form {
   // display: flex;
   // flex-direction: column;
   margin-bottom: 1rem;
+  padding:0 0.5rem;
   .item{
     display: flex;
     flex-direction: column;
@@ -237,7 +257,7 @@ a {
   cursor: pointer;
 }
 hr{
-  margin: 0.5rem;
+  margin: 1rem;
 }
 .card {
   @include shadow-md;

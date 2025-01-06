@@ -38,6 +38,11 @@ const QuotesList = () => {
               </td>
             </tr>
           ))}
+          {quotes.quotes.length === 0 && (
+            <tr>
+              <td colSpan={4}>Aucun devis</td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
