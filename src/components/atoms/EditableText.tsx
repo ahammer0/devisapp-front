@@ -97,7 +97,11 @@ function EditableText<T extends string | number | boolean>({
   if (inputType === "select") {
     return (
       <form className="editableText">
-        <select value={value.toString()} onChange={handleChangeSelect} className="editableText">
+        <select
+          value={value.toString()}
+          onChange={handleChangeSelect}
+          className="editableText"
+        >
           {selectOptions.map((option) => (
             <option key={option} value={option}>
               {option}

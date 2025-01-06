@@ -13,8 +13,8 @@ const useQuotes = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [success, setSuccess] = useState("");
 
-  const [quoteToSave, setQuoteToSave] = useState<quote_full_create|null>()
-  const [quoteIdToDelete, setQuoteIdToDelete] = useState<number|null>(null);
+  const [quoteToSave, setQuoteToSave] = useState<quote_full_create | null>();
+  const [quoteIdToDelete, setQuoteIdToDelete] = useState<number | null>(null);
 
   // Fetching works if store is empty
   useEffect(() => {
@@ -91,11 +91,11 @@ const useQuotes = () => {
   }
   function saveQuote(quote: quote_full_create) {
     setIsSaving(true);
-    setQuoteToSave(quote)
+    setQuoteToSave(quote);
   }
   function rm(id: number) {
     setIsDeleting(true);
-    setQuoteIdToDelete(id)
+    setQuoteIdToDelete(id);
   }
 
   return {

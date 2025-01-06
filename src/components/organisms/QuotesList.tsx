@@ -9,7 +9,7 @@ const QuotesList = () => {
 
   const onEdit = (id: number) => {
     console.log("edit", id);
-  }
+  };
   return (
     <div>
       <h2>Liste des devis</h2>
@@ -32,7 +32,10 @@ const QuotesList = () => {
                 <button className="btn btn-primary">
                   <FontAwesomeIcon icon={faPen} />
                 </button>
-                <button className="btn btn-danger" onClick={() => quotes.rm(quote.id)}>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => quotes.rm(quote.id)}
+                >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
               </td>

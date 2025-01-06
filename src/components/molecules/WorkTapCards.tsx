@@ -9,7 +9,11 @@ const WorkTapCards = ({ handleTap }: { handleTap: (work: work) => void }) => {
       {works.error && <p className="error">{works.error}</p>}
       {works.isLoading && <p>Loading...</p>}
       {works.works.map((work) => (
-        <button className="btn btn-secondary btn-outline" key={work.id} onClick={() => handleTap(work)}>
+        <button
+          className="btn btn-secondary btn-outline"
+          key={work.id}
+          onClick={() => handleTap(work)}
+        >
           {work.name}
         </button>
       ))}

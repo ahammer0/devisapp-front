@@ -19,8 +19,8 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
       .toISOString()
       .split("T")[0],
   };
-  if(quoteId) {
-    console.log("on édite le devis no:", quoteId)
+  if (quoteId) {
+    console.log("on édite le devis no:", quoteId);
   }
   ////////////////////////////////////////////////////////
   //                                                    //
@@ -90,14 +90,14 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   useEffect(() => {
     if (isFirstRender.current) {
       const ls = localStorage.getItem("quote");
-      if(ls){
+      if (ls) {
         setQuoteToSave(JSON.parse(ls));
       }
       isFirstRender.current = false;
     }
-  },[])
+  }, []);
   useEffect(() => {
-    if(!isFirstRender.current){
+    if (!isFirstRender.current) {
       localStorage.setItem("quote", JSON.stringify(quoteToSave));
     }
   }, [quoteToSave]);
@@ -127,70 +127,83 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   return (
     <>
       <QuoteFormContext.Provider value={[quoteToSave, setQuoteToSave]}>
-      <WorkTapCards handleTap={(work) => addWork(work)} />
-      <hr/>
+        <WorkTapCards handleTap={(work) => addWork(work)} />
+        <hr />
 
-      {/*select existing sections*/}
-          <form>
+        {/*select existing sections*/}
+        <form>
           <select onChange={handleChangeSection} value={currentSection}>
             {categories.map((category) => (
               <option key={category} value={category}>
                 {category}
               </option>
             ))}
-            {!categories.includes(currentSection)&&
-            <option key={currentSection} value={currentSection}>
-              {currentSection}
-            </option>}
-          </select>
-          </form>
-
-      {/*add new section*/}
-      <form onSubmit={handleAddSection}>
-          <input type="text" name="section" placeholder="Nouvelle section" />
-        <button className="btn btn-primary" type="submit">
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
-      </form>
-
-      {/*display quotes elements by sections*/}
-      {categories.map((category) => (
-        <div key={category}>
-          <h3>Section: {category ?? "sans section"}</h3>
-          <QuoteDetails
-            quoteElements={quoteToSave.quote_elements.filter(
-              (el) => el.quote_section === category,
+            {!categories.includes(currentSection) && (
+              <option key={currentSection} value={currentSection}>
+                {currentSection}
+              </option>
             )}
-          />
-        </div>
-      ))}
+            <option value="--Ajouter une section--">
+              --Ajouter une section--
+            </option>
+          </select>
+        </form>
 
-      <hr/>
-      {/*general quotes infos form*/}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="general_infos">Infos gérérales</label>
-          <textarea name="general_infos" ></textarea>
-        </div>
-        <div>
-          <label htmlFor="global_discount">Remise générale</label>
-          <input type="number" name="global_discount" />
-        </div>
-        <div>
-          <label htmlFor="expires_at">Date d'expiration</label>
-          <input
-            type="date"
-            name="global_discount"
-            value={quoteToSave.expires_at}
-          />
-        </div>
-        <button className="btn btn-primary" type="submit">
-          Submit
-        </button>
-        <button className="btn btn-secondary" onClick={handleReset}>Reset</button>
-        {quotes.error && <p className="error">{quotes.error}</p>}
-        {quotes.isSaving && <p>Saving...</p>}
-      </form>
+        {/*add new section*/}
+        {currentSection === "--Ajouter une section--" && (
+          <form onSubmit={handleAddSection}>
+            <input
+              type="text"
+              name="section"
+              placeholder="Nouvelle section"
+              autoFocus
+            />
+            <button className="btn btn-primary" type="submit">
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </form>
+        )}
+
+        {/*display quotes elements by sections*/}
+        {categories.map((category) => (
+          <div key={category}>
+            <h3>Section: {category ?? "sans section"}</h3>
+            <QuoteDetails
+              quoteElements={quoteToSave.quote_elements.filter(
+                (el) => el.quote_section === category,
+              )}
+            />
+          </div>
+        ))}
+
+        <hr />
+        {/*general quotes infos form*/}
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="general_infos">Infos gérérales</label>
+            <textarea name="general_infos"></textarea>
+          </div>
+          <div>
+            <label htmlFor="global_discount">Remise générale</label>
+            <input type="number" name="global_discount" />
+          </div>
+          <div>
+            <label htmlFor="expires_at">Date d'expiration</label>
+            <input
+              type="date"
+              name="global_discount"
+              value={quoteToSave.expires_at}
+            />
+          </div>
+          <button className="btn btn-primary" type="submit">
+            Submit
+          </button>
+          <button className="btn btn-secondary" onClick={handleReset}>
+            Reset
+          </button>
+          {quotes.error && <p className="error">{quotes.error}</p>}
+          {quotes.isSaving && <p>Saving...</p>}
+        </form>
       </QuoteFormContext.Provider>
     </>
   );

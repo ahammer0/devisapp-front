@@ -26,7 +26,7 @@ const QuoteDetails = ({
   const [quote, setQuote] = formContext;
 
   function setQuantity(quantity: number) {
-    if (quantity ===0){
+    if (quantity === 0) {
       rmQuoteElement();
       return;
     }
@@ -37,11 +37,11 @@ const QuoteDetails = ({
         quoteEl.work_id === elToPopup.work_id &&
         quoteEl.quote_section === elToPopup.quote_section
           ? { ...quoteEl, quantity }
-          : quoteEl
+          : quoteEl,
       ),
     });
-    
-    setElToPopup({...elToPopup, quantity});
+
+    setElToPopup({ ...elToPopup, quantity });
   }
   function rmQuoteElement() {
     if (!elToPopup) return;
@@ -50,7 +50,7 @@ const QuoteDetails = ({
       quote_elements: quote.quote_elements.filter(
         (quoteEl) =>
           quoteEl.work_id !== elToPopup.work_id ||
-          quoteEl.quote_section !== elToPopup.quote_section
+          quoteEl.quote_section !== elToPopup.quote_section,
       ),
     });
     setIsPopupOpen(false);
@@ -117,9 +117,7 @@ const QuoteDetails = ({
                   type="number"
                   id="quantity"
                   value={elToPopup.quantity}
-                  onChange={(e) =>
-                    setQuantity(parseInt(e.target.value))
-                  }
+                  onChange={(e) => setQuantity(parseInt(e.target.value))}
                 />
               </form>
               <button
@@ -130,10 +128,7 @@ const QuoteDetails = ({
               </button>
             </div>
 
-            <button
-              className="btn btn-danger"
-              onClick={() => rmQuoteElement()}
-            >
+            <button className="btn btn-danger" onClick={() => rmQuoteElement()}>
               Supprimer
             </button>
           </>

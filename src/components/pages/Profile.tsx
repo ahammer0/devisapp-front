@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { useEffect, useState } from "react";
-import "./pages.scss"
+import "./pages.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
