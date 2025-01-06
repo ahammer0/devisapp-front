@@ -1,4 +1,4 @@
-@use "../../App.scss";
+@use "./../../variables.scss" as App;
 .menuBurgerButton {
   transition: all 0.3s ease-in-out;
   &-item {

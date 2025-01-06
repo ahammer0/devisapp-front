@@ -1,0 +1,82 @@
+
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Mixins flex                //////
+//////                                      //////
+//////////////////////////////////////////////////
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@mixin flexBetween {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+@mixin flexColumn {
+  display: flex;
+  flex-direction: column;
+}
+@mixin flexRow {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin mx($margin) {
+  margin-left: $margin;
+  margin-right: $margin;
+}
+@mixin my($margin) {
+  margin-top: $margin;
+  margin-bottom: $margin;
+}
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Variables                  //////
+//////                                      //////
+//////////////////////////////////////////////////
+// Couleurs
+$bgLight: #e7e8ea;
+$bgDark: #acb4b7;
+
+$textLight: #ffffff;
+$textDark: #000000;
+
+$primary: #ed7a29; //orange
+$secondary: #acb4b7; //gris clair
+$danger: #ff0000; //Rouge primaire
+$light: #acb4b7; //gris très clair
+$dark: #222d37; //gris moyen léger rouge
+
+$colorsMap: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "danger": $danger,
+);
+
+// Radius
+$radius-small: 5px;
+$radius-large: 15px;
+// Shadows
+$shadow-sm: 2px 2px 2px 0px rgba(0, 0, 0, 0.3);
+$shadow-md: 1px 2px 4px 0px rgba(0, 0, 0, 0.3);
+$shadow-lg: 2px 5px 10px 0px rgba(0, 0, 0, 0.54);
+$shadow-inset-light: 4px -4px 8px 1px rgba(255, 255, 255, 0.2) inset;
+
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Shadows                    //////
+//////                                      //////
+//////////////////////////////////////////////////
+@mixin shadow-md {
+  box-shadow: $shadow-md;
+  // filter: drop-shadow(1px 2px 5px rgba(0,0,0,0.30));
+}
+@mixin shadow-lg {
+  box-shadow: $shadow-lg;
+  // filter: drop-shadow(1px 5px 5px rgba(0,0,0,0.54));
+}
+@mixin shadow-inner {
+  box-shadow: inset 2px 5px 7px 0px rgba(0, 0, 0, 0.3);
+}
