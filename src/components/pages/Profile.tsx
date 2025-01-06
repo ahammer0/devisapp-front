@@ -1,6 +1,6 @@
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import "./pages.scss"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -21,14 +21,7 @@ const Profile = () => {
 
   const user = useAppSelector(selectUser);
   const [userToSave, setUserToSave] = useState(user);
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
 
   const handleAbort = () => {
     setIsEditing(false);
@@ -90,7 +83,7 @@ const Profile = () => {
           )}
           {isSaving && <p>Sauvegarde en cours...</p>}
           {error && <p className="text-danger">{error}</p>}
-          <table>
+          <table className="profile">
             <tbody>
               <tr>
                 <th>Email</th>

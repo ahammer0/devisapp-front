@@ -8,21 +8,18 @@ const QuotesList = () => {
   const navigate = useNavigate();
 
   const onEdit = (id: number) => {
-    const quote = quotes.quotes.find((quote) => quote.id === id);
-    const str = JSON.stringify(quote);
-    localStorage.setItem("quoteEdit", str);
-    navigate("/add-quote");
+    console.log("edit", id);
   }
   return (
     <div>
-      <h2>QuotesList</h2>
+      <h2>Liste des devis</h2>
       <table>
         <thead>
           <tr>
             <th>id</th>
             <th>global_discount</th>
             <th>status</th>
-            <th>actions</th>
+            <th className="actions">actions</th>
           </tr>
         </thead>
         <tbody>
@@ -31,8 +28,8 @@ const QuotesList = () => {
               <td>{quote.id}</td>
               <td>{quote.global_discount}</td>
               <td>{quote.status}</td>
-              <td>
-                <button className="btn btn-secondary">
+              <td className="actions">
+                <button className="btn btn-primary">
                   <FontAwesomeIcon icon={faPen} />
                 </button>
                 <button className="btn btn-danger" onClick={() => quotes.rm(quote.id)}>

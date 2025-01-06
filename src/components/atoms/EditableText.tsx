@@ -96,22 +96,26 @@ function EditableText<T extends string | number | boolean>({
   }
   if (inputType === "select") {
     return (
-      <select value={value.toString()} onChange={handleChangeSelect}>
-        {selectOptions.map((option) => (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
+      <form className="editableText">
+        <select value={value.toString()} onChange={handleChangeSelect} className="editableText">
+          {selectOptions.map((option) => (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ))}
+        </select>
+      </form>
     );
   }
   return (
-    <input
-      value={formatValue(value)}
-      type={inputType}
-      onChange={handleChange}
-      checked={inputType === "checkbox" && value === true}
-    />
+    <form className="editableText">
+      <input
+        value={formatValue(value)}
+        type={inputType}
+        onChange={handleChange}
+        checked={inputType === "checkbox" && value === true}
+      />
+    </form>
   );
 }
 export default EditableText;

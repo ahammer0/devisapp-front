@@ -16,7 +16,7 @@ const WorksArray = () => {
 
   return (
     <div>
-      <h2>WorksArray</h2>
+      <h2>Liste des travaux</h2>
       {works.error && <p className="error">{works.error}</p>}
       {works.isLoading && <p>Loading...</p>}
       <table>
@@ -25,7 +25,7 @@ const WorksArray = () => {
             <th>Désignation</th>
             <th>Prix/U</th>
             <th>Temps</th>
-            <th>Actions</th>
+            <th className="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -34,7 +34,7 @@ const WorksArray = () => {
               <td>{work.name}</td>
               <td>{work.unit_price}</td>
               <td>{work.unit_time}</td>
-              <td>
+              <td className="text-center">
                 <button
                   className="btn btn-primary"
                   onClick={() => setWorkToEdit(work)}

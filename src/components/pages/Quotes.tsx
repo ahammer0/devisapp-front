@@ -5,10 +5,10 @@ const Quotes = () => {
   return (
     <MainTemplate>
       <h1>Devis</h1>
+      <QuotesList/>
       <Link to="/add-quote" className="btn btn-primary">
         Ajouter un devis
       </Link>
-      <QuotesList/>
 
     </MainTemplate>
   );

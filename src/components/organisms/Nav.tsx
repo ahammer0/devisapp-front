@@ -11,6 +11,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { resetUser, selectUser } from "../../redux/userSlice";
+import { useEffect } from "react";
 
 const Nav = ({
   isActive,
@@ -26,12 +27,20 @@ const Nav = ({
     localStorage.removeItem("token");
     dispatch(resetUser());
   };
+
+  //lock body scroll
+  useEffect(() => {
+    if (isActive) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [isActive]);
   return (
     <div
       className={isActive ? "nav " : "nav hide"}
       onClick={() => setIsActive(false)}
     >
-      <h2>Nav</h2>
       <Link to="/" className="item">
         <FontAwesomeIcon icon={faHouse} className="icon" /> Accueil
       </Link>

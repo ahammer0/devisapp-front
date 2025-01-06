@@ -125,11 +125,10 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
 
   return (
     <>
-      <div>QuoteForm</div>
       <WorkTapCards handleTap={(work) => addWork(work)} />
+      <hr/>
 
       {/*select existing sections*/}
-      <div>
         <select onChange={handleChangeSection} value={currentSection}>
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -141,7 +140,6 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
             {currentSection}
           </option>}
         </select>
-      </div>
 
       {/*add new section*/}
       <form onSubmit={handleAddSection}>
@@ -163,6 +161,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
         </div>
       ))}
 
+      <hr/>
       {/*general quotes infos form*/}
       <form onSubmit={handleSubmit}>
         <div>

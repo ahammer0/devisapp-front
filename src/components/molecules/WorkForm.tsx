@@ -93,9 +93,9 @@ const WorkForm = ({
   }, [isSuccess]);
 
   return (
-    <div>
+    <>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className="item">
           <label htmlFor="name">Désignation</label>
           <input
             type="text"
@@ -106,7 +106,7 @@ const WorkForm = ({
           />
         </div>
 
-        <div>
+        <div className="item">
           <label htmlFor="unit">Unité (ex: m2,kg,...)</label>
           <input
             type="text"
@@ -117,7 +117,7 @@ const WorkForm = ({
           />
         </div>
 
-        <div>
+        <div className="item">
           <label htmlFor="unit_price">Prix unitaire</label>
           <input
             type="number"
@@ -130,7 +130,7 @@ const WorkForm = ({
           />
         </div>
 
-        <div>
+        <div className="item">
           <label htmlFor="unit_time">Main d' oeuvre par unité</label>
           <input
             type="number"
@@ -143,7 +143,7 @@ const WorkForm = ({
           />
         </div>
 
-        <div>
+        <div className="item">
           <label htmlFor="buy_price">Prix d' achat</label>
           <input
             type="number"
@@ -156,7 +156,7 @@ const WorkForm = ({
           />
         </div>
 
-        <div className="flex-row items-center justify-between">
+        <div className="flex-row items-center justify-center">
           <div>
             <label htmlFor="isFavorite">Favoris</label>
             <input
@@ -187,7 +187,7 @@ const WorkForm = ({
           </div>
         </div>
 
-        <div>
+        <div className="flex-row items-center justify-center">
           <button type="submit" className="btn btn-primary">
             Enregistrer
           </button>
@@ -196,7 +196,7 @@ const WorkForm = ({
           {isSuccess && <p className="text-success">Enregistré</p>}
         </div>
       </form>
-    </div>
+    </>
   );
 };
 export default WorkForm;
