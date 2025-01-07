@@ -6,7 +6,7 @@ import QuoteDetails from "../molecules/QuoteDetails";
 import useQuotes from "../../hooks/useQuotes";
 import QuoteFormContext from "./../../contexts/QuoteFormContext";
 import { work } from "../../types/works";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
@@ -25,6 +25,9 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   //               STATES                               //
   //                                                    //
   ////////////////////////////////////////////////////////
+  const quotes = useQuotes();
+  if (!quotes.quotes) return null;
+  const isEditing = useMemo(() => quoteId !== undefined, [quoteId]);
   const [quoteToSave, setQuoteToSave] =
     useState<quote_full_create>(initialQuote);
   const [currentSection, setCurrentSection] = useState<string>("Sans Section");
@@ -36,8 +39,6 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
       return acc;
     }, [] as string[]);
   }, [quoteToSave]);
-  const isEditing = useMemo(() => quoteId !== undefined, [quoteId]);
-  const quotes = useQuotes();
   const isFirstRender = useRef(true);
   const navigate = useNavigate();
 
@@ -49,7 +50,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const addWork = (work: work) => {
     // Check if increment quantity or create new element
     const elId = quoteToSave.quote_elements.findIndex(
-      (el) => el.work_id === work.id && el.quote_section === currentSection,
+      (el) => el.work_id === work.id && el.quote_section === currentSection
     );
     if (elId !== -1) {
       setQuoteToSave((state) => {
@@ -109,6 +110,16 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
     }
   }, [quotes.success]);
 
+  // if edit mode then load the quote
+  useEffect(() => {
+    if (isEditing) {
+      const quote = quotes.quotes.find((q) => q.id === quoteId);
+      if (quote) {
+        setQuoteToSave(quote);
+      }
+    }
+  }, [isEditing, quoteId, quotes.quotes]);
+
   ////////////////////////////////////////////////////////
   //                                                    //
   //               EVENT HANDLERS                       //
@@ -116,7 +127,11 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   ////////////////////////////////////////////////////////
   const handleSubmit = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
-    quotes.saveQuote(quoteToSave);
+    if (isEditing) {
+      console.log("save edit")
+    } else {
+      quotes.saveQuote(quoteToSave);
+    }
     localStorage.removeItem("quote");
   };
   const handleAddSection = (e: React.BaseSyntheticEvent) => {
@@ -178,7 +193,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           <div key={category}>
             <QuoteDetails
               quoteElements={quoteToSave.quote_elements.filter(
-                (el) => el.quote_section === category,
+                (el) => el.quote_section === category
               )}
             />
           </div>
@@ -204,15 +219,17 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
             />
           </div>
           <button className="btn btn-primary" type="submit">
-            Submit
+            <FontAwesomeIcon icon={faFloppyDisk}/> Enregistrer
           </button>
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={handleReset}
-          >
-            Reset
-          </button>
+          {!isEditing && (
+            <button
+              type="button"
+              className="btn btn-secondary"
+              onClick={handleReset}
+            >
+              Reset
+            </button>
+          )}
           {quotes.error && <p className="error">{quotes.error}</p>}
           {quotes.isSaving && <p>Saving...</p>}
         </form>

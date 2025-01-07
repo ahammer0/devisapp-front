@@ -12,6 +12,7 @@ import "./reset.css";
 import "./App.scss";
 import Quotes from "./components/pages/Quotes";
 import AddQuote from "./components/pages/AddQuote";
+import EditQuote from "./components/pages/EditQuote";
 
 function App() {
   return (
@@ -49,6 +50,14 @@ function App() {
           element={
             <RequireAuth authLevel="user">
               <AddQuote />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/edit-quote/:id"
+          element={
+            <RequireAuth authLevel="user">
+              <EditQuote />
             </RequireAuth>
           }
         />

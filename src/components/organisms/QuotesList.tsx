@@ -5,20 +5,15 @@ import {
   faRotateBack,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNavigate } from "react-router-dom";
 import Popup from "../atoms/Popup";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const QuotesList = () => {
   const quotes = useQuotes();
-  const navigate = useNavigate();
   const [quoteToDelete, setQuoteToDelete] = useState<number | null>(null);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
-  console.log(quotes.quotes[0]);
 
-  const onEdit = (id: number) => {
-    console.log("edit", id);
-  };
   const handleClickDelete = (id: number) => {
     setQuoteToDelete(id);
     setIsDeletePopupOpen(true);
@@ -48,9 +43,12 @@ const QuotesList = () => {
               <td>{quote.global_discount}</td>
               <td>{quote.status}</td>
               <td className="actions">
-                <button className="btn btn-primary">
+                <Link
+                  className="btn btn-primary"
+                  to={`/edit-quote/${quote.id}`}
+                >
                   <FontAwesomeIcon icon={faPen} />
-                </button>
+                </Link>
                 <button
                   className="btn btn-danger"
                   onClick={() => handleClickDelete(quote.id)}
