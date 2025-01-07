@@ -1,6 +1,10 @@
 import { useState, useEffect, useMemo, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { quote_full_create, quote_element_create } from "../../types/quotes";
+import {
+  quote_full_create,
+  quote_element_create,
+  full_quote,
+} from "../../types/quotes";
 import WorkTapCards from "../molecules/WorkTapCards";
 import QuoteDetails from "../molecules/QuoteDetails";
 import useQuotes from "../../hooks/useQuotes";
@@ -50,7 +54,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const addWork = (work: work) => {
     // Check if increment quantity or create new element
     const elId = quoteToSave.quote_elements.findIndex(
-      (el) => el.work_id === work.id && el.quote_section === currentSection
+      (el) => el.work_id === work.id && el.quote_section === currentSection,
     );
     if (elId !== -1) {
       setQuoteToSave((state) => {
@@ -89,6 +93,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
 
   // Persistent state using localStorage
   useEffect(() => {
+    if (isEditing) return;
     if (isFirstRender.current) {
       const ls = localStorage.getItem("quote");
       if (ls) {
@@ -98,6 +103,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
     }
   }, []);
   useEffect(() => {
+    if (isEditing) return;
     if (!isFirstRender.current) {
       localStorage.setItem("quote", JSON.stringify(quoteToSave));
     }
@@ -128,7 +134,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const handleSubmit = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     if (isEditing) {
-      console.log("save edit")
+      quotes.edit(quoteToSave as full_quote);
     } else {
       quotes.saveQuote(quoteToSave);
     }
@@ -148,7 +154,9 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
 
   return (
     <>
-      <QuoteFormContext.Provider value={[quoteToSave, setQuoteToSave]}>
+      <QuoteFormContext.Provider
+        value={[quoteToSave, setQuoteToSave, isEditing]}
+      >
         <WorkTapCards handleTap={(work) => addWork(work)} />
         <hr />
 
@@ -193,7 +201,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           <div key={category}>
             <QuoteDetails
               quoteElements={quoteToSave.quote_elements.filter(
-                (el) => el.quote_section === category
+                (el) => el.quote_section === category,
               )}
             />
           </div>
@@ -204,11 +212,30 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
         <form onSubmit={handleSubmit}>
           <div>
             <label htmlFor="general_infos">Infos gérérales</label>
-            <textarea name="general_infos"></textarea>
+            <textarea
+              name="general_infos"
+              onChange={(e) =>
+                setQuoteToSave({
+                  ...quoteToSave,
+                  general_infos: e.target.value,
+                })
+              }
+              value={quoteToSave.general_infos}
+            ></textarea>
           </div>
           <div>
-            <label htmlFor="global_discount">Remise générale</label>
-            <input type="number" name="global_discount" />
+            <label htmlFor="global_discount">Remise générale (%)</label>
+            <input
+              type="number"
+              name="global_discount"
+              value={quoteToSave.global_discount}
+              onChange={(e) =>
+                setQuoteToSave({
+                  ...quoteToSave,
+                  global_discount: parseFloat(e.target.value),
+                })
+              }
+            />
           </div>
           <div>
             <label htmlFor="expires_at">Date d'expiration</label>
@@ -219,7 +246,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
             />
           </div>
           <button className="btn btn-primary" type="submit">
-            <FontAwesomeIcon icon={faFloppyDisk}/> Enregistrer
+            <FontAwesomeIcon icon={faFloppyDisk} /> Enregistrer
           </button>
           {!isEditing && (
             <button

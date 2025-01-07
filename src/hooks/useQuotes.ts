@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { quote_full_create } from "../types/quotes";
+import { full_quote, quote_full_create } from "../types/quotes";
 import { selectQuotes, setQuotes } from "../redux/quotesSlice";
-import { getAllQuotes, addQuote, deleteQuote } from "../api/quotesApi";
+import {
+  getAllQuotes,
+  addQuote,
+  deleteQuote,
+  editQuote,
+} from "../api/quotesApi";
 
 const useQuotes = () => {
   const quotes = useAppSelector(selectQuotes);
@@ -10,10 +15,12 @@ const useQuotes = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const [quoteToSave, setQuoteToSave] = useState<quote_full_create | null>();
+  const [quoteToUpdate, setQuoteToUpdate] = useState<full_quote | null>();
   const [quoteIdToDelete, setQuoteIdToDelete] = useState<number | null>(null);
 
   // Fetching works if store is empty
@@ -88,6 +95,22 @@ const useQuotes = () => {
     }
   }, [isDeleting]);
 
+  // data updating
+  useEffect(() => {
+    if (isUpdating && quoteToUpdate) {
+      editQuote(quoteToUpdate.id, quoteToUpdate)
+        .then(() => {
+          doRefresh();
+          setIsUpdating(false);
+          setSuccess(true);
+        })
+        .catch(() => {
+          setError("Une erreur est survenue");
+          setIsUpdating(false);
+        });
+    }
+  }, [isUpdating]);
+
   function doRefresh() {
     setIsLoading(true);
   }
@@ -98,6 +121,10 @@ const useQuotes = () => {
   function rm(id: number) {
     setIsDeleting(true);
     setQuoteIdToDelete(id);
+  }
+  function edit(quote: full_quote) {
+    setIsUpdating(true);
+    setQuoteToUpdate(quote);
   }
 
   return {
@@ -110,6 +137,7 @@ const useQuotes = () => {
     doRefresh,
     saveQuote,
     rm,
+    edit,
   };
 };
 export default useQuotes;

@@ -4,6 +4,7 @@ import { quote_full_create } from "../types/quotes";
 type quoteFormContext = [
   quote_full_create,
   React.Dispatch<React.SetStateAction<quote_full_create>>,
+  boolean,
 ];
 
 const QuoteFormContext = createContext<quoteFormContext | null>(null);

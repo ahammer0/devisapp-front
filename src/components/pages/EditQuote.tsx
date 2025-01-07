@@ -4,11 +4,11 @@ import QuoteForm from "../organisms/QuoteForm";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 const EditQuote = () => {
-  const {id} = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   if (!id) {
     navigate("/quotes");
-  } 
+  }
 
   return (
     <MainTemplate>
@@ -16,7 +16,7 @@ const EditQuote = () => {
       <Link to="/quotes" className="btn btn-primary">
         Retour aux Devis
       </Link>
-      <QuoteForm quoteId={parseInt(id!)}/>
+      <QuoteForm quoteId={parseInt(id!)} />
     </MainTemplate>
   );
 };
