@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { quote_full_create, quote_element_create } from "../../types/quotes";
 import WorkTapCards from "../molecules/WorkTapCards";
 import QuoteDetails from "../molecules/QuoteDetails";
@@ -30,7 +31,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const [quoteToSave, setQuoteToSave] =
     useState<quote_full_create>(initialQuote);
   const [currentSection, setCurrentSection] = useState<string>("Sans Section");
-  const categories: string[] = useMemo(() => {
+  const categories = useMemo(() => {
     return quoteToSave.quote_elements.reduce((acc, el) => {
       if (!acc.includes(el.quote_section)) {
         return [...acc, el.quote_section];
@@ -40,6 +41,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   }, [quoteToSave]);
   const quotes = useQuotes();
   const isFirstRender = useRef(true);
+  const navigate = useNavigate();
 
   ////////////////////////////////////////////////////////
   //                                                    //
@@ -102,6 +104,13 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
     }
   }, [quoteToSave]);
 
+  // Redirect on success
+  useEffect(() => {
+    if (quotes.success) {
+      navigate("/quotes");
+    }
+  }, [quotes.success]);
+
   ////////////////////////////////////////////////////////
   //                                                    //
   //               EVENT HANDLERS                       //
@@ -110,7 +119,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const handleSubmit = (event: React.BaseSyntheticEvent) => {
     event.preventDefault();
     quotes.saveQuote(quoteToSave);
-    console.log(quoteToSave);
+    localStorage.removeItem("quote");
   };
   const handleAddSection = (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
@@ -143,9 +152,11 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
                 {currentSection}
               </option>
             )}
-            <option value="--Ajouter une section--">
-              --Ajouter une section--
-            </option>
+            {currentSection !== "--Ajouter une section--" && (
+              <option value="--Ajouter une section--">
+                --Ajouter une section--
+              </option>
+            )}
           </select>
         </form>
 
@@ -167,7 +178,6 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
         {/*display quotes elements by sections*/}
         {categories.map((category) => (
           <div key={category}>
-            <h3>Section: {category ?? "sans section"}</h3>
             <QuoteDetails
               quoteElements={quoteToSave.quote_elements.filter(
                 (el) => el.quote_section === category,
@@ -192,13 +202,17 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
             <input
               type="date"
               name="global_discount"
-              value={quoteToSave.expires_at}
+              defaultValue={quoteToSave.expires_at}
             />
           </div>
           <button className="btn btn-primary" type="submit">
             Submit
           </button>
-          <button className="btn btn-secondary" onClick={handleReset}>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={handleReset}
+          >
             Reset
           </button>
           {quotes.error && <p className="error">{quotes.error}</p>}

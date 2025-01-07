@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import {start} from "repl";
+import { start } from "repl";
 
 interface EditableTextProps<T> {
   isEditMode: boolean;
@@ -49,7 +49,7 @@ function EditableText<T extends string | number | boolean>({
 
   // set value to parent component when exiting edit mode
   useEffect(() => {
-    if(isPreviousModeEdit.current && !isEditMode && value !== startValue) { 
+    if (isPreviousModeEdit.current && !isEditMode && value !== startValue) {
       onModeSwitch(value);
     }
     isPreviousModeEdit.current = isEditMode;
@@ -101,11 +101,12 @@ function EditableText<T extends string | number | boolean>({
   }
   if (inputType === "select") {
     return (
-      <form className="editableText">
+      <div className="editableText">
         <select
           value={value.toString()}
           onChange={handleChangeSelect}
           className="editableText"
+          autoFocus
         >
           {selectOptions.map((option) => (
             <option key={option} value={option}>
@@ -113,18 +114,19 @@ function EditableText<T extends string | number | boolean>({
             </option>
           ))}
         </select>
-      </form>
+      </div>
     );
   }
   return (
-    <form className="editableText">
+    <div className="editableText">
       <input
         value={formatValue(value)}
         type={inputType}
         onChange={handleChange}
         checked={inputType === "checkbox" && value === true}
+        autoFocus
       />
-    </form>
+    </div>
   );
 }
 export default EditableText;

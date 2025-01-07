@@ -11,7 +11,7 @@ const useQuotes = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [success, setSuccess] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const [quoteToSave, setQuoteToSave] = useState<quote_full_create | null>();
   const [quoteIdToDelete, setQuoteIdToDelete] = useState<number | null>(null);
@@ -32,11 +32,10 @@ const useQuotes = () => {
     return () => clearTimeout(timer);
   }, [error]);
 
-  // Success display handling
+  //reset success
   useEffect(() => {
-    if (!success) return;
     const timer = setTimeout(() => {
-      setSuccess("");
+      setSuccess(false);
     }, 5000);
     return () => clearTimeout(timer);
   }, [success]);
@@ -56,6 +55,7 @@ const useQuotes = () => {
         setIsLoading(false);
       });
   }, [isLoading, dispatch]);
+
   // data saving
   useEffect(() => {
     if (isSaving && quoteToSave) {
@@ -63,6 +63,7 @@ const useQuotes = () => {
         .then(() => {
           doRefresh();
           setIsSaving(false);
+          setSuccess(true);
         })
         .catch(() => {
           setError("Une erreur est survenue");
@@ -78,6 +79,7 @@ const useQuotes = () => {
         .then(() => {
           doRefresh();
           setIsDeleting(false);
+          setSuccess(true);
         })
         .catch(() => {
           setError("Une erreur est survenue");
@@ -101,6 +103,7 @@ const useQuotes = () => {
   return {
     quotes,
     error,
+    success,
     isLoading,
     isSaving,
     isDeleting,
