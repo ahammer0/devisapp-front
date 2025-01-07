@@ -12,6 +12,7 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import EditableText from "../atoms/EditableText";
+import "./molecules.scss";
 
 /**
  * need to be placed in quoteformContext
@@ -111,6 +112,7 @@ const QuoteDetails = ({
   }
   return (
     <>
+      {/* section name title*/}
       <form onSubmit={handleEditSectionName} className="flex-row items-center">
         <h3 className="flex-row items-center">
           Section:{" "}
@@ -136,11 +138,13 @@ const QuoteDetails = ({
           </button>
         )}
       </form>
-      <table>
+
+      {/* details table */}
+      <table className="quoteDetailsTable">
         <tbody>
           <tr>
             <th>Designation</th>
-            <th>Quantité</th>
+            <th className="quantity">Quantité</th>
             <th className="actions">Actions</th>
           </tr>
           {quoteElements.map((quoteElement) => (

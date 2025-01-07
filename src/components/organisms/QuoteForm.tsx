@@ -20,9 +20,6 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
       .toISOString()
       .split("T")[0],
   };
-  if (quoteId) {
-    console.log("on édite le devis no:", quoteId);
-  }
   ////////////////////////////////////////////////////////
   //                                                    //
   //               STATES                               //
@@ -39,6 +36,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
       return acc;
     }, [] as string[]);
   }, [quoteToSave]);
+  const isEditing = useMemo(() => quoteId !== undefined, [quoteId]);
   const quotes = useQuotes();
   const isFirstRender = useRef(true);
   const navigate = useNavigate();

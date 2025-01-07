@@ -1,0 +1,16 @@
+.quoteDetailsTable {
+  table-layout: fixed;
+  width: 100%;
+  .quantity {
+    width: 5rem;
+    text-align: right;
+  }
+  .actions {
+    width: 5rem;
+  }
+  td {
+    &:nth-child(2) {
+      text-align: right;
+    }
+  }
+}
