@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
+import {start} from "repl";
 
 interface EditableTextProps<T> {
   isEditMode: boolean;
@@ -25,6 +26,7 @@ function EditableText<T extends string | number | boolean>({
 }: EditableTextProps<T>) {
   const [value, setValue] = useState(startValue);
   const [inputType, setInputType] = useState("text");
+  const isPreviousModeEdit = useRef(false);
 
   // set input type
   useEffect(() => {
@@ -45,10 +47,13 @@ function EditableText<T extends string | number | boolean>({
     }
   }, [startValue, type]);
 
-  // set value to parent component
+  // set value to parent component when exiting edit mode
   useEffect(() => {
-    onModeSwitch(value);
-    if (!isEditMode) {
+    if(isPreviousModeEdit.current && !isEditMode && value !== startValue) { 
+      onModeSwitch(value);
+    }
+    isPreviousModeEdit.current = isEditMode;
+    if (!isPreviousModeEdit.current && isEditMode) {
       setValue(startValue);
     }
     // /!\ do not put value in deps
