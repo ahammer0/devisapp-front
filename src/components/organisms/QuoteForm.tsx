@@ -5,6 +5,7 @@ import {
   quote_element_create,
   full_quote,
 } from "../../types/quotes";
+import EditableSelect from "../atoms/EditableSelect";
 import WorkTapCards from "../molecules/WorkTapCards";
 import QuoteDetails from "../molecules/QuoteDetails";
 import useQuotes from "../../hooks/useQuotes";
@@ -140,14 +141,6 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
     }
     localStorage.removeItem("quote");
   };
-  const handleAddSection = (e: React.BaseSyntheticEvent) => {
-    e.preventDefault();
-    setCurrentSection(e.target[0].value);
-  };
-  const handleChangeSection = (e: React.BaseSyntheticEvent) => {
-    e.preventDefault();
-    setCurrentSection(e.target.value);
-  };
   const handleReset = () => {
     setQuoteToSave(initialQuote);
   };
@@ -161,40 +154,11 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
         <hr />
 
         {/*select existing sections*/}
-        <form>
-          <select onChange={handleChangeSection} value={currentSection}>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-            {!categories.includes(currentSection) && (
-              <option key={currentSection} value={currentSection}>
-                {currentSection}
-              </option>
-            )}
-            {currentSection !== "--Ajouter une section--" && (
-              <option value="--Ajouter une section--">
-                --Ajouter une section--
-              </option>
-            )}
-          </select>
-        </form>
-
-        {/*add new section*/}
-        {currentSection === "--Ajouter une section--" && (
-          <form onSubmit={handleAddSection}>
-            <input
-              type="text"
-              name="section"
-              placeholder="Nouvelle section"
-              autoFocus
-            />
-            <button className="btn btn-primary" type="submit">
-              <FontAwesomeIcon icon={faPlus} />
-            </button>
-          </form>
-        )}
+        <EditableSelect
+          values={categories}
+          defaultValue={currentSection}
+          onChange={setCurrentSection}
+        />
 
         {/*display quotes elements by sections*/}
         {categories.map((category) => (

@@ -1,6 +1,6 @@
 import { quote_element_create } from "../../types/quotes";
 import useWorks from "../../hooks/useWorks";
-import { useContext, useState } from "react";
+import { useContext, useState, useMemo } from "react";
 import QuoteFormContext from "../../contexts/QuoteFormContext";
 import Popup from "../atoms/Popup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -13,6 +13,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import EditableText from "../atoms/EditableText";
 import "./molecules.scss";
+import EditableSelect from "../atoms/EditableSelect";
 
 /**
  * need to be placed in quoteformContext
@@ -22,6 +23,11 @@ const QuoteDetails = ({
 }: {
   quoteElements: quote_element_create[];
 }) => {
+  //////////////////////////////////////////////////////////
+  //                                                      //
+  //                  STATES                              //
+  //                                                      //
+  //////////////////////////////////////////////////////////
   const works = useWorks();
   const formContext = useContext(QuoteFormContext);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -33,7 +39,22 @@ const QuoteDetails = ({
     throw new Error("QuoteFormContext not found");
   }
   const [quote, setQuote] = formContext;
+  const categories = useMemo(
+    () =>
+      quote.quote_elements.reduce((acc, quoteEl) => {
+        if (!acc.includes(quoteEl.quote_section)) {
+          acc.push(quoteEl.quote_section);
+        }
+        return acc;
+      }, [] as string[]),
+    [quote.quote_elements],
+  );
 
+  //////////////////////////////////////////////////////////
+  //                                                      //
+  //                  REDUCERS                            //
+  //                                                      //
+  //////////////////////////////////////////////////////////
   function setQuantity(quantity: number) {
     if (quantity === 0) {
       rmQuoteElement();
@@ -95,6 +116,46 @@ const QuoteDetails = ({
         //else return with new name
         return [...acc, { ...quoteEl, quote_section: newName }];
       }, [] as quote_element_create[]),
+    });
+  }
+  function changeElementSection(newSection: string) {
+    if (!elToPopup) return;
+    //changing section
+    const newElements = quote.quote_elements.map((el) => {
+      if (
+        el.work_id === elToPopup.work_id &&
+        el.quote_section === elToPopup.quote_section
+      ) {
+        return { ...el, quote_section: newSection };
+      }
+      return el;
+    });
+    // merging double elements
+    const newElements2 = newElements.reduce((acc, el) => {
+      if (el.quote_section !== newSection) {
+        return [...acc, el];
+      }
+
+      //check if not already exists
+      const id = acc.findIndex(
+        (el) =>
+          el.quote_section === newSection && el.work_id === elToPopup.work_id,
+      );
+      if (id !== -1) {
+        //if exists update
+        return acc.map((el2, i) => {
+          if (i === id) {
+            return { ...el2, quantity: el2.quantity + el.quantity };
+          }
+          return el2;
+        });
+      }
+      return [...acc, el];
+    }, [] as quote_element_create[]);
+
+    setQuote({
+      ...quote,
+      quote_elements: newElements2,
     });
   }
 
@@ -181,6 +242,12 @@ const QuoteDetails = ({
               {elToPopup.quote_section}--
               {works.works.find((work) => work.id === elToPopup.work_id)?.name}
             </p>
+            <EditableSelect
+              defaultValue={elToPopup.quote_section}
+              onChange={(val) => changeElementSection(val)}
+              values={categories}
+              label="Changer la section"
+            />
             <div className="flex-row items-center">
               <button
                 className="btn btn-primary"
