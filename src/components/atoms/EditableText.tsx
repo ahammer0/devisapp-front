@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef,useMemo } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 
 interface EditableTextProps<T> {
   isEditMode: boolean;
@@ -29,7 +29,7 @@ function EditableText<T extends string | number | boolean>({
   //                                                     //
   /////////////////////////////////////////////////////////
   const [value, setValue] = useState(startValue);
-  const inputType = useMemo(()=>{
+  const inputType = useMemo(() => {
     if (type) {
       return type;
     }
@@ -41,7 +41,7 @@ function EditableText<T extends string | number | boolean>({
       case "boolean":
         return "checkbox";
     }
-  },[type,startValue]);
+  }, [type, startValue]);
   const isPreviousModeEdit = useRef(false);
 
   /////////////////////////////////////////////////////////
@@ -55,7 +55,7 @@ function EditableText<T extends string | number | boolean>({
     if (isPreviousModeEdit.current && !isEditMode && value !== startValue) {
       onModeSwitch(value);
     }
-    
+
     //to synchronize the value with the parent component
     if (!isPreviousModeEdit.current && isEditMode) {
       setValue(startValue);

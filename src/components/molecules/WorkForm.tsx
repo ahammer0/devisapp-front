@@ -10,7 +10,7 @@ const WorkForm = ({
   defaultWork?: work;
   done?: () => void;
 }) => {
-  const emptyWork:workCreate = useMemo(() => {
+  const emptyWork: workCreate = useMemo(() => {
     if (defaultWork) {
       const { id: _a, user_id: _b, ...work } = defaultWork;
       return work;
@@ -27,7 +27,7 @@ const WorkForm = ({
   }, [defaultWork]);
 
   let isEditing = false;
-  let id=-1;
+  let id = -1;
   if (defaultWork) {
     id = defaultWork.id;
     isEditing = true;
@@ -46,7 +46,7 @@ const WorkForm = ({
 
   function changeWork<K extends keyof workCreate>(
     key: K,
-    value: workCreate[K]
+    value: workCreate[K],
   ) {
     setWorkToSave({ ...workToSave, [key]: value });
   }
@@ -181,7 +181,7 @@ const WorkForm = ({
               onChange={(e) =>
                 changeWork(
                   "type",
-                  e.target.value === "template" ? "template" : "custom"
+                  e.target.value === "template" ? "template" : "custom",
                 )
               }
             >

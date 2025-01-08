@@ -4,6 +4,7 @@ import { quote_full_create, full_quote } from "../../types/quotes";
 import EditableSelect from "../atoms/EditableSelect";
 import WorkTapCards from "../molecules/WorkTapCards";
 import QuoteDetails from "../molecules/QuoteDetails";
+import CustomerForm from "../molecules/CustomerForm";
 import useQuotes from "../../hooks/useQuotes";
 import QuoteFormContext from "./../../contexts/QuoteFormContext";
 import { work } from "../../types/works";
@@ -17,6 +18,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
     status: "draft",
     quote_elements: [],
     quote_medias: [],
+    customer: null,
     expires_at: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
       .toISOString()
       .split("T")[0],
@@ -50,7 +52,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const addWork = (work: work) => {
     // Check if increment quantity or create new element
     const elId = quoteToSave.quote_elements.findIndex(
-      (el) => el.work_id === work.id && el.quote_section === currentSection
+      (el) => el.work_id === work.id && el.quote_section === currentSection,
     );
     if (elId !== -1) {
       setQuoteToSave((state) => {
@@ -160,13 +162,25 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           <div key={category}>
             <QuoteDetails
               quoteElements={quoteToSave.quote_elements.filter(
-                (el) => el.quote_section === category
+                (el) => el.quote_section === category,
               )}
             />
           </div>
         ))}
 
         <hr />
+        {/*customer info form*/}
+        <CustomerForm
+          customer={quoteToSave.customer}
+          setCustomer={(customer) =>
+            setQuoteToSave({
+              ...quoteToSave,
+              customer: customer,
+              customer_id: undefined,
+            })
+          }
+        />
+
         {/*general quotes infos form*/}
         <form onSubmit={handleSubmit}>
           <div>

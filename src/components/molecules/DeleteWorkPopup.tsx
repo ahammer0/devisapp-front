@@ -26,7 +26,7 @@ const DeleteWorkPopup = ({
     if (!isActive) {
       reset();
     }
-  }, [isActive,reset]);
+  }, [isActive, reset]);
 
   const handleDelete = () => {
     if (!workToDelete) return;

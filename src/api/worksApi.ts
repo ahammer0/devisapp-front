@@ -20,9 +20,6 @@ export async function addWork(work: workCreate): Promise<work> {
     },
     body: JSON.stringify(work),
   });
-  if (res.status !== 201) {
-    throw new FetchError(res);
-  }
   return res.json();
 }
 

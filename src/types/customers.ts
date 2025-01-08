@@ -5,7 +5,7 @@ export type customer = {
   last_name: string | null;
   street: string | null;
   city: string | null;
-  zip: string | null;
+  zip: number | null;
   phone: string | null;
   email: string | null;
 };

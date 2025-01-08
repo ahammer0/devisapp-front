@@ -34,7 +34,7 @@ const RequireAuth = (
           }
         });
     }
-  }, [role,dispatch,navigate,token,props.authLevel]);
+  }, [role, dispatch, navigate, token, props.authLevel]);
 
   if (role === props.authLevel || props.authLevel === "any") {
     return props.children;

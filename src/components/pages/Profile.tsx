@@ -28,13 +28,13 @@ const Profile = () => {
     setIsEditing(false);
     setIsAborting(true);
   };
-  useEffect(()=>{
-    if(isAborting){
+  useEffect(() => {
+    if (isAborting) {
       setUserToSave(user);
       setIsEditing(false);
       setIsAborting(false);
     }
-  },[isAborting,userToSave,user])
+  }, [isAborting, userToSave, user]);
 
   const handleSave = () => {
     setIsEditing(false);

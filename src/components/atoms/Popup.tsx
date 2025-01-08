@@ -33,7 +33,7 @@ const Popup = ({
     return () => {
       removeEventListener("keydown", handleEscape);
     };
-  }, [isActive,setIsActive]);
+  }, [isActive, setIsActive]);
 
   return (
     <div
