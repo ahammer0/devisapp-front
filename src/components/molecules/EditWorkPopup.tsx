@@ -24,7 +24,7 @@ const EditWorkPopup = ({
     if (!isActive) {
       reset();
     }
-  }, [isActive]);
+  }, [isActive,reset]);
 
   if (!workToEdit) return;
 

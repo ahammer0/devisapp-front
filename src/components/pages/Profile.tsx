@@ -17,6 +17,7 @@ import { editUser } from "../../api/userApi";
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  const [isAborting, setIsAborting] = useState(false);
   const [error, setError] = useState("");
 
   const user = useAppSelector(selectUser);
@@ -25,10 +26,18 @@ const Profile = () => {
 
   const handleAbort = () => {
     setIsEditing(false);
-    setUserToSave(user);
+    setIsAborting(true);
   };
+  useEffect(()=>{
+    if(isAborting){
+      setUserToSave(user);
+      setIsEditing(false);
+      setIsAborting(false);
+    }
+  },[isAborting,userToSave,user])
 
   const handleSave = () => {
+    setIsEditing(false);
     setIsSaving(true);
   };
 
@@ -38,7 +47,6 @@ const Profile = () => {
       editUser(userToSave)
         .then((res) => {
           dispatch(setUser({ user: res, role: "user" }));
-          setIsEditing(false);
         })
         .catch(() => {
           setError("Probleme de sauvegarde");
@@ -66,7 +74,7 @@ const Profile = () => {
           {!isEditing && (
             <button
               className="btn btn-secondary"
-              onClick={() => setIsEditing(!isEditing)}
+              onClick={() => setIsEditing(true)}
             >
               Éditer <FontAwesomeIcon icon={faPen} />
             </button>

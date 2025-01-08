@@ -77,7 +77,7 @@ const useQuotes = () => {
           setIsSaving(false);
         });
     }
-  }, [isSaving]);
+  }, [isSaving,quoteToSave]);
 
   // data deleting
   useEffect(() => {
@@ -93,7 +93,7 @@ const useQuotes = () => {
           setIsDeleting(false);
         });
     }
-  }, [isDeleting]);
+  }, [isDeleting,quoteIdToDelete]);
 
   // data updating
   useEffect(() => {
@@ -109,7 +109,7 @@ const useQuotes = () => {
           setIsUpdating(false);
         });
     }
-  }, [isUpdating]);
+  }, [isUpdating,quoteToUpdate]);
 
   function doRefresh() {
     setIsLoading(true);

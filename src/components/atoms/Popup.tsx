@@ -1,7 +1,5 @@
 import React, { useEffect } from "react";
-import { createContext } from "react";
-
-export const PopupContext = createContext((a: boolean) => {});
+import { PopupContext } from "../../contexts/PopupContext";
 
 const Popup = ({
   children,
@@ -35,7 +33,7 @@ const Popup = ({
     return () => {
       removeEventListener("keydown", handleEscape);
     };
-  }, [isActive]);
+  }, [isActive,setIsActive]);
 
   return (
     <div

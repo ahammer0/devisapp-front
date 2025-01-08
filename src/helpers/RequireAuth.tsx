@@ -13,7 +13,7 @@ const RequireAuth = (
   const navigate = useNavigate();
 
   // reading redux store
-  let role = useAppSelector(selectUserRole);
+  const role = useAppSelector(selectUserRole);
   const token = getToken();
 
   //check if we can login the user
@@ -34,7 +34,7 @@ const RequireAuth = (
           }
         });
     }
-  }, [role]);
+  }, [role,dispatch,navigate,token,props.authLevel]);
 
   if (role === props.authLevel || props.authLevel === "any") {
     return props.children;

@@ -1,17 +1,13 @@
-import { useState, useEffect, useMemo, useRef, useContext } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  quote_full_create,
-  quote_element_create,
-  full_quote,
-} from "../../types/quotes";
+import { quote_full_create, full_quote } from "../../types/quotes";
 import EditableSelect from "../atoms/EditableSelect";
 import WorkTapCards from "../molecules/WorkTapCards";
 import QuoteDetails from "../molecules/QuoteDetails";
 import useQuotes from "../../hooks/useQuotes";
 import QuoteFormContext from "./../../contexts/QuoteFormContext";
 import { work } from "../../types/works";
-import { faFloppyDisk, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
@@ -31,7 +27,6 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   //                                                    //
   ////////////////////////////////////////////////////////
   const quotes = useQuotes();
-  if (!quotes.quotes) return null;
   const isEditing = useMemo(() => quoteId !== undefined, [quoteId]);
   const [quoteToSave, setQuoteToSave] =
     useState<quote_full_create>(initialQuote);
@@ -55,7 +50,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const addWork = (work: work) => {
     // Check if increment quantity or create new element
     const elId = quoteToSave.quote_elements.findIndex(
-      (el) => el.work_id === work.id && el.quote_section === currentSection,
+      (el) => el.work_id === work.id && el.quote_section === currentSection
     );
     if (elId !== -1) {
       setQuoteToSave((state) => {
@@ -64,7 +59,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           quantity: state.quote_elements[elId].quantity + 1,
         };
         const newelements = [
-          ...state.quote_elements.filter((el, id) => id !== elId),
+          ...state.quote_elements.filter((_el, id) => id !== elId),
           newel,
         ];
         return { ...state, quote_elements: [...newelements] };
@@ -102,20 +97,20 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
       }
       isFirstRender.current = false;
     }
-  }, []);
+  }, [isEditing]);
   useEffect(() => {
     if (isEditing) return;
     if (!isFirstRender.current) {
       localStorage.setItem("quote", JSON.stringify(quoteToSave));
     }
-  }, [quoteToSave]);
+  }, [quoteToSave, isEditing]);
 
   // Redirect on success
   useEffect(() => {
     if (quotes.success) {
       navigate("/quotes");
     }
-  }, [quotes.success]);
+  }, [quotes.success, navigate]);
 
   // if edit mode then load the quote
   useEffect(() => {
@@ -165,7 +160,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           <div key={category}>
             <QuoteDetails
               quoteElements={quoteToSave.quote_elements.filter(
-                (el) => el.quote_section === category,
+                (el) => el.quote_section === category
               )}
             />
           </div>

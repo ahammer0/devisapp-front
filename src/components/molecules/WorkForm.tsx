@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { workCreate, work } from "../../types/works";
 import { addWork, editWork } from "../../api/worksApi";
 import useWorks from "../../hooks/useWorks";
@@ -10,21 +10,25 @@ const WorkForm = ({
   defaultWork?: work;
   done?: () => void;
 }) => {
-  let emptyWork: workCreate = {
-    name: "",
-    unit: "",
-    unit_price: 0,
-    unit_time: 0,
-    buy_price: 0,
-    isFavorite: false,
-    type: "template",
-  };
-  let isEditing = false;
-  let id: number;
+  const emptyWork:workCreate = useMemo(() => {
+    if (defaultWork) {
+      const { id: _a, user_id: _b, ...work } = defaultWork;
+      return work;
+    }
+    return {
+      name: "",
+      unit: "",
+      unit_price: 0,
+      unit_time: 0,
+      buy_price: 0,
+      isFavorite: false,
+      type: "template",
+    };
+  }, [defaultWork]);
 
+  let isEditing = false;
+  let id=-1;
   if (defaultWork) {
-    const { id: workid, user_id, ...rest } = defaultWork;
-    emptyWork = rest;
     id = defaultWork.id;
     isEditing = true;
   }
@@ -42,7 +46,7 @@ const WorkForm = ({
 
   function changeWork<K extends keyof workCreate>(
     key: K,
-    value: workCreate[K],
+    value: workCreate[K]
   ) {
     setWorkToSave({ ...workToSave, [key]: value });
   }
@@ -78,7 +82,7 @@ const WorkForm = ({
           });
       }
     }
-  }, [isSaving]);
+  }, [isSaving, done, id, isEditing, workToSave, works]);
 
   // Remove success message after 3 seconds
   useEffect(() => {
@@ -90,7 +94,7 @@ const WorkForm = ({
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [isSuccess]);
+  }, [isSuccess, emptyWork, isEditing]);
 
   return (
     <>
@@ -177,7 +181,7 @@ const WorkForm = ({
               onChange={(e) =>
                 changeWork(
                   "type",
-                  e.target.value === "template" ? "template" : "custom",
+                  e.target.value === "template" ? "template" : "custom"
                 )
               }
             >

@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from "react";
-import { start } from "repl";
+import { useEffect, useState, useRef,useMemo } from "react";
 
 interface EditableTextProps<T> {
   isEditMode: boolean;
@@ -24,41 +23,51 @@ function EditableText<T extends string | number | boolean>({
   type,
   selectOptions = [],
 }: EditableTextProps<T>) {
+  /////////////////////////////////////////////////////////
+  //                                                     //
+  //             STATES                                  //
+  //                                                     //
+  /////////////////////////////////////////////////////////
   const [value, setValue] = useState(startValue);
-  const [inputType, setInputType] = useState("text");
-  const isPreviousModeEdit = useRef(false);
-
-  // set input type
-  useEffect(() => {
+  const inputType = useMemo(()=>{
     if (type) {
-      setInputType(type);
-      return;
+      return type;
     }
     switch (typeof startValue) {
       case "string":
-        setInputType("text");
-        break;
+        return "text";
       case "number":
-        setInputType("number");
-        break;
+        return "number";
       case "boolean":
-        setInputType("checkbox");
-        break;
+        return "checkbox";
     }
-  }, [startValue, type]);
+  },[type,startValue]);
+  const isPreviousModeEdit = useRef(false);
 
+  /////////////////////////////////////////////////////////
+  //                                                     //
+  //             EFFECTS                                 //
+  //                                                     //
+  /////////////////////////////////////////////////////////
   // set value to parent component when exiting edit mode
   useEffect(() => {
+    //trigger callback on editModeexit
     if (isPreviousModeEdit.current && !isEditMode && value !== startValue) {
       onModeSwitch(value);
     }
-    isPreviousModeEdit.current = isEditMode;
+    
+    //to synchronize the value with the parent component
     if (!isPreviousModeEdit.current && isEditMode) {
       setValue(startValue);
     }
-    // /!\ do not put value in deps
-  }, [isEditMode, startValue]);
+    isPreviousModeEdit.current = isEditMode;
+  }, [isEditMode, startValue, onModeSwitch, value]);
 
+  /////////////////////////////////////////////////////////
+  //                                                     //
+  //             HANDLERS                                //
+  //                                                     //
+  /////////////////////////////////////////////////////////
   // change handlers
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     switch (inputType) {
@@ -82,6 +91,11 @@ function EditableText<T extends string | number | boolean>({
     setValue(e.target.value as T);
   };
 
+  /////////////////////////////////////////////////////////
+  //                                                     //
+  //             RETURNS                                 //
+  //                                                     //
+  /////////////////////////////////////////////////////////
   // utility to format value into string
   const formatValue = (value: typeof startValue) => {
     switch (inputType) {
@@ -96,6 +110,11 @@ function EditableText<T extends string | number | boolean>({
     }
   };
 
+  /////////////////////////////////////////////////////////
+  //                                                     //
+  //             RETURNS                                 //
+  //                                                     //
+  /////////////////////////////////////////////////////////
   if (!isEditMode) {
     return <>{children}</>;
   }
