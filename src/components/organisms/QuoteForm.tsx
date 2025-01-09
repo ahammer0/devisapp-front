@@ -218,6 +218,24 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
               defaultValue={quoteToSave.expires_at}
             />
           </div>
+          <div>
+            <label htmlFor="status">Statut</label>
+            <select
+              name="status"
+              value={quoteToSave.status}
+              onChange={(e) =>
+                setQuoteToSave({
+                  ...quoteToSave,
+                  status: e.target.value as quote_full_create["status"],
+                })
+              }
+            >
+              <option value="quote">Quote</option>
+              <option value="draft">Draft</option>
+              <option value="invoice">Invoice</option>
+              <option value="validated">Validated</option>
+            </select>
+          </div>
           <button className="btn btn-primary" type="submit">
             <FontAwesomeIcon icon={faFloppyDisk} /> Enregistrer
           </button>
