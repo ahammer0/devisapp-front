@@ -214,6 +214,9 @@ form {
     align-items: stretch;
   }
 }
+fieldset {
+  padding: 0 0.5rem;
+}
 
 //////////////////////////////////////////////////
 //////                                      //////
@@ -258,6 +261,9 @@ table {
 a {
   text-decoration: underline;
   cursor: pointer;
+}
+p {
+  padding: 0 0.5rem;
 }
 hr {
   margin: 1rem;

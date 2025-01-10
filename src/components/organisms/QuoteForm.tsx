@@ -1,13 +1,19 @@
 import { useState, useEffect, useMemo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { quote_full_create, full_quote } from "../../types/quotes";
+import {
+  quote_full_create,
+  full_quote,
+  quote_element,
+  quote_element_create,
+} from "../../types/quotes";
+import { work } from "../../types/works";
 import EditableSelect from "../atoms/EditableSelect";
 import WorkTapCards from "../molecules/WorkTapCards";
 import QuoteDetails from "../molecules/QuoteDetails";
 import CustomerForm from "../molecules/CustomerForm";
 import useQuotes from "../../hooks/useQuotes";
+import useWorks from "../../hooks/useWorks";
 import QuoteFormContext from "./../../contexts/QuoteFormContext";
-import { work } from "../../types/works";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -43,6 +49,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   }, [quoteToSave]);
   const isFirstRender = useRef(true);
   const navigate = useNavigate();
+  const works = useWorks();
 
   ////////////////////////////////////////////////////////
   //                                                    //
@@ -81,6 +88,23 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
         },
       ],
     });
+  };
+  const getQuoteTotal = (
+    quote_elements: quote_element[] | quote_element_create[],
+    global_discount = 0,
+  ) => {
+    const total =
+      ((100 - global_discount) / 100) *
+      quote_elements.reduce((total, el) => {
+        const work = works.works.find((el2) => el2.id === el.work_id);
+        if (!work) {
+          return total;
+        }
+        return (
+          total + ((el.quantity * (100 - el.discount)) / 100) * work.unit_price
+        );
+      }, 0.0);
+    return total;
   };
 
   ////////////////////////////////////////////////////////
@@ -168,6 +192,14 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           </div>
         ))}
 
+        <p className="quoteDetails total">
+          TOTAL GÉNÉRAL:{" "}
+          {getQuoteTotal(
+            quoteToSave.quote_elements,
+            quoteToSave.global_discount,
+          )}{" "}
+          €
+        </p>
         <hr />
         {/*customer info form*/}
         <CustomerForm

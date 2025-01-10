@@ -1,4 +1,4 @@
-import { quote_element_create } from "../../types/quotes";
+import { quote_element_create, quote_element } from "../../types/quotes";
 import useWorks from "../../hooks/useWorks";
 import { useContext, useState, useMemo } from "react";
 import QuoteFormContext from "../../contexts/QuoteFormContext";
@@ -158,6 +158,11 @@ const QuoteDetails = ({
       quote_elements: newElements2,
     });
   }
+  //////////////////////////////////////////////////////////
+  //                                                      //
+  //                  EVENT HANDLERS                      //
+  //                                                      //
+  //////////////////////////////////////////////////////////
 
   function handleClickAction(quoteElement: quote_element_create) {
     setIsPopupOpen(true);
@@ -171,6 +176,29 @@ const QuoteDetails = ({
     e.preventDefault();
     setIsEditSectionName(true);
   }
+  //////////////////////////////////////////////////////////
+  //                                                      //
+  //                  FUNCTIONS                           //
+  //                                                      //
+  //////////////////////////////////////////////////////////
+  const getQuoteTotal = (
+    quote_elements: quote_element[] | quote_element_create[],
+    global_discount = 0,
+  ) => {
+    const total =
+      ((100 - global_discount) / 100) *
+      quote_elements.reduce((total, el) => {
+        const work = works.works.find((el2) => el2.id === el.work_id);
+        if (!work) {
+          return total;
+        }
+        return (
+          total + ((el.quantity * (100 - el.discount)) / 100) * work.unit_price
+        );
+      }, 0.0);
+    return total;
+  };
+
   return (
     <>
       {/* section name title*/}
@@ -229,6 +257,9 @@ const QuoteDetails = ({
           ))}
         </tbody>
       </table>
+      <p className="quoteDetails total">
+        Sous-total: {getQuoteTotal(quoteElements)} €
+      </p>
       <Popup isActive={isPopupOpen} setIsActive={setIsPopupOpen}>
         <button
           onClick={() => setIsPopupOpen(false)}

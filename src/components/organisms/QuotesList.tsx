@@ -1,16 +1,22 @@
-import useQuotes from "../../hooks/useQuotes";
-import {
-  faPen,
-  faTrash,
-  faRotateBack,
-} from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Popup from "../atoms/Popup";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import {
+  faPen,
+  faRotateBack,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import useQuotes from "../../hooks/useQuotes";
+import useWorks from "../../hooks/useWorks";
+import Popup from "../atoms/Popup";
+
+import { quote_element } from "../../types/quotes";
+
 const QuotesList = () => {
   const quotes = useQuotes();
+  const works = useWorks();
   const [quoteToDelete, setQuoteToDelete] = useState<number | null>(null);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
@@ -24,6 +30,24 @@ const QuotesList = () => {
       setIsDeletePopupOpen(false);
     }
   };
+
+  const getQuoteTotal = (
+    quote_elements: quote_element[],
+    global_discount = 0,
+  ) => {
+    const total =
+      ((100 - global_discount) / 100) *
+      quote_elements.reduce((total, el) => {
+        const work = works.works.find((el2) => el2.id === el.work_id);
+        if (!work) {
+          return total;
+        }
+        return (
+          total + ((el.quantity * (100 - el.discount)) / 100) * work.unit_price
+        );
+      }, 0.0);
+    return total;
+  };
   return (
     <div>
       <h2>Liste des devis</h2>
@@ -31,7 +55,7 @@ const QuotesList = () => {
         <thead>
           <tr>
             <th>id</th>
-            <th>global_discount</th>
+            <th>Total</th>
             <th>status</th>
             <th className="actions">actions</th>
           </tr>
@@ -40,7 +64,9 @@ const QuotesList = () => {
           {quotes.quotes.map((quote) => (
             <tr key={quote.id}>
               <td>{quote.id}</td>
-              <td>{quote.global_discount}</td>
+              <td>
+                {getQuoteTotal(quote.quote_elements, quote.global_discount)}€
+              </td>
               <td>{quote.status}</td>
               <td className="actions">
                 <Link
