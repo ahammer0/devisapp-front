@@ -15,6 +15,7 @@ import MainTemplate from "../templates/MainTemplate";
 import { selectUser, setUser } from "../../redux/userSlice";
 import EditableText from "../atoms/EditableText";
 import { editUser } from "../../api/userApi";
+import { toFrenchDate } from "../../helpers/dateFormat";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -247,11 +248,11 @@ const Profile = () => {
               </tr>
               <tr>
                 <th>Date de création du compte</th>
-                <td>{userToSave.created_at.toString()}</td>
+                <td>{toFrenchDate(userToSave.created_at.toString())}</td>
               </tr>
               <tr>
                 <th>Date d'expiration du compte</th>
-                <td>{userToSave.expires_at.toString()}</td>
+                <td>{toFrenchDate(userToSave.expires_at.toString())}</td>
               </tr>
               <tr>
                 <th>Informations complémentaires</th>

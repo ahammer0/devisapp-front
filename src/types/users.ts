@@ -35,3 +35,7 @@ export type userCreate = {
   expires_at?: string | Date; //timestamp
   quote_infos?: string;
 };
+
+export type addCreditRequestBody = {
+  plan: 3 | 12;
+};

@@ -1,4 +1,4 @@
-import { userCreate, user } from "../types/users";
+import { userCreate, user, addCreditRequestBody } from "../types/users";
 import { FetchError } from "../helpers/customErrors/FetchError";
 
 const api = import.meta.env.VITE_API_URL;
@@ -65,6 +65,23 @@ export async function checkToken(): Promise<{
       "Content-Type": "application/json",
       Authorization: `Bearer ${getToken()}`,
     },
+  });
+  if (res.status !== 200) {
+    throw new FetchError(res);
+  }
+  return res.json();
+}
+
+export async function addCredit(
+  plan: addCreditRequestBody["plan"],
+): Promise<user> {
+  const res = await fetch(`${api}/addCredit`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ plan }),
   });
   if (res.status !== 200) {
     throw new FetchError(res);
