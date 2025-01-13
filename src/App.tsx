@@ -6,6 +6,7 @@ import Register from "./components/pages/Register";
 import ColorPalette from "./helpers/ColorPalette";
 import Profile from "./components/pages/Profile";
 import Works from "./components/pages/Works";
+import ChangePlan from "./components/pages/ChangePlan";
 import RequireAuth from "./helpers/RequireAuth";
 
 import "./reset.css";
@@ -58,6 +59,14 @@ function App() {
           element={
             <RequireAuth authLevel="user">
               <EditQuote />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/change-plan"
+          element={
+            <RequireAuth authLevel="user">
+              <ChangePlan />
             </RequireAuth>
           }
         />

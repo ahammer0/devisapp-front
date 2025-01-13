@@ -1,5 +1,6 @@
 import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import "./pages.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +8,7 @@ import {
   faArrowRotateLeft,
   faCheck,
   faPen,
+  faNewspaper,
 } from "@fortawesome/free-solid-svg-icons";
 
 import MainTemplate from "../templates/MainTemplate";
@@ -267,6 +269,12 @@ const Profile = () => {
               </tr>
             </tbody>
           </table>
+          <div className="flex-row justify-center">
+            <Link to="/change-plan" className="btn btn-primary btn-cta">
+              <FontAwesomeIcon icon={faNewspaper} className="icon" /> Changer
+              d'abonnement
+            </Link>
+          </div>
         </>
       )}
     </MainTemplate>

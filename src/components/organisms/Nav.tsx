@@ -8,6 +8,7 @@ import {
   faNewspaper,
   faHammer,
   faPalette,
+  faList,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { resetUser, selectUser } from "../../redux/userSlice";
@@ -50,6 +51,8 @@ const Nav = ({
           Connection
         </Link>
       )}
+
+      {/* User connected */}
       {user && (
         <>
           <Link to="/profile" className="item">
@@ -60,8 +63,11 @@ const Nav = ({
             devis
           </Link>
           <Link to="/quotes" className="item">
-            <FontAwesomeIcon icon={faNewspaper} className="icon" /> Liste des
-            Devis
+            <FontAwesomeIcon icon={faList} className="icon" /> Liste des Devis
+          </Link>
+          <Link to="/change-plan" className="item">
+            <FontAwesomeIcon icon={faNewspaper} className="icon" /> Changer
+            d'abonnement
           </Link>
         </>
       )}

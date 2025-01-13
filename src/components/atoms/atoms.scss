@@ -1,9 +1,11 @@
-@use "./../../variables.scss" as App;
+@use "./../../App.scss" as App;
+@use "./../../variables.scss" as Var;
+
 .menuBurgerButton {
   transition: all 0.3s ease-in-out;
   &-item {
     height: 5px;
-    background-color: App.$textDark;
+    background-color: Var.$textDark;
     border-radius: 9999px;
   }
   &.container {
@@ -50,7 +52,7 @@
     margin: auto;
   }
   &-popup {
-    background-color: App.$bgLight;
+    background-color: Var.$bgLight;
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 0 1rem rgba(0, 0, 0, 0.5);
@@ -59,4 +61,41 @@
 .editableText {
   margin: 0;
   // margin-right: 0.5rem;
+}
+
+.radioCard {
+  cursor: pointer;
+  .checked {
+    display: none;
+    color: Var.$primary;
+  }
+  .unchecked {
+    color: Var.$secondary;
+  }
+  input[type="radio"] {
+    display: none;
+    &:checked {
+      + .cardWrapper {
+        outline: 2px;
+        outline-style: solid;
+        outline-color: Var.$primary;
+        .checked {
+          display: inline;
+        }
+        .unchecked {
+          display: none;
+        }
+      }
+    }
+  }
+  .cardWrapper {
+    @include Var.shadow-md;
+    border-radius: Var.$radius-small;
+    padding: 0.75rem;
+    margin: 1rem 0.5rem;
+  }
+  .label {
+    font-family: bungee;
+    margin-left: 0.5rem;
+  }
 }

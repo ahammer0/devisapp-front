@@ -6,3 +6,14 @@
     width: 150px;
   }
 }
+.subscribeForm {
+  .price {
+    font-weight: bold;
+    text-align: right;
+  }
+  input.submitButton {
+    width: 10rem;
+    display: block;
+    margin: 1rem auto;
+  }
+}
