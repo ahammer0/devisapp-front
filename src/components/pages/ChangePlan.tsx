@@ -50,7 +50,17 @@ const ChangePlan = () => {
     setChoosedPlan(parseInt(subscriptionTime));
     setDisplayedItem("pay");
   };
+
   if (!user) return;
+
+  const getNextExpirationDate = (choosedPlan: number) => {
+    if (isPast(user.expires_at)) {
+      return toFrenchDate(addMonths(new Date(), choosedPlan));
+    } else {
+      return toFrenchDate(addMonths(user.expires_at, choosedPlan));
+    }
+  };
+
   return (
     <MainTemplate>
       {displayedItem === "select" && (
@@ -123,7 +133,7 @@ const ChangePlan = () => {
               <p>Prix :{choosedPlan === 3 ? "30€" : "100€"}</p>
               <p>
                 Votre abonnement sera valide jusqu'au :{" "}
-                {toFrenchDate(addMonths(new Date(), choosedPlan))}
+                {getNextExpirationDate(choosedPlan)}
               </p>
               <form action={formPayAction}>
                 <input type="hidden" name="plan" value={choosedPlan} />
