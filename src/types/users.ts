@@ -13,8 +13,8 @@ export type user = {
   company_type: "Individuelle" | "SAS" | "SARL" | "EURL";
   account_status: "valid" | "blocked" | "deleted" | "waiting";
   subscription_plan: "free" | "paid";
-  created_at: Date; //timestamp
-  expires_at: Date; //timestamp
+  created_at: string | Date; //timestamp
+  expires_at: string | Date; //timestamp
   quote_infos: string;
 };
 export type userCreate = {
@@ -31,7 +31,7 @@ export type userCreate = {
   company_type: "Individuelle" | "SAS" | "SARL" | "EURL";
   account_status: "valid" | "blocked" | "deleted" | "waiting";
   subscription_plan: "free" | "paid";
-  created_at?: Date; //timestamp
-  expires_at?: Date; //timestamp
+  created_at?: string | Date; //timestamp
+  expires_at?: string | Date; //timestamp
   quote_infos?: string;
 };

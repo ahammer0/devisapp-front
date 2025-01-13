@@ -16,6 +16,7 @@ import useWorks from "../../hooks/useWorks";
 import QuoteFormContext from "./../../contexts/QuoteFormContext";
 import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { toFormDateString } from "../../helpers/dateFormat";
 
 const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const initialQuote: quote_full_create = {
@@ -25,9 +26,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
     quote_elements: [],
     quote_medias: [],
     customer: null,
-    expires_at: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000)
-      .toISOString()
-      .split("T")[0],
+    expires_at: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
   };
   ////////////////////////////////////////////////////////
   //                                                    //
@@ -246,8 +245,14 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
             <label htmlFor="expires_at">Date d'expiration</label>
             <input
               type="date"
-              name="global_discount"
-              defaultValue={quoteToSave.expires_at}
+              name="expires_at"
+              value={toFormDateString(quoteToSave.expires_at)}
+              onChange={(e) => {
+                setQuoteToSave({
+                  ...quoteToSave,
+                  expires_at: new Date(e.target.value),
+                });
+              }}
             />
           </div>
           <div>

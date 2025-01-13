@@ -5,8 +5,8 @@ export type quote = {
   global_discount: number;
   general_infos: string;
   status: "quote" | "draft" | "invoice" | "validated";
-  expires_at: string;
-  created_at: string;
+  expires_at: string | Date;
+  created_at: string | Date;
 };
 
 export type quote_element = {
