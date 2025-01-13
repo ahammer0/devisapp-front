@@ -6,14 +6,16 @@ import Register from "./components/pages/Register";
 import ColorPalette from "./helpers/ColorPalette";
 import Profile from "./components/pages/Profile";
 import Works from "./components/pages/Works";
+import Quotes from "./components/pages/Quotes";
+import AddQuote from "./components/pages/AddQuote";
+import EditQuote from "./components/pages/EditQuote";
+import AdminLogin from "./components/pages/AdminLogin";
 import ChangePlan from "./components/pages/ChangePlan";
+import AdminDashboard from "./components/pages/AdminDashboard";
 import RequireAuth from "./helpers/RequireAuth";
 
 import "./reset.css";
 import "./App.scss";
-import Quotes from "./components/pages/Quotes";
-import AddQuote from "./components/pages/AddQuote";
-import EditQuote from "./components/pages/EditQuote";
 
 function App() {
   return (
@@ -70,6 +72,24 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route path="/admin">
+          <Route
+            index
+            element={
+              <RequireAuth authLevel="any">
+                <AdminLogin />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="dashboard"
+            element={
+              <RequireAuth authLevel="admin">
+                <AdminDashboard />
+              </RequireAuth>
+            }
+          />
+        </Route>
         <Route
           path="/"
           element={

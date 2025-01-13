@@ -20,6 +20,10 @@ const RequireAuth = (
   useEffect(() => {
     // check if user is logged in
     if (!role) {
+      if (props.authLevel === "admin") {
+        navigate("/admin");
+        return;
+      }
       if (!token && props.authLevel !== "any") {
         navigate("/connection");
         return;

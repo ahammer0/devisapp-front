@@ -15,7 +15,7 @@ const initialState: UserState = {
 };
 
 interface userPayload {
-  user: user;
+  user: user | null;
   role: "admin" | "user";
 }
 
@@ -42,5 +42,6 @@ export const { setUser, resetUser, setToken } = userSlice.actions;
 
 export const selectUser = (state: RootState) => state.user.user;
 export const selectUserRole = (state: RootState) => state.user.role;
+export const selectUserToken = (state: RootState) => state.user.token;
 
 export default userSlice.reducer;
