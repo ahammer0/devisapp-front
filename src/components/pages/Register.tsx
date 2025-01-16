@@ -7,6 +7,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 import { registerUser } from "../../api/userApi";
+import {
+  emailValidator,
+  InputError,
+  passwordValidator,
+} from "../../helpers/inputValidators";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -38,6 +43,17 @@ const Register = () => {
 
   useEffect(() => {
     if (isSubmitting) {
+      //validating inputs
+      try {
+        emailValidator(email);
+        passwordValidator(password);
+      } catch (e) {
+        if (e instanceof InputError) {
+          setError(e.message);
+        }
+        setIsSubmitting(false);
+        return;
+      }
       registerUser({ email, password })
         .then(() => {
           navigate("/connection");
@@ -90,7 +106,7 @@ const Register = () => {
           <div className="flex-row items-center">
             <input
               type={showPassword ? "text" : "password"}
-              id="password"
+              id="passwordConfirm"
               name="password"
               autoComplete="new-password"
               value={passwordConfirm}
