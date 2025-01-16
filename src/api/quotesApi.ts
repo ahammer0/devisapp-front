@@ -85,3 +85,18 @@ export async function deleteQuote(id: number): Promise<boolean> {
   }
   return res.json();
 }
+
+export async function getQuotePdf(id: number) {
+  const res = await fetch(`${api}/quotes/downloadQuotePdf/${id.toString()}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/pdf",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  if (res.status !== 200) {
+    throw new FetchError(res);
+  }
+  // return res.json();
+  return res.blob();
+}

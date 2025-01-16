@@ -2,21 +2,27 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
+  faFileExport,
   faPen,
   faRotateBack,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAppSelector } from "../../redux/hooks";
+import { selectUser } from "../../redux/userSlice";
 
 import useQuotes from "../../hooks/useQuotes";
 import useWorks from "../../hooks/useWorks";
 import Popup from "../atoms/Popup";
+import { getQuotePdf } from "../../api/quotesApi";
 
 import { quote_element } from "../../types/quotes";
+import { isPast } from "../../helpers/dateFormat";
 
 const QuotesList = () => {
   const quotes = useQuotes();
   const works = useWorks();
+  const user = useAppSelector(selectUser);
   const [quoteToDelete, setQuoteToDelete] = useState<number | null>(null);
   const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
@@ -29,6 +35,14 @@ const QuotesList = () => {
       quotes.rm(quoteToDelete);
       setIsDeletePopupOpen(false);
     }
+  };
+  const handleClickDownload = async (id: number) => {
+    const pdfBlob = await getQuotePdf(id);
+    const file = new File([pdfBlob], `devis-${id}.pdf`, {
+      type: "application/pdf",
+    });
+    const url = URL.createObjectURL(file);
+    window.open(url, "_blank");
   };
 
   const getQuoteTotal = (
@@ -81,6 +95,14 @@ const QuotesList = () => {
                 >
                   <FontAwesomeIcon icon={faTrash} />
                 </button>
+                {user && !isPast(user?.expires_at) && (
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => handleClickDownload(quote.id)}
+                  >
+                    <FontAwesomeIcon icon={faFileExport} />
+                  </button>
+                )}
               </td>
             </tr>
           ))}

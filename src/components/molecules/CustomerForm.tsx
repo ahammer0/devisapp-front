@@ -19,7 +19,7 @@ const CustomerForm = ({
       last_name: "",
       street: "",
       city: "",
-      zip: "",
+      zip: 0,
       phone: "",
       email: "",
     };
