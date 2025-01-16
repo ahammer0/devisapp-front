@@ -1,0 +1,28 @@
+.accordion {
+  .header {
+    border: 1px solid black;
+    border-right-style: none;
+    border-left-style: none;
+    button {
+      width: 100%;
+      padding: 0.5rem 0.5rem;
+      height: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .arrow-up {
+      transform: rotate(180deg);
+      transition: all 200ms;
+    }
+    .arrow-up.open {
+      transform: rotate(0);
+    }
+  }
+  .content {
+    overflow-y: hidden;
+    max-height: 0;
+    transition: all 0.5s ease-out;
+  }
+}

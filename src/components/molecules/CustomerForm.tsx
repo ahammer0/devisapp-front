@@ -31,7 +31,6 @@ const CustomerForm = ({
 
   return (
     <fieldset>
-      <legend>Informations du client</legend>
       {"id" in defaultCustomer && typeof defaultCustomer.id === "number" && (
         <input type="hidden" name="id" value={defaultCustomer?.id} />
       )}
