@@ -83,13 +83,14 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
         {
           work_id: work.id,
           quote_section: currentSection,
+          vat: 10,
           quantity: 1,
           discount: 0,
         },
       ],
     });
   };
-  const getQuoteTotal = (
+  const getQuoteTotalTTC = (
     quote_elements: quote_element[] | quote_element_create[],
     global_discount = 0,
   ) => {
@@ -101,7 +102,10 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           return total;
         }
         return (
-          total + ((el.quantity * (100 - el.discount)) / 100) * work.unit_price
+          total +
+          ((el.quantity * (100 - el.discount)) / 100) *
+            work.unit_price *
+            (1 + el.vat / 100)
         );
       }, 0.0);
     return total;
@@ -193,14 +197,13 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
         ))}
 
         <p className="quoteDetails total">
-          TOTAL GÉNÉRAL:{" "}
-          {getQuoteTotal(
+          TOTAL GÉNÉRAL TTC:{" "}
+          {getQuoteTotalTTC(
             quoteToSave.quote_elements,
             quoteToSave.global_discount,
           )}{" "}
           €
         </p>
-        <hr />
         {/*customer info form*/}
         <Accordion
           elements={[

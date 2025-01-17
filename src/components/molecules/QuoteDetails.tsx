@@ -158,6 +158,21 @@ const QuoteDetails = ({
       quote_elements: newElements2,
     });
   }
+
+  const setVat = (newVat: number) => {
+    if (![0, 20, 10, 5.5].includes(newVat)) return;
+    if (!elToPopup) return;
+    setQuote({
+      ...quote,
+      quote_elements: [
+        ...quote.quote_elements.filter((el) => el !== elToPopup),
+        {
+          ...elToPopup,
+          vat: newVat as quote_element["vat"],
+        },
+      ],
+    });
+  };
   //////////////////////////////////////////////////////////
   //                                                      //
   //                  EVENT HANDLERS                      //
@@ -279,6 +294,21 @@ const QuoteDetails = ({
               values={categories}
               label="Changer la section"
             />
+            <form>
+              <label>
+                Tva:
+                <select
+                  name="vat"
+                  onChange={(e) => setVat(parseInt(e.target.value))}
+                  defaultValue={elToPopup.vat}
+                >
+                  <option value={0}>0%</option>
+                  <option value={5.5}>5,5%</option>
+                  <option value={10}>10%</option>
+                  <option value={20}>20%</option>
+                </select>
+              </label>
+            </form>
             <div className="flex-row items-center">
               <button
                 className="btn btn-primary"
