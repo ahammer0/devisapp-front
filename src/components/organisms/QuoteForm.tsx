@@ -201,7 +201,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           {getQuoteTotalTTC(
             quoteToSave.quote_elements,
             quoteToSave.global_discount,
-          )}{" "}
+          ).toFixed(2)}{" "}
           €
         </p>
         {/*customer info form*/}

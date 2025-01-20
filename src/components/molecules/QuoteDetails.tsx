@@ -273,7 +273,7 @@ const QuoteDetails = ({
         </tbody>
       </table>
       <p className="quoteDetails total">
-        Sous-total: {getQuoteTotal(quoteElements)} €
+        Sous-total: {getQuoteTotal(quoteElements).toFixed(2)} €
       </p>
       <Popup isActive={isPopupOpen} setIsActive={setIsPopupOpen}>
         <button
