@@ -12,7 +12,7 @@ import {
   faCheck,
 } from "@fortawesome/free-solid-svg-icons";
 import EditableText from "../atoms/EditableText";
-import "./molecules.scss";
+import "./QuoteDetails.scss";
 import EditableSelect from "../atoms/EditableSelect";
 
 /**

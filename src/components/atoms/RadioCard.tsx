@@ -1,5 +1,5 @@
 import { useId } from "react";
-import "./atoms.scss";
+import "./RadioCard.scss";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { faCircle } from "@fortawesome/free-regular-svg-icons/faCircle";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

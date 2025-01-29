@@ -1,0 +1,118 @@
+@use "./variables" as *;
+
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Utilities                 //////
+//////                                      //////
+//////////////////////////////////////////////////
+
+.font-bungee {
+  font-family: bungee, sans-serif;
+}
+.font-poppins {
+  font-family: poppins, sans-serif;
+}
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Buttons                    //////
+//////                                      //////
+//////////////////////////////////////////////////
+.btn {
+  $px: 3px;
+  $py: 7px;
+
+  display: inline-block;
+  padding: $px $py;
+  border-radius: $radius-small;
+  border: none;
+  cursor: pointer;
+  margin: 0.25rem 0;
+  transition: all 0.2s ease-in-out;
+  font-weight: 550;
+  box-shadow: $shadow-sm, $shadow-inset-light;
+
+  @mixin outline($color) {
+    &.btn-outline {
+      padding: ($px - 2px) ($py - 2px);
+      border-radius: $radius-small;
+      border: 2px solid $color;
+      background-color: transparent;
+      color: $color;
+    }
+  }
+
+  @each $name, $color in $colorsMap {
+    &.btn-#{$name} {
+      background-color: $color;
+      color: $textLight;
+      @include outline($color);
+    }
+  }
+
+  &.btn-cta {
+    padding: ($px + 8px) ($py + 14px);
+    margin: {
+      top: 1rem;
+      bottom: 1rem;
+    }
+    box-shadow: $shadow-md, $shadow-inset-light;
+    font-size: 1.2rem;
+    font-weight: bold;
+    @include outline($primary);
+  }
+
+  &:hover {
+    transform: scale(1.02);
+    @include shadow-lg;
+  }
+  &:focus {
+    outline-color: $primary;
+    outline-style: solid;
+    outline-width: 2px;
+    outline-offset: 1.5px;
+  }
+  &:active {
+    transform: scale(0.98);
+    transition: all 0.1s ease-in-out;
+    @include shadow-inner;
+  }
+}
+
+.card {
+  @include shadow-md;
+  border-radius: $radius-small;
+  padding: 0.75rem;
+  margin: 0.5rem;
+}
+/// Flex
+.justify-center {
+  justify-content: center;
+}
+.items-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.justify-end {
+  justify-content: flex-end;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.flex-col {
+  @include flexColumn;
+}
+.flex-row {
+  @include flexRow;
+}
+.flex-center {
+  @include flexCenter;
+}
+.flex-between {
+  @include flexBetween;
+}
+//text align
+.text-center {
+  text-align: center;
+}

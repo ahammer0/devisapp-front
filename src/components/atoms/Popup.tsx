@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { PopupContext } from "../../contexts/PopupContext";
+import "./Popup.scss";
 
 const Popup = ({
   children,

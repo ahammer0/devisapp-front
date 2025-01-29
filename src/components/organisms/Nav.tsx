@@ -13,6 +13,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { resetUser, selectUser } from "../../redux/userSlice";
 import { useEffect } from "react";
+import "./Nav.scss";
 
 const Nav = ({
   isActive,

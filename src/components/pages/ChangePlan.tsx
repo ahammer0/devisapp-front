@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectUser, setUser } from "../../redux/userSlice";
 import { addMonths, isPast, toFrenchDate } from "../../helpers/dateFormat";
 import { addCredit } from "../../api/userApi";
+import "./ChangePlan.scss";
 
 const ChangePlan = () => {
   const user = useAppSelector(selectUser);

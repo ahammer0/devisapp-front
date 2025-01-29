@@ -10,7 +10,6 @@ import {
   faUser,
 } from "@fortawesome/free-solid-svg-icons";
 
-import "./organisms.scss";
 import MenuBurgerIcon from "../atoms/MenuBurgerIcon";
 import Nav from "./Nav";
 import { selectUser, resetUser } from "../../redux/userSlice";

@@ -1,4 +1,5 @@
-import "./atoms.scss";
+import "./MenuBurgerIcon.scss";
+
 const MenuBurgerIcon = ({
   isActive,
   toggle,

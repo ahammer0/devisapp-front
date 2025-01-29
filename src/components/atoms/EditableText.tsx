@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef, useMemo } from "react";
+import "./EditableText.scss";
 
 interface EditableTextProps<T> {
   isEditMode: boolean;

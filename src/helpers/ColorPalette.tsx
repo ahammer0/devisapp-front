@@ -4,13 +4,41 @@ const ColorPalette = () => {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row flex-wrap">
-        <div className="testDiv bg-primary">primary</div>
-        <div className="testDiv bg-secondary">secondary</div>
-        <div className="testDiv bg-danger">danger</div>
-        <div className="testDiv bg-light">light</div>
-        <div className="testDiv bg-dark text-textLight">dark</div>
-        <div className="testDiv bg-bgDark text-textLight">bgDark</div>
-        <div className="testDiv bg-bgLight">bgLight</div>
+        <div className="testDiv bg-primary">
+          primary
+          <br />
+          #ED7A29
+        </div>
+        <div className="testDiv bg-secondary">
+          secondary
+          <br />
+          #acb4b7
+        </div>
+        <div className="testDiv bg-danger">
+          danger
+          <br />
+          #ff0000
+        </div>
+        <div className="testDiv bg-light">
+          light
+          <br />
+          #acb4b7
+        </div>
+        <div className="testDiv bg-dark text-textLight">
+          dark
+          <br />
+          #222d37
+        </div>
+        <div className="testDiv bg-bgDark text-textLight">
+          bgDark
+          <br />
+          #acb4b7
+        </div>
+        <div className="testDiv bg-bgLight">
+          bgLight
+          <br />
+          #e7e8ea
+        </div>
       </div>
       <div>
         <p className="text-primary bg-bgLight">primary</p>
