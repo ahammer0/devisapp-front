@@ -26,7 +26,7 @@ const CustomerForm = ({
     return t;
   }, [customer, user]);
 
-  //not usable if user is not connected
+  //not usable if user is not connected, should not happen
   if (!user) return;
 
   return (

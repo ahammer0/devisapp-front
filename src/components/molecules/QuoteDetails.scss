@@ -1,3 +1,5 @@
+@use "../../variables.scss" as *;
+
 .quoteDetailsTable {
   table-layout: fixed;
   width: 100%;
@@ -15,8 +17,15 @@
   }
 }
 .quoteDetails {
+  margin-bottom: 1rem;
   &.total {
     text-align: right;
     font-weight: bold;
+  }
+  &__sectionTitle {
+    margin-top: 1rem;
+  }
+  hr {
+    width: 100%;
   }
 }

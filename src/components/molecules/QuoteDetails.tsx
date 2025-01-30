@@ -215,9 +215,12 @@ const QuoteDetails = ({
   };
 
   return (
-    <>
+    <section className="quoteDetails">
       {/* section name title*/}
-      <form onSubmit={handleEditSectionName} className="flex-row items-center">
+      <form
+        onSubmit={handleEditSectionName}
+        className="quoteDetails__sectionTitle flex-row items-center"
+      >
         <h3 className="flex-row items-center">
           Section:{" "}
           <EditableText
@@ -275,6 +278,7 @@ const QuoteDetails = ({
       <p className="quoteDetails total">
         Sous-total: {getQuoteTotal(quoteElements).toFixed(2)} €
       </p>
+      <hr />
       <Popup isActive={isPopupOpen} setIsActive={setIsPopupOpen}>
         <button
           onClick={() => setIsPopupOpen(false)}
@@ -340,7 +344,7 @@ const QuoteDetails = ({
           </>
         )}
       </Popup>
-    </>
+    </section>
   );
 };
 
