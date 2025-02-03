@@ -1,0 +1,69 @@
+@use "../../variables.scss" as *;
+.home_illustration_img {
+  object-fit: contain;
+  width: 100px;
+  aspect-ratio: 1;
+}
+.homeSection {
+  h1 {
+    margin-top: 2rem;
+  }
+  section {
+    margin-bottom: 2rem;
+  }
+  &__first {
+    .descText {
+      text-align: center;
+      margin: 1rem 0;
+    }
+    min-height: 80svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  &__cta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2 {
+      text-align: center;
+    }
+    // a {
+    //   margin: 0 auto;
+    //   display: inline-block;
+    // }
+  }
+  &__social {
+    padding: 0.5rem;
+    .profile {
+      width: 100px;
+      margin: 0 auto;
+      @include shadow-md;
+      border-radius: $radius-small;
+    }
+    article {
+      @include shadow-md;
+      border-radius: $radius-small;
+      padding: 0.75rem;
+      margin: 0.5rem;
+      width: 80%;
+      margin: 1rem auto;
+    }
+    blockquote {
+      p {
+        &:first-child {
+          font-style: italic;
+          &::before,
+          &::after {
+            content: '"';
+          }
+        }
+        &:last-child {
+          text-align: right;
+          font-size: 0.85rem;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+}

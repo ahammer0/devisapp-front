@@ -37,24 +37,13 @@ h1 {
 h2 {
   font-size: 2rem;
   @include mx(1rem);
-  // text-align: center;
+  padding: 0 0.5rem;
   position: relative;
-  display: block;
+  display: inline-block;
   margin-top: 1rem;
   margin-bottom: 0.75rem;
-  margin-left: 1.7rem;
-  &:before {
-    content: "";
-    display: inline-block;
-    height: 0.5rem;
-    width: 0.5rem;
-    background-color: $primary;
-    border-radius: 100%;
-    position: absolute;
-    top: 45%;
-    // left:-0.85rem;
-    margin-left: -1rem;
-  }
+
+  &:before,
   &:after {
     content: "";
     display: inline-block;
@@ -64,14 +53,18 @@ h2 {
     border-radius: 100%;
     position: absolute;
     top: 45%;
-    margin-left: 0.3rem;
+  }
+  &:before {
+    left: 0;
+  }
+  &:after {
+    right: 0;
   }
 }
 h3 {
   font-size: 1.5rem;
   @include mx(1rem);
 
-  // text-align: center;
   position: relative;
   display: block;
   margin-left: 1.7rem;
@@ -85,7 +78,6 @@ h3 {
     border-radius: 100%;
     position: absolute;
     top: 40%;
-    // left:-0.85rem;
     margin-left: -1rem;
   }
 }
