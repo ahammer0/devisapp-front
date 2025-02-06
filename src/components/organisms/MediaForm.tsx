@@ -15,7 +15,7 @@ const MediaForm = () => {
   const [success, setSuccess] = useState("");
   const url = currentFile ? URL.createObjectURL(currentFile) : "";
   const accordionUpdate = useContext(AccordionContext);
-  const [quote, setQuote, _isEditing] = useContext(QuoteFormContext) ?? [
+  const [quote, setQuote, isEditing] = useContext(QuoteFormContext) ?? [
     null,
     null,
     null,
@@ -63,36 +63,45 @@ const MediaForm = () => {
       </section>
 
       <article className="addCard card">
-        {!currentFile && (
+        {isEditing ? (
           <>
-            <label className="flex-center" htmlFor="newImage">
-              Ajouter une image
-            </label>
-            <div className="flex-center">
-              <FontAwesomeIcon icon={faPlus} />
+            {!currentFile && (
+              <>
+                <label className="flex-center" htmlFor="newImage">
+                  Ajouter une image
+                </label>
+                <div className="flex-center">
+                  <FontAwesomeIcon icon={faPlus} />
+                </div>
+              </>
+            )}
+            {currentFile && <img src={url} alt="image uploadée" />}
+            <div className="flex-row items-center">
+              <input
+                type="file"
+                name="newImage"
+                accept="image/*"
+                onChange={handleChange}
+              />
+              {currentFile && (
+                <>
+                  {success && <p>{success}</p>}
+                  {error && <p>{error}</p>}
+                  <div>
+                    <button
+                      className="btn btn-primary"
+                      onClick={handleAddImage}
+                    >
+                      <FontAwesomeIcon icon={faCheck} />
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           </>
+        ) : (
+          <p>Veuillez enregistrer le devis pour pouvoir ajouter des images</p>
         )}
-        {currentFile && <img src={url} alt="image uploadée" />}
-        <div className="flex-row items-center">
-          <input
-            type="file"
-            name="newImage"
-            accept="image/*"
-            onChange={handleChange}
-          />
-          {currentFile && (
-            <>
-              {success && <p>{success}</p>}
-              {error && <p>{error}</p>}
-              <div>
-                <button className="btn btn-primary" onClick={handleAddImage}>
-                  <FontAwesomeIcon icon={faCheck} />
-                </button>
-              </div>
-            </>
-          )}
-        </div>
       </article>
     </fieldset>
   );
@@ -103,7 +112,7 @@ const Image = ({ id }: { id: number }) => {
   const [file, setFile] = useState<Blob | null>(null);
   const [isActivePopup, setIsActivePopup] = useState(false);
   const accordionUpdate = useContext(AccordionContext);
-  const [quote, setQuote, isEditing] = useContext(QuoteFormContext) ?? [
+  const [quote, setQuote, _isEditing] = useContext(QuoteFormContext) ?? [
     null,
     null,
     null,
