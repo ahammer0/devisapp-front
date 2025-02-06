@@ -1,9 +1,9 @@
 import React, { createContext } from "react";
-import { quote_full_create } from "../types/quotes";
+import { full_quote, quote_full_create } from "../types/quotes";
 
 type quoteFormContext = [
-  quote_full_create,
-  React.Dispatch<React.SetStateAction<quote_full_create>>,
+  quote_full_create | full_quote,
+  React.Dispatch<React.SetStateAction<quote_full_create | full_quote>>,
   boolean,
 ];
 

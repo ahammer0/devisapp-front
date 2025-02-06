@@ -1,0 +1,39 @@
+@use "../../variables" as *;
+.mediaForm {
+  .card {
+    border-radius: $radius-small;
+    box-shadow: none;
+    display: block;
+    margin: 0.25rem;
+    padding: 0;
+    img {
+      margin: 0 auto;
+      aspect-ratio: 1;
+      border-radius: $radius-small;
+    }
+  }
+  .card:hover {
+    cursor: pointer;
+  }
+  .addCard {
+    color: $secondary;
+    border: 2px dashed $secondary;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // justify-content: center;
+    padding: 0.5rem;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    img {
+      grid-row: 1 / span 2;
+      margin: 0 auto;
+      height: 200px;
+      border-radius: $radius-small;
+    }
+  }
+  .imagesGroup {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}

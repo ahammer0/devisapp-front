@@ -25,6 +25,36 @@ export async function addQuote(quote: quote_full_create): Promise<full_quote> {
   }
   return res.json();
 }
+export async function addMedia(file: File, quoteId: number) {
+  const formData = new FormData();
+  formData.append("image", file);
+  formData.append("quoteId", quoteId.toString());
+
+  const res = await fetch(`${api}/quotes/media/add`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: formData,
+  });
+  if (res.status !== 201) {
+    throw new FetchError(res);
+  }
+  return res.json();
+}
+
+export async function getMedia(mediaId: number): Promise<Blob> {
+  const res = await fetch(`${api}/quotes/media/${mediaId.toString()}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  if (res.status !== 200) {
+    throw new FetchError(res);
+  }
+  return res.blob();
+}
 
 export async function getAllQuotes(): Promise<full_quote[]> {
   const res = await fetch(`${api}/quotes/all`, {

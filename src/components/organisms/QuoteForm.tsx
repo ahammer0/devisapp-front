@@ -18,6 +18,7 @@ import { faFloppyDisk } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { toFormDateString } from "../../helpers/dateFormat";
 import Accordion from "../atoms/Accordion";
+import MediaForm from "../organisms/MediaForm";
 
 const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const initialQuote: quote_full_create = {
@@ -36,8 +37,9 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   ////////////////////////////////////////////////////////
   const quotes = useQuotes();
   const isEditing = useMemo(() => quoteId !== undefined, [quoteId]);
-  const [quoteToSave, setQuoteToSave] =
-    useState<quote_full_create>(initialQuote);
+  const [quoteToSave, setQuoteToSave] = useState<
+    quote_full_create | full_quote
+  >(initialQuote);
   const [currentSection, setCurrentSection] = useState<string>("Sans Section");
   const categories = useMemo(() => {
     return quoteToSave.quote_elements.reduce((acc, el) => {
@@ -285,8 +287,9 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
                 </select>
               </div>
             </fieldset>,
+            <MediaForm />,
           ]}
-          headers={["informations générales"]}
+          headers={["informations générales", "Médias"]}
         />
         <form onSubmit={handleSubmit}>
           <button className="btn btn-primary" type="submit">
