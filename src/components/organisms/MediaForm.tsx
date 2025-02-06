@@ -4,7 +4,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { useState, useContext, useEffect } from "react";
 import { AccordionContext } from "../../contexts/AccordionContext";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
-import { addMedia, getMedia } from "../../api/quotesApi";
+import { addMedia, deleteMedia, getMedia } from "../../api/quotesApi";
 import QuoteFormContext from "../../contexts/QuoteFormContext";
 import Popup from "../atoms/Popup";
 import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
@@ -15,7 +15,7 @@ const MediaForm = () => {
   const [success, setSuccess] = useState("");
   const url = currentFile ? URL.createObjectURL(currentFile) : "";
   const accordionUpdate = useContext(AccordionContext);
-  const [quote, setQuote, isEditing] = useContext(QuoteFormContext) ?? [
+  const [quote, setQuote, _isEditing] = useContext(QuoteFormContext) ?? [
     null,
     null,
     null,
@@ -103,6 +103,11 @@ const Image = ({ id }: { id: number }) => {
   const [file, setFile] = useState<Blob | null>(null);
   const [isActivePopup, setIsActivePopup] = useState(false);
   const accordionUpdate = useContext(AccordionContext);
+  const [quote, setQuote, isEditing] = useContext(QuoteFormContext) ?? [
+    null,
+    null,
+    null,
+  ];
   let pathname;
   if (file) {
     pathname = URL.createObjectURL(file);
@@ -113,6 +118,17 @@ const Image = ({ id }: { id: number }) => {
     });
   }, []);
   useEffect(() => accordionUpdate(), [file]);
+
+  const handleDelete = () => {
+    deleteMedia(id).then(() => {
+      //if delete successful then update current quote
+      if (!quote || !("id" in quote)) return;
+      setQuote({
+        ...quote,
+        quote_medias: quote.quote_medias.filter((el) => el.id !== id),
+      });
+    });
+  };
 
   return (
     <div>
@@ -125,7 +141,9 @@ const Image = ({ id }: { id: number }) => {
           <FontAwesomeIcon icon={faXmark} />
         </button>
         <img src={pathname} alt="image" />
-        <button className="btn btn-danger">Supprimer</button>
+        <button className="btn btn-danger" onClick={handleDelete}>
+          Supprimer
+        </button>
       </Popup>
     </div>
   );

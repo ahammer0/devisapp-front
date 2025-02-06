@@ -130,3 +130,16 @@ export async function getQuotePdf(id: number) {
   // return res.json();
   return res.blob();
 }
+
+export async function deleteMedia(id: number): Promise<boolean> {
+  const res = await fetch(`${api}/quotes/media/${id.toString()}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  if (res.status !== 200) {
+    throw new FetchError(res);
+  }
+  return res.json();
+}
