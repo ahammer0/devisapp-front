@@ -73,6 +73,8 @@ const CustomerForm = ({
       <input
         type="text"
         name="zip"
+        maxLength={5}
+        minLength={5}
         onChange={(e) =>
           setCustomer({ ...defaultCustomer, zip: parseInt(e.target.value) })
         }

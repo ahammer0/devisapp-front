@@ -31,13 +31,11 @@ const AccordionItem = ({
   header: string;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [scrollHeight, setScrollHeight] = useState(0);
   const [needsUpdate, setNeedsUpdate] = useState(true);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (needsUpdate) {
-      setScrollHeight(contentRef?.current?.scrollHeight ?? 0);
       setNeedsUpdate(false);
     }
   }, [needsUpdate]);
@@ -53,7 +51,7 @@ const AccordionItem = ({
     <>
       <div className="accordion">
         <div className="header">
-          <button onClick={() => toggleOpen()}>
+          <button type="button" onClick={() => toggleOpen()}>
             <span> {header}</span>
             <FontAwesomeIcon
               icon={faChevronUp}
@@ -64,7 +62,7 @@ const AccordionItem = ({
         <div
           className={"content" + (isOpen ? " open" : "")}
           style={{
-            maxHeight: isOpen ? scrollHeight : "",
+            maxHeight: isOpen ? contentRef?.current?.scrollHeight : "",
           }}
           ref={contentRef}
         >

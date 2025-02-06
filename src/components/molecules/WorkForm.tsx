@@ -127,6 +127,7 @@ const WorkForm = ({
             type="number"
             name="unit_price"
             id="unit_price"
+            step="0.01"
             value={workToSave.unit_price}
             onChange={(e) =>
               changeWork("unit_price", parseFloat(e.target.value))
@@ -140,6 +141,7 @@ const WorkForm = ({
             type="number"
             name="unit_time"
             id="unit_time"
+            step="0.1"
             value={workToSave.unit_time}
             onChange={(e) =>
               changeWork("unit_time", parseFloat(e.target.value))
@@ -153,6 +155,7 @@ const WorkForm = ({
             type="number"
             name="buy_price"
             id="buy_price"
+            step="0.01"
             value={workToSave.buy_price}
             onChange={(e) =>
               changeWork("buy_price", parseFloat(e.target.value))

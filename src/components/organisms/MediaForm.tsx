@@ -89,6 +89,7 @@ const MediaForm = () => {
                   {error && <p>{error}</p>}
                   <div>
                     <button
+                      type="button"
                       className="btn btn-primary"
                       onClick={handleAddImage}
                     >
