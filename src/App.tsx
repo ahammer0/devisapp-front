@@ -18,6 +18,7 @@ import RequireAuth from "./helpers/RequireAuth";
 import "./reset.css";
 import "./App.scss";
 import TicketDetails from "./components/pages/TicketDetails";
+import AdminTicketDetails from "./components/pages/AdminTicketDetails";
 
 function App() {
   return (
@@ -104,6 +105,14 @@ function App() {
             element={
               <RequireAuth authLevel="admin">
                 <AdminDashboard />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="tickets/:id"
+            element={
+              <RequireAuth authLevel="admin">
+                <AdminTicketDetails />
               </RequireAuth>
             }
           />
