@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { resetUser, selectUser } from "../../redux/userSlice";
 import { useEffect } from "react";
 import "./Nav.scss";
+import { faGears } from "@fortawesome/free-solid-svg-icons/faGears";
 
 const Nav = ({
   isActive,
@@ -46,6 +47,9 @@ const Nav = ({
       <Link to="/" className="item">
         <FontAwesomeIcon icon={faHouse} className="icon" /> Accueil
       </Link>
+      <Link to="/admin" className="item">
+        <FontAwesomeIcon icon={faGears} className="icon" /> Admin
+      </Link>
       {!user && (
         <Link to="/connection" className="item">
           <FontAwesomeIcon icon={faRightToBracket} className="icon" />{" "}
@@ -70,12 +74,13 @@ const Nav = ({
             <FontAwesomeIcon icon={faNewspaper} className="icon" /> Changer
             d'abonnement
           </Link>
+          <Link to="/tickets" className="item">
+            <FontAwesomeIcon icon={faNewspaper} className="icon" /> Tickets/SAV
+          </Link>
+          <Link to="" onClick={handleLogout} className="item">
+            <FontAwesomeIcon icon={faDoorOpen} className="icon" /> Deconnection
+          </Link>
         </>
-      )}
-      {user && (
-        <Link to="" onClick={handleLogout} className="item">
-          <FontAwesomeIcon icon={faDoorOpen} className="icon" /> Deconnection
-        </Link>
       )}
       <Link to="/palette" className="item">
         <FontAwesomeIcon icon={faPalette} className="icon" /> Palette

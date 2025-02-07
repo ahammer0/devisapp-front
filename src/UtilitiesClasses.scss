@@ -30,6 +30,7 @@
   transition: all 0.2s ease-in-out;
   font-weight: 550;
   box-shadow: $shadow-sm, $shadow-inset-light;
+  text-decoration: none;
 
   @mixin outline($color) {
     &.btn-outline {
