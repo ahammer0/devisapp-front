@@ -2,7 +2,11 @@ import { useActionState, useState, useEffect } from "react";
 import { createTicket } from "../../api/ticketsApi";
 import { ticketCreate } from "../../types/tickets";
 
-const TicketsCreateForm = () => {
+const TicketsCreateForm = ({
+  onSubmitSuccess,
+}: {
+  onSubmitSuccess: () => void;
+}) => {
   const [success, setSuccess] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const handleTicketSubmit = async (_prevState: void, formdata: FormData) => {
@@ -14,6 +18,7 @@ const TicketsCreateForm = () => {
     try {
       await createTicket(ticket);
       setSuccess("Votre ticket a bien été envoyé");
+      onSubmitSuccess();
     } catch {
       setError("Une erreur est survenue");
     }

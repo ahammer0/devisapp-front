@@ -1,26 +1,11 @@
-import { useState, useEffect } from "react";
 import { ticket } from "../../types/tickets";
-import { getAllTickets } from "../../api/ticketsApi";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import "./TicketsList.scss";
 
-const TicketsList = () => {
-  const [tickets, setTickets] = useState<ticket[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
+const TicketsList = ({ tickets }: { tickets: ticket[] }) => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getAllTickets()
-      .then((res) => setTickets(res))
-      .catch(() => setError("Une erreur est survenue"));
-  }, []);
-
-  useEffect(() => {
-    if (!error) return;
-    const timer = setTimeout(() => setError(null), 3000);
-    return () => clearTimeout(timer);
-  });
   return (
     <div className="ticketsList">
       <h2>Liste des tickets</h2>

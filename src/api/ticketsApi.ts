@@ -62,3 +62,15 @@ export async function createTicket(ticket: ticketCreate) {
     throw new FetchError(response);
   }
 }
+export async function deleteTicket(ticketId: number) {
+  const token = getToken();
+  const response = await fetch(`${api}/tickets/${ticketId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (response.status !== 200) {
+    throw new FetchError(response);
+  }
+}
