@@ -2,7 +2,7 @@ import { FetchError } from "../helpers/customErrors/FetchError";
 import { store } from "../redux/store";
 import { payment } from "../types/payments";
 import { user } from "../types/users";
-import { ticket } from "../types/tickets";
+import { ticketWCompanyName } from "../types/tickets";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -113,7 +113,7 @@ export async function getOpenedTickets() {
     throw new FetchError(res);
   }
   const rawTickets = await res.json();
-  const tickets: ticket[] = rawTickets.map((ticket: any) => {
+  const tickets: ticketWCompanyName[] = rawTickets.map((ticket: any) => {
     return { ...ticket, created_at: new Date(ticket.created_at.split(".")[0]) };
   });
 
@@ -132,7 +132,7 @@ export async function closeTicket(id: number) {
 }
 export async function getOneTicket(id: number) {
   const token = getToken();
-  const response = await fetch(`${api}/admin/tickets/${id}`, {
+  const response = await fetch(`${api}/tickets/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -142,7 +142,7 @@ export async function getOneTicket(id: number) {
     throw new FetchError(response);
   }
   const rawTicket = await response.json();
-  const ticket: ticket = {
+  const ticket: ticketWCompanyName = {
     ...rawTicket,
     created_at: new Date(rawTicket.created_at.split(".")[0]),
   };

@@ -1,4 +1,4 @@
-import { ticket } from "../../types/tickets";
+import { ticketWCompanyName } from "../../types/tickets";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,7 @@ import { getOpenedTickets } from "../../api/adminApi";
 
 const TicketsOpenedList = () => {
   const navigate = useNavigate();
-  const [ticketsOpen, setTicketsOpen] = useState<ticket[]>([]);
+  const [ticketsOpen, setTicketsOpen] = useState<ticketWCompanyName[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -25,6 +25,7 @@ const TicketsOpenedList = () => {
           <tr>
             <th>Objet</th>
             <th>Date de création</th>
+            <th>Entreprise</th>
           </tr>
         </thead>
         <tbody>
@@ -40,6 +41,7 @@ const TicketsOpenedList = () => {
                   </Link>
                 </td>
                 <td>{ticket.created_at.toLocaleDateString()}</td>
+                <td>{ticket.company_name}</td>
               </tr>
             ))}
         </tbody>
