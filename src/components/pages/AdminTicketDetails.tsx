@@ -1,8 +1,8 @@
 import MainTemplate from "../templates/MainTemplate";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useActionState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 import { ticket } from "../../types/tickets";
-import { closeTicket, getOneTicket } from "../../api/adminApi";
+import { closeTicket, getOneTicket, respondTicket } from "../../api/adminApi";
 import { Link, useNavigate } from "react-router-dom";
 
 const AdminTicketDetails = () => {
@@ -13,11 +13,18 @@ const AdminTicketDetails = () => {
   const navigate = useNavigate();
   const ticketId = parseInt(params.id ?? "0");
 
+  const loadTicket = useCallback(
+    function () {
+      getOneTicket(ticketId)
+        .then((ticket) => setTicket(ticket))
+        .catch(() => setError("Une erreur est survenue"));
+    },
+    [ticketId],
+  );
+
   useEffect(() => {
-    getOneTicket(ticketId)
-      .then((ticket) => setTicket(ticket))
-      .catch(() => setError("Une erreur est survenue"));
-  }, [ticketId]);
+    loadTicket();
+  }, [loadTicket]);
 
   const handleCloseTicket = () => {
     if (!params.id) return;
@@ -35,6 +42,7 @@ const AdminTicketDetails = () => {
 
   if (!params.id) return;
   if (!ticket) return;
+  console.log(ticket);
   return (
     <MainTemplate>
       <h1>Details du ticket</h1>
@@ -50,6 +58,11 @@ const AdminTicketDetails = () => {
       </p>
 
       <p>Message: {ticket.text_content}</p>
+      <RespondForm
+        id={ticket.id}
+        placeholder={ticket.response}
+        onSubmitSuccess={loadTicket}
+      />
       <button
         type="button"
         onClick={() => handleCloseTicket()}
@@ -60,6 +73,63 @@ const AdminTicketDetails = () => {
 
       {success && <p>{success}</p>}
     </MainTemplate>
+  );
+};
+const RespondForm = ({
+  id,
+  placeholder,
+  onSubmitSuccess,
+}: {
+  id: number;
+  placeholder: string | null;
+  onSubmitSuccess: () => void;
+}) => {
+  const [success, setSuccess] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const respond = async (_state: void, formdata: FormData) => {
+    const response = formdata.get("response");
+    if (!response) return;
+    try {
+      await respondTicket(id, response.toString());
+      onSubmitSuccess();
+      setSuccess("Votre réponse a bien étée envoyée");
+    } catch {
+      setError("Une erreur est survenue");
+    }
+  };
+  const [_state, formAction, isPending] = useActionState(respond, undefined);
+
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => setSuccess(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
+  return (
+    <form action={formAction}>
+      <textarea
+        name="response"
+        rows={5}
+        cols={50}
+        defaultValue={placeholder ?? ""}
+        placeholder="Votre réponse"
+        required
+      ></textarea>
+      <button type="submit" className="btn btn-primary" disabled={isPending}>
+        Envoyer
+      </button>
+      {error && <p className="text-danger">{error}</p>}
+      {success && <p>{success}</p>}
+    </form>
   );
 };
 export default AdminTicketDetails;

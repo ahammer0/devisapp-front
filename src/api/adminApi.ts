@@ -137,7 +137,7 @@ export async function closeTicket(id: number) {
 }
 export async function getOneTicket(id: number) {
   const token = getToken();
-  const response = await fetch(`${api}/tickets/${id}`, {
+  const response = await fetch(`${api}/admin/tickets/${id}`, {
     method: "GET",
     headers: {
       Authorization: `Bearer ${token}`,
@@ -152,4 +152,17 @@ export async function getOneTicket(id: number) {
     created_at: new Date(rawTicket.created_at.split(".")[0]),
   };
   return ticket;
+}
+export async function respondTicket(id: number, text: string) {
+  const res = await fetch(`${api}/admin/tickets/response/${id.toString()}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+    body: JSON.stringify({ response: text }),
+  });
+  if (res.status !== 200) {
+    throw new FetchError(res);
+  }
 }
