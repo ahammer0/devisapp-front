@@ -42,7 +42,6 @@ const AdminTicketDetails = () => {
 
   if (!params.id) return;
   if (!ticket) return;
-  console.log(ticket);
   return (
     <MainTemplate>
       <h1>Details du ticket</h1>
