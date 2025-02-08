@@ -11,14 +11,13 @@ const AdminTicketDetails = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  if (!params.id) return;
   const ticketId = parseInt(params.id ?? "0");
+
   useEffect(() => {
     getOneTicket(ticketId)
       .then((ticket) => setTicket(ticket))
       .catch(() => setError("Une erreur est survenue"));
-  }, []);
+  }, [ticketId]);
 
   const handleCloseTicket = () => {
     if (!params.id) return;
@@ -34,6 +33,7 @@ const AdminTicketDetails = () => {
       .catch(() => setError("Une erreur est survenue"));
   };
 
+  if (!params.id) return;
   if (!ticket) return;
   return (
     <MainTemplate>

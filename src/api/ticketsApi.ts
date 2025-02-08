@@ -1,5 +1,5 @@
 import { FetchError } from "../helpers/customErrors/FetchError";
-import { ticketCreate, ticket } from "../types/tickets";
+import { ticketCreate, ticket, rawTicket } from "../types/tickets";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -22,7 +22,7 @@ export async function getAllTickets() {
     throw new FetchError(response);
   }
   const rawTickets = await response.json();
-  const tickets: ticket[] = rawTickets.map((rawTicket: any) => {
+  const tickets: ticket[] = rawTickets.map((rawTicket: rawTicket) => {
     return {
       ...rawTicket,
       created_at: new Date(rawTicket.created_at.split(".")[0]),

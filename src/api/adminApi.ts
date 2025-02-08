@@ -2,7 +2,7 @@ import { FetchError } from "../helpers/customErrors/FetchError";
 import { store } from "../redux/store";
 import { payment } from "../types/payments";
 import { user } from "../types/users";
-import { ticketWCompanyName } from "../types/tickets";
+import { rawTicketWCompanyName, ticketWCompanyName } from "../types/tickets";
 
 const api = import.meta.env.VITE_API_URL;
 
@@ -113,9 +113,14 @@ export async function getOpenedTickets() {
     throw new FetchError(res);
   }
   const rawTickets = await res.json();
-  const tickets: ticketWCompanyName[] = rawTickets.map((ticket: any) => {
-    return { ...ticket, created_at: new Date(ticket.created_at.split(".")[0]) };
-  });
+  const tickets: ticketWCompanyName[] = rawTickets.map(
+    (ticket: rawTicketWCompanyName) => {
+      return {
+        ...ticket,
+        created_at: new Date(ticket.created_at.split(".")[0]),
+      };
+    },
+  );
 
   return tickets;
 }

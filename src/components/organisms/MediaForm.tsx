@@ -49,12 +49,13 @@ const MediaForm = () => {
     const timer = setTimeout(() => setSuccess(""), 5000);
     return () => clearTimeout(timer);
   }, [success]);
-  useEffect(() => accordionUpdate(), [currentFile]);
+  useEffect(() => accordionUpdate(), [currentFile, accordionUpdate]);
 
   return (
     <fieldset className="mediaForm" key={"newImage" + currentFile?.name}>
       <section className="imagesGroup">
         {quote &&
+          quote.quote_medias &&
           quote.quote_medias.map((el) => (
             <article className="card" key={`quoteImage${el.id}`}>
               <Image id={el.id} />
@@ -126,8 +127,8 @@ const Image = ({ id }: { id: number }) => {
     getMedia(id).then((res) => {
       setFile(res);
     });
-  }, []);
-  useEffect(() => accordionUpdate(), [file]);
+  }, [id]);
+  useEffect(() => accordionUpdate(), [file, accordionUpdate]);
 
   const handleDelete = () => {
     deleteMedia(id).then(() => {

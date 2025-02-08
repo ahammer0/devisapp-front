@@ -36,7 +36,7 @@ export type full_quote = quote & {
 
 export type quote_full_create = Omit<quote, "id" | "user_id" | "created_at"> & {
   quote_elements: quote_element_create[];
-  quote_medias: quote_media_create[];
+  quote_medias: undefined;
 } & (
     | { customer?: customer_create | null; customer_id?: never }
     | { customer_id: customer["id"]; customer?: never }
