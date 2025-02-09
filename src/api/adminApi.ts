@@ -1,7 +1,7 @@
 import { FetchError } from "../helpers/customErrors/FetchError";
 import { store } from "../redux/store";
 import { payment } from "../types/payments";
-import { user } from "../types/users";
+import { rawUser, user } from "../types/users";
 import { rawTicketWCompanyName, ticketWCompanyName } from "../types/tickets";
 
 const api = import.meta.env.VITE_API_URL;
@@ -32,7 +32,7 @@ export async function adminLogin(adminKey: string): Promise<{ token: string }> {
   return res.json();
 }
 
-export async function getAllUsers(): Promise<user[]> {
+export async function getAllUsers() {
   const res = await fetch(`${api}/admin/users/all`, {
     method: "GET",
     headers: {
@@ -43,10 +43,18 @@ export async function getAllUsers(): Promise<user[]> {
   if (res.status !== 200) {
     throw new FetchError(res);
   }
-  return res.json();
+  const rawUsers: rawUser[] = await res.json();
+  const users: user[] = rawUsers.map((user) => {
+    return {
+      ...user,
+      expires_at: new Date(user.expires_at.split(".")[0]),
+      created_at: new Date(user.created_at.split(".")[0]),
+    };
+  });
+  return users;
 }
 
-export async function getOneUser(id: number): Promise<user> {
+export async function getOneUser(id: number) {
   const res = await fetch(`${api}/admin/users/${id.toString()}`, {
     method: "GET",
     headers: {
@@ -57,7 +65,13 @@ export async function getOneUser(id: number): Promise<user> {
   if (res.status !== 200) {
     throw new FetchError(res);
   }
-  return res.json();
+  const rawUser: rawUser = await res.json();
+  const user: user = {
+    ...rawUser,
+    expires_at: new Date(rawUser.expires_at.split(".")[0]),
+    created_at: new Date(rawUser.created_at.split(".")[0]),
+  };
+  return user;
 }
 
 export async function editUser(id: number, user: Partial<user>): Promise<user> {
