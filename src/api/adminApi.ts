@@ -1,6 +1,6 @@
 import { FetchError } from "../helpers/customErrors/FetchError";
 import { store } from "../redux/store";
-import { payment } from "../types/payments";
+import { payment, rawPayment } from "../types/payments";
 import { rawUser, user } from "../types/users";
 import { rawTicketWCompanyName, ticketWCompanyName } from "../types/tickets";
 
@@ -103,7 +103,7 @@ export async function deleteUser(id: number): Promise<{ message: string }> {
   return res.json();
 }
 
-export async function getAllPayments(): Promise<payment[]> {
+export async function getAllPayments() {
   const res = await fetch(`${api}/admin/payments/all`, {
     method: "GET",
     headers: {
@@ -114,7 +114,14 @@ export async function getAllPayments(): Promise<payment[]> {
   if (res.status !== 200) {
     throw new FetchError(res);
   }
-  return res.json();
+  const rawPayments: rawPayment[] = await res.json();
+  const payments: payment[] = rawPayments.map((payment: rawPayment) => {
+    return {
+      ...payment,
+      date: new Date(payment.date.split(".")[0]),
+    };
+  });
+  return payments;
 }
 export async function getOpenedTickets() {
   const res = await fetch(`${api}/admin/tickets/all-opened`, {
