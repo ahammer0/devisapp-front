@@ -21,6 +21,7 @@ const AdminUsersList = () => {
         array={users}
         keys={["id", "company_name", "account_status", "expires_at"]}
         headers={["id", "Entreprise", "Statut", "Date d'expiration"]}
+        searchKeys={["company_name"]}
       />
     </div>
   );

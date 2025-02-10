@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp } from "@fortawesome/free-solid-svg-icons/faChevronUp";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons/faChevronDown";
 import {
   faChevronLeft,
   faChevronRight,
+  faChevronUp,
+  faChevronDown,
+  faSearch,
 } from "@fortawesome/free-solid-svg-icons";
 import "./ArrayWSort.scss";
+import Fuse from "fuse.js";
 
 type values = number | string | Date;
 interface objectWithId {
@@ -15,13 +17,14 @@ interface objectWithId {
 }
 const ArrayWSort = <T extends objectWithId>({
   keys,
+  searchKeys,
   headers,
   array,
   nElementsByPage = 10,
 }: {
   keys: (keyof T)[];
+  searchKeys: (keyof T)[];
   headers: string[];
-
   array: T[];
   nElementsByPage?: number;
 }) => {
@@ -31,6 +34,7 @@ const ArrayWSort = <T extends objectWithId>({
   const [sortMode, setSortMode] = useState<"asc" | "desc">("asc");
   const [sortField, setSortField] = useState<keyof T>("id");
   const [page, setPage] = useState(1);
+  const [displaySearchBar, setDisplaySearchBar] = useState(false);
 
   const needsPagination = array.length > nElementsByPage;
   const numberOfPages = Math.ceil(array.length / nElementsByPage);
@@ -38,6 +42,36 @@ const ArrayWSort = <T extends objectWithId>({
     nElementsByPage * (page - 1),
     nElementsByPage * page - 1,
   );
+
+  const onSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const search = e.target.value;
+    if (search.length === 0) {
+      setElements(array);
+      return;
+    }
+    const fuseOptions = {
+      isCaseSensitive: false,
+      keys: searchKeys as string[],
+    };
+    const fuse = new Fuse(array, fuseOptions);
+    const results = fuse.search(search);
+    const items = results.map((result) => result.item);
+    setElements(items);
+  };
+  const handleClickSearch = () => {
+    if (displaySearchBar) {
+      setDisplaySearchBar(false);
+      setElements(array);
+    } else {
+      setDisplaySearchBar(true);
+    }
+  };
+  const handleEscapeSearchBar = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Escape") {
+      setDisplaySearchBar(false);
+      setElements(array);
+    }
+  };
 
   const nextPage = () => {
     if (page + 1 > numberOfPages) return;
@@ -85,19 +119,46 @@ const ArrayWSort = <T extends objectWithId>({
         <thead>
           <tr>
             {headers.map((header, index) => (
-              <th onClick={() => handleSortByKey(keys[index])}>
-                {header}
-                {sortField === keys[index] &&
-                  (sortMode === "asc" ? (
-                    <FontAwesomeIcon icon={faChevronUp} />
-                  ) : (
-                    <FontAwesomeIcon icon={faChevronDown} />
-                  ))}
+              <th>
+                <div className="flex justify-between">
+                  <span onClick={() => handleSortByKey(keys[index])}>
+                    {header}
+                    {sortField === keys[index] &&
+                      (sortMode === "asc" ? (
+                        <FontAwesomeIcon icon={faChevronUp} />
+                      ) : (
+                        <FontAwesomeIcon icon={faChevronDown} />
+                      ))}
+                  </span>{" "}
+                  {index === headers.length - 1 && (
+                    <button type="button" onClick={handleClickSearch}>
+                      <FontAwesomeIcon icon={faSearch} />
+                    </button>
+                  )}
+                </div>
               </th>
             ))}
           </tr>
+          {displaySearchBar && (
+            <tr>
+              <td colSpan={keys.length} className="searchBar">
+                <input
+                  type="search"
+                  placeholder="Votre Recherche..."
+                  onChange={onSearchChange}
+                  onKeyDown={handleEscapeSearchBar}
+                  autoFocus
+                />
+              </td>
+            </tr>
+          )}
         </thead>
         <tbody>
+          {displaySearchBar && displayedElements.length === 0 && (
+            <tr>
+              <td colSpan={keys.length}>Aucun resultat</td>
+            </tr>
+          )}
           {displayedElements &&
             displayedElements.map((el) => (
               <tr key={el.id}>
