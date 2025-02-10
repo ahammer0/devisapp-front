@@ -1,5 +1,6 @@
 import { userCreate, user, addCreditRequestBody } from "../types/users";
 import { FetchError } from "../helpers/customErrors/FetchError";
+import { InputError } from "../helpers/inputValidators";
 
 const api = import.meta.env.VITE_API_URL;
 if (!api) {
@@ -14,6 +15,8 @@ export async function registerUser(
   user: Partial<userCreate> & {
     email: userCreate["email"];
     password: userCreate["password"];
+    captcha: string;
+    captchaToken: string;
   },
 ): Promise<user> {
   const res = await fetch(`${api}/register`, {
@@ -21,10 +24,13 @@ export async function registerUser(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(user),
   });
+  const resp = await res.json();
+  if (resp.message === "Invalid Captcha")
+    throw new InputError("Le captchea entré est invalide");
   if (res.status !== 201) {
     throw new FetchError(res);
   }
-  return res.json();
+  return resp;
 }
 export async function loginUser(
   email: string,
@@ -82,6 +88,22 @@ export async function addCredit(
       Authorization: `Bearer ${getToken()}`,
     },
     body: JSON.stringify({ plan }),
+  });
+  if (res.status !== 200) {
+    throw new FetchError(res);
+  }
+  return res.json();
+}
+export interface captchaResponse {
+  captcha: string; //svg element
+  token: string;
+}
+export async function getCaptcha(): Promise<captchaResponse> {
+  const res = await fetch(`${api}/captcha`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
   });
   if (res.status !== 200) {
     throw new FetchError(res);

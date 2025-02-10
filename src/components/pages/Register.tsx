@@ -6,7 +6,7 @@ import CenterCardTemplate from "../templates/CenterCardTemplate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-import { registerUser } from "../../api/userApi";
+import { captchaResponse, registerUser, getCaptcha } from "../../api/userApi";
 import {
   emailValidator,
   InputError,
@@ -20,6 +20,8 @@ const Register = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [captcha, setCaptcha] = useState<captchaResponse | null>(null);
+  const [captchaInput, setCaptchaInput] = useState("");
 
   const navigate = useNavigate();
 
@@ -36,6 +38,16 @@ const Register = () => {
     }
   }, [passwordConfirm, password]);
 
+  useEffect(() => {
+    getCaptcha()
+      .then((res) => {
+        setCaptcha(res);
+      })
+      .catch(() =>
+        setError("Une erreur a eu lieu lors de la récupération du captcha"),
+      );
+  }, []);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsSubmitting(true);
@@ -43,6 +55,7 @@ const Register = () => {
 
   useEffect(() => {
     if (isSubmitting) {
+      if (!captcha) return;
       //validating inputs
       try {
         emailValidator(email);
@@ -54,16 +67,26 @@ const Register = () => {
         setIsSubmitting(false);
         return;
       }
-      registerUser({ email, password })
+      registerUser({
+        email,
+        password,
+        captcha: captchaInput,
+        captchaToken: captcha.token,
+      })
         .then(() => {
           navigate("/connection");
         })
-        .catch(() => {
-          setError("Une erreur est survenue");
+        .catch((e) => {
+          console.log(e);
+          if (e instanceof InputError) {
+            setError(e.message);
+          } else {
+            setError("Une erreur est survenue");
+          }
           setIsSubmitting(false);
         });
     }
-  }, [isSubmitting, email, password, navigate]);
+  }, [isSubmitting, email, password, navigate, captcha, captchaInput]);
 
   return (
     <CenterCardTemplate>
@@ -120,6 +143,15 @@ const Register = () => {
               <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
             </span>
           </div>
+        </div>
+        <div className="flex-row">
+          <div dangerouslySetInnerHTML={{ __html: captcha?.captcha ?? "" }} />
+          <input
+            type="text"
+            name="captcha"
+            required
+            onChange={(e) => setCaptchaInput(e.target.value)}
+          />
         </div>
         {error && <p className="text-danger">{error}</p>}
         <div className="flex-center">
