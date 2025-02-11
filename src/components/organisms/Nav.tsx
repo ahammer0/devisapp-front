@@ -39,10 +39,17 @@ const Nav = ({
       document.body.style.overflow = "unset";
     }
   }, [isActive]);
+  useEffect(() => {
+    function handleClickOutside() {
+      setIsActive(false);
+    }
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, [setIsActive]);
   return (
     <div
       className={isActive ? "nav " : "nav hide"}
-      onClick={() => setIsActive(false)}
+      onClick={(e) => e.stopPropagation()}
     >
       <Link to="/" className="item">
         <FontAwesomeIcon icon={faHouse} className="icon" /> Accueil

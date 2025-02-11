@@ -7,9 +7,13 @@ const MenuBurgerIcon = ({
   isActive: boolean;
   toggle: () => void;
 }) => {
+  function handleToggle(e: React.BaseSyntheticEvent) {
+    e.stopPropagation();
+    toggle();
+  }
   return (
     <div
-      onClick={toggle}
+      onClick={handleToggle}
       className={`menuBurgerButton container ${isActive ? "menuBurgerButton-active" : ""}`}
     >
       <div className="menuBurgerButton menuBurgerButton-item"></div>

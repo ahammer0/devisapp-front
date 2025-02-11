@@ -2,7 +2,7 @@
 .profile {
   @include display-md {
     max-width: 700px;
-    margin: auto;
+    margin: 0 auto;
   }
 
   table {
