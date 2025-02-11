@@ -30,10 +30,14 @@ const EditWorkPopup = ({
 
   return (
     <Popup isActive={isActive} setIsActive={setIsActive}>
-      <button onClick={() => setIsActive(false)} className="btn btn-secondary">
-        <FontAwesomeIcon icon={faXmark} />
-      </button>
-
+      <div className="popupButtons">
+        <button
+          onClick={() => setIsActive(false)}
+          className="btn btn-danger btnArrow"
+        >
+          <FontAwesomeIcon icon={faXmark} />
+        </button>
+      </div>
       <h1>Modifier un travail</h1>
       <WorkForm defaultWork={workToEdit} done={() => setIsActive(false)} />
     </Popup>
