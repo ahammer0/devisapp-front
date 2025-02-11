@@ -4,10 +4,16 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { useState, useContext, useEffect } from "react";
 import { AccordionContext } from "../../contexts/AccordionContext";
 import { faCheck } from "@fortawesome/free-solid-svg-icons/faCheck";
+import {
+  faArrowLeft,
+  faArrowRight,
+  faTrashCan,
+} from "@fortawesome/free-solid-svg-icons";
 import { addMedia, deleteMedia, getMedia } from "../../api/quotesApi";
 import QuoteFormContext from "../../contexts/QuoteFormContext";
 import Popup from "../atoms/Popup";
 import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
+import { quote_media } from "../../types/quotes";
 
 const MediaForm = () => {
   const [currentFile, setCurrentFile] = useState<File | null>(null);
@@ -20,6 +26,11 @@ const MediaForm = () => {
     null,
     null,
   ];
+  const [mediasWithPathname, setMediasWithPathname] = useState<
+    (quote_media & { pathname?: string; data?: Blob })[]
+  >([]);
+  const [mediaToPopup, setMediaToPopup] = useState(0);
+  const [isActivePopup, setIsActivePopup] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
@@ -40,6 +51,57 @@ const MediaForm = () => {
       })
       .catch((err) => setError(err));
   };
+  const handleDelete = () => {
+    const id = mediasWithPathname[mediaToPopup].id;
+    deleteMedia(id).then(() => {
+      //if delete successful then update current quote
+      if (!quote || !("id" in quote)) return;
+      setQuote({
+        ...quote,
+        quote_medias: quote.quote_medias.filter((el) => el.id !== id),
+      });
+      setMediasWithPathname(
+        mediasWithPathname.filter((_, i) => i !== mediaToPopup),
+      );
+    });
+  };
+  const handleOpenPopup = (id: number) => {
+    setMediaToPopup(id);
+    setIsActivePopup(true);
+  };
+  const handleNextImage = () => {
+    if (mediaToPopup < mediasWithPathname.length - 1)
+      setMediaToPopup(mediaToPopup + 1);
+  };
+  const handlePreviousImage = () => {
+    if (mediaToPopup > 0) setMediaToPopup(mediaToPopup - 1);
+  };
+
+  useEffect(() => {
+    if (!quote?.quote_medias) return;
+    if (quote.quote_medias.length === mediasWithPathname.length) return;
+
+    const promises = quote.quote_medias.map((media) => getMedia(media.id));
+
+    Promise.all(promises).then((res) => {
+      setMediasWithPathname(
+        quote.quote_medias.map((media, i) => ({
+          ...media,
+          pathname: URL.createObjectURL(res[i]),
+          data: res[i],
+        })),
+      );
+      accordionUpdate();
+    });
+
+    function free() {
+      mediasWithPathname.forEach((el) => {
+        if (!el.pathname) return;
+        URL.revokeObjectURL(el.pathname);
+      });
+    }
+    return free;
+  }, [quote?.quote_medias, mediasWithPathname, accordionUpdate]);
 
   useEffect(() => {
     if (!error) return;
@@ -55,13 +117,14 @@ const MediaForm = () => {
   return (
     <fieldset className="mediaForm" key={"newImage" + currentFile?.name}>
       <section className="imagesGroup">
-        {quote &&
-          quote.quote_medias &&
-          quote.quote_medias.map((el) => (
-            <article className="card" key={`quoteImage${el.id}`}>
-              <Image id={el.id} />
-            </article>
-          ))}
+        {mediasWithPathname.map((el, id) => (
+          <article className="card" key={`quoteImage${id}`}>
+            <img
+              src={el?.pathname ?? undefined}
+              onClick={() => handleOpenPopup(id)}
+            />
+          </article>
+        ))}
       </section>
 
       <article className="addCard card">
@@ -106,59 +169,46 @@ const MediaForm = () => {
           <p>Veuillez enregistrer le devis pour pouvoir ajouter des images</p>
         )}
       </article>
+      <Popup isActive={isActivePopup} setIsActive={setIsActivePopup}>
+        <img
+          className="popupImage"
+          src={mediasWithPathname[mediaToPopup]?.pathname ?? undefined}
+          alt="image"
+        />
+        <div className="popupButtons">
+          <button
+            type="button"
+            className="btn btn-danger btnArrow"
+            onClick={handleDelete}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+          </button>
+          <div className="btnGroup">
+            <button
+              type="button"
+              className="btn btn-primary btnArrow"
+              onClick={handlePreviousImage}
+            >
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+            <button
+              type="button"
+              className="btn btn-primary btnArrow"
+              onClick={handleNextImage}
+            >
+              <FontAwesomeIcon icon={faArrowRight} />
+            </button>
+            <button
+              type="button"
+              className="btn btn-danger btnArrow"
+              onClick={() => setIsActivePopup(false)}
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+        </div>
+      </Popup>
     </fieldset>
   );
 };
 export default MediaForm;
-
-const Image = ({ id }: { id: number }) => {
-  const [file, setFile] = useState<Blob | null>(null);
-  const accordionUpdate = useContext(AccordionContext);
-  const [isActivePopup, setIsActivePopup] = useState(false);
-  const [quote, setQuote, _isEditing] = useContext(QuoteFormContext) ?? [
-    null,
-    null,
-    null,
-  ];
-  let pathname;
-  if (file) {
-    pathname = URL.createObjectURL(file);
-  }
-  useEffect(() => {
-    if (!file)
-      getMedia(id).then((res) => {
-        setFile(res);
-        accordionUpdate();
-      });
-  }, [id, accordionUpdate, file]);
-
-  const handleDelete = () => {
-    deleteMedia(id).then(() => {
-      //if delete successful then update current quote
-      if (!quote || !("id" in quote)) return;
-      setQuote({
-        ...quote,
-        quote_medias: quote.quote_medias.filter((el) => el.id !== id),
-      });
-    });
-  };
-
-  return (
-    <div>
-      <img src={pathname} onClick={() => setIsActivePopup(true)} />
-      <Popup isActive={isActivePopup} setIsActive={setIsActivePopup}>
-        <button
-          type="button"
-          className="btn btn-danger"
-          onClick={() => setIsActivePopup(false)}
-        >
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
-        <img className="popupImage" src={pathname} alt="image" />
-        <button type="button" className="btn btn-danger" onClick={handleDelete}>
-          Supprimer
-        </button>
-      </Popup>
-    </div>
-  );
-};
