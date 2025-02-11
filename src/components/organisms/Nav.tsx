@@ -52,7 +52,7 @@ const Nav = ({
       </Link>
       {!user && (
         <Link to="/connection" className="item">
-          <FontAwesomeIcon icon={faRightToBracket} className="icon" />{" "}
+          <FontAwesomeIcon icon={faRightToBracket} className="icon" />
           Connection
         </Link>
       )}

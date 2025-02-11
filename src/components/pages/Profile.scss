@@ -1,6 +1,14 @@
+@use "../../variables.scss" as *;
 .profile {
-  table-layout: fixed;
-  width: 100%;
+  @include display-md {
+    max-width: 700px;
+    margin: auto;
+  }
+
+  table {
+    table-layout: fixed;
+    width: 100%;
+  }
 
   th {
     width: 150px;

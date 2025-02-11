@@ -70,7 +70,7 @@ const Profile = () => {
   }, [error]);
 
   return (
-    <MainTemplate>
+    <MainTemplate className="profile">
       <h1>Profil entreprise</h1>
       {userToSave && (
         <>

@@ -13,6 +13,7 @@ import {
 import MenuBurgerIcon from "../atoms/MenuBurgerIcon";
 import Nav from "./Nav";
 import { selectUser, resetUser } from "../../redux/userSlice";
+import "./Header.scss";
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false);

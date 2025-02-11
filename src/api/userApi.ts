@@ -26,7 +26,7 @@ export async function registerUser(
   });
   const resp = await res.json();
   if (resp.message === "Invalid Captcha")
-    throw new InputError("Le captchea entré est invalide");
+    throw new InputError("Le captcha entré est invalide");
   if (res.status !== 201) {
     throw new FetchError(res);
   }
@@ -46,6 +46,7 @@ export async function loginUser(
   }
   return res.json();
 }
+
 export async function editUser(user: Partial<userCreate>): Promise<user> {
   const res = await fetch(`${api}/user`, {
     method: "PUT",

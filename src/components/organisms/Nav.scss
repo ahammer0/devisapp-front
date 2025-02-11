@@ -12,9 +12,32 @@
   display: flex;
   flex-direction: column;
   justify-content: start;
-  align-items: center;
+  align-items: stretch;
+
   &.hide {
-    display: none;
+    max-width: 0;
+    padding: 0;
+    transition:
+      max-width 200ms ease-in-out 200ms,
+      padding 1ms ease 200ms;
+    .item {
+      opacity: 0;
+      transition: opacity 200ms ease-in-out;
+    }
+    @include Var.display-lg {
+      max-width: 300px;
+      padding: 2rem;
+      transition: unset;
+      .item {
+        opacity: 1;
+        transition: unset;
+      }
+    }
+  }
+  @include Var.display-md {
+    right: unset;
+    max-width: 300px;
+    transition: max-width 200ms ease-in-out;
   }
   overflow-y: scroll;
   .item {
@@ -27,8 +50,13 @@
     align-items: center;
     justify-content: space-between;
     text-decoration: none;
+    text-align: right;
     color: Var.$textDark;
-    width: 100%;
+    transition: opacity 200ms ease-in-out 200ms;
+    opacity: 1;
+    svg {
+      margin-right: 1rem;
+    }
     &:hover {
       background-color: Var.$secondary;
     }

@@ -63,9 +63,9 @@ const ChangePlan = () => {
   };
 
   return (
-    <MainTemplate>
+    <MainTemplate className="changePlan">
       {displayedItem === "select" && (
-        <>
+        <div className="planSelect">
           <h1>Changer d'abonnement</h1>
           {isPast(user.expires_at) && (
             <p className="text-danger">
@@ -73,46 +73,48 @@ const ChangePlan = () => {
             </p>
           )}
           <form onSubmit={handleSubmit} className="subscribeForm">
-            <RadioCard
-              label="Gratuit"
-              name="subscriptionTime"
-              value="0"
-              checked={choosedPlan === 0}
-            >
-              Vous continuez d'utiliser l'appli gratuitement.
-              <br />
-              <small>
-                En revanche, les devis que vous générez portent un filigrane
-              </small>{" "}
-              <div className="price">
-                <strong>Gratuit</strong>
-              </div>
-            </RadioCard>
-            <RadioCard
-              label="Ajouter 3 Mois"
-              name="subscriptionTime"
-              value="3"
-              checked={choosedPlan ? choosedPlan === 3 : true}
-            >
-              Vous Achetez 3 mois d'utilisation <br />
-              <em>Idéal pour essayer en entier!</em>
-              <div className="price">
-                <strong>30€</strong>
-              </div>
-            </RadioCard>
-            <RadioCard
-              label="Ajouter 12 Mois"
-              name="subscriptionTime"
-              value="12"
-              checked={choosedPlan === 12}
-            >
-              Vous achetez un an d'utilisation
-              <br />
-              <em>Pour les utilisateurs convaincus !</em>
-              <div className="price">
-                <strong>100€</strong>
-              </div>
-            </RadioCard>
+            <div className="cards">
+              <RadioCard
+                label="Gratuit"
+                name="subscriptionTime"
+                value="0"
+                checked={choosedPlan === 0}
+              >
+                Vous continuez d'utiliser l'appli gratuitement.
+                <br />
+                <small>
+                  En revanche, les devis que vous générez portent un filigrane
+                </small>{" "}
+                <div className="price">
+                  <strong>Gratuit</strong>
+                </div>
+              </RadioCard>
+              <RadioCard
+                label="Ajouter 3 Mois"
+                name="subscriptionTime"
+                value="3"
+                checked={choosedPlan ? choosedPlan === 3 : true}
+              >
+                Vous Achetez 3 mois d'utilisation <br />
+                <em>Idéal pour essayer en entier!</em>
+                <div className="price">
+                  <strong>30€</strong>
+                </div>
+              </RadioCard>
+              <RadioCard
+                label="Ajouter 12 Mois"
+                name="subscriptionTime"
+                value="12"
+                checked={choosedPlan === 12}
+              >
+                Vous achetez un an d'utilisation
+                <br />
+                <em>Pour les utilisateurs convaincus !</em>
+                <div className="price">
+                  <strong>100€</strong>
+                </div>
+              </RadioCard>
+            </div>
 
             <input
               type="submit"
@@ -120,7 +122,7 @@ const ChangePlan = () => {
               value="Payer"
             />
           </form>
-        </>
+        </div>
       )}
       {displayedItem === "pay" && (
         <>

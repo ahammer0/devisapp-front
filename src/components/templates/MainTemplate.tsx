@@ -1,6 +1,7 @@
 import Header from "../organisms/Header";
 import Footer from "../organisms/Footer";
 import EmptyTemplate from "./EmptyTemplate";
+import Nav from "../organisms/Nav";
 import "./MainTemplate.scss";
 
 const MainTemplate = ({
@@ -13,7 +14,14 @@ const MainTemplate = ({
   return (
     <EmptyTemplate>
       <Header />
-      <main className={"mainTemplate__main" + " " + className}>{children}</main>
+      <div className="mainTemplate__container">
+        <div className="navContainer">
+          <Nav isActive={false} setIsActive={() => null} />
+        </div>
+        <main className={"mainTemplate__main" + " " + (className ?? "")}>
+          {children}
+        </main>
+      </div>
       <Footer />
     </EmptyTemplate>
   );

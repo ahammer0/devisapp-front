@@ -1,11 +1,37 @@
-.subscribeForm {
-  .price {
-    font-weight: bold;
-    text-align: right;
+@use "../../variables.scss" as *;
+.changePlan {
+  display: flex;
+  .planSelect {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
   }
-  input.submitButton {
-    width: 10rem;
-    display: block;
-    margin: 1rem auto;
+  .subscribeForm {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 4rem;
+    .cards {
+      @include display-md {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+      }
+    }
+
+    .price {
+      font-weight: bold;
+      text-align: right;
+    }
+    input.submitButton {
+      width: 10rem;
+      display: block;
+      margin: 1rem auto;
+      @include display-md {
+        margin-top: 3rem;
+      }
+    }
   }
 }

@@ -8,18 +8,35 @@
   h1 {
     margin-top: 2rem;
   }
+  @include display-md {
+    max-width: 1000px;
+    margin: auto;
+    h2 {
+      text-align: center;
+    }
+  }
   section {
     margin-bottom: 2rem;
   }
   &__first {
     .descText {
       text-align: center;
-      margin: 1rem 0;
+      margin: 4rem;
     }
     min-height: 80svh;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    @include display-md {
+      max-width: 1000px;
+      margin: auto;
+      flex-direction: row;
+      img {
+        height: 300px;
+        width: 300px;
+      }
+    }
   }
   &__cta {
     display: flex;
@@ -35,6 +52,14 @@
   }
   &__social {
     padding: 0.5rem;
+    .cardsContainer {
+      @include display-md {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 10px;
+      }
+    }
     .profile {
       width: 100px;
       margin: 0 auto;

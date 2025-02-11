@@ -27,7 +27,6 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
     general_infos: "",
     status: "draft",
     quote_elements: [],
-    quote_medias: [],
     customer: null,
     expires_at: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000),
   };

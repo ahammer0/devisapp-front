@@ -40,7 +40,7 @@ const TicketsCreateForm = ({
   }, [success]);
 
   return (
-    <>
+    <div className="createTicket">
       <h2>Creer un ticket</h2>
       <form action={formAction}>
         <label>
@@ -63,7 +63,7 @@ const TicketsCreateForm = ({
           </button>
         </div>
       </form>
-    </>
+    </div>
   );
 };
 export default TicketsCreateForm;

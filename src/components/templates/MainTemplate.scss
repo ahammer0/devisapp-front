@@ -1,3 +1,28 @@
+@use "../../variables.scss" as *;
 .mainTemplate__main {
   flex-grow: 1;
+  overflow-y: scroll;
+  @include display-lg {
+    padding: 1rem;
+  }
+}
+.mainTemplate__container {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  flex-grow: 1;
+  .nav {
+    display: none;
+  }
+  .navContainer {
+    background-color: $primary;
+  }
+
+  @include display-lg {
+    .nav {
+      position: sticky;
+      display: flex;
+      top: 0;
+    }
+  }
 }

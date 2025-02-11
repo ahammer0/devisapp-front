@@ -79,3 +79,19 @@ $shadow-inset-light: 4px -4px 8px 1px rgba(255, 255, 255, 0.2) inset;
 @mixin shadow-inner {
   box-shadow: inset 2px 5px 7px 0px rgba(0, 0, 0, 0.3);
 }
+
+//////////////////////////////////////////////////
+//////                                      //////
+//////           Media queries              //////
+//////                                      //////
+//////////////////////////////////////////////////
+@mixin display-md() {
+  @media screen and (min-width: 768px) {
+    @content;
+  }
+}
+@mixin display-lg() {
+  @media screen and (min-width: 1200px) {
+    @content;
+  }
+}

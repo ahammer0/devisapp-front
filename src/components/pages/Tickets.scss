@@ -1,0 +1,16 @@
+@use "../../variables" as *;
+.tickets {
+  .content {
+    @include display-md {
+      display: flex;
+      flex-direction: row;
+      gap: 2rem;
+      .ticketList {
+        max-width: 50%;
+      }
+      .createTicket {
+        max-width: 50%;
+      }
+    }
+  }
+}
