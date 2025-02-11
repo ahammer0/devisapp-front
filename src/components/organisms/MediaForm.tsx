@@ -25,6 +25,7 @@ const MediaForm = () => {
     const fileList = e.target.files;
     if (!fileList || fileList.length === 0) return;
     setCurrentFile(fileList[0]);
+    accordionUpdate();
   };
   const handleAddImage = () => {
     if (!currentFile) return;
@@ -35,6 +36,7 @@ const MediaForm = () => {
         setQuote({ ...quote, quote_medias: [...quote.quote_medias, res] });
         setSuccess("l' image à bien été enregistrée");
         setCurrentFile(null);
+        accordionUpdate();
       })
       .catch((err) => setError(err));
   };
@@ -49,7 +51,6 @@ const MediaForm = () => {
     const timer = setTimeout(() => setSuccess(""), 5000);
     return () => clearTimeout(timer);
   }, [success]);
-  useEffect(() => accordionUpdate(), [currentFile, accordionUpdate]);
 
   return (
     <fieldset className="mediaForm" key={"newImage" + currentFile?.name}>
@@ -112,8 +113,8 @@ export default MediaForm;
 
 const Image = ({ id }: { id: number }) => {
   const [file, setFile] = useState<Blob | null>(null);
-  const [isActivePopup, setIsActivePopup] = useState(false);
   const accordionUpdate = useContext(AccordionContext);
+  const [isActivePopup, setIsActivePopup] = useState(false);
   const [quote, setQuote, _isEditing] = useContext(QuoteFormContext) ?? [
     null,
     null,
@@ -124,11 +125,12 @@ const Image = ({ id }: { id: number }) => {
     pathname = URL.createObjectURL(file);
   }
   useEffect(() => {
-    getMedia(id).then((res) => {
-      setFile(res);
-    });
-  }, [id]);
-  useEffect(() => accordionUpdate(), [file, accordionUpdate]);
+    if (!file)
+      getMedia(id).then((res) => {
+        setFile(res);
+        accordionUpdate();
+      });
+  }, [id, accordionUpdate, file]);
 
   const handleDelete = () => {
     deleteMedia(id).then(() => {
