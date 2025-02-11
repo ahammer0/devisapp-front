@@ -7,9 +7,13 @@
     margin: 0.25rem;
     padding: 0;
     img {
+      width: 100px;
       margin: 0 auto;
       aspect-ratio: 1;
       border-radius: $radius-small;
+    }
+    .popupImage {
+      width: auto;
     }
   }
   .card:hover {
@@ -33,7 +37,8 @@
     }
   }
   .imagesGroup {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 }

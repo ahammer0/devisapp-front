@@ -20,6 +20,7 @@ import { toFormDateString } from "../../helpers/dateFormat";
 import Accordion from "../atoms/Accordion";
 import MediaForm from "../organisms/MediaForm";
 import "./QuoteForm.scss";
+import useBreakpoint from "../../hooks/useBreakpoint";
 
 const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   const initialQuote: quote_full_create = {
@@ -35,6 +36,7 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
   //               STATES                               //
   //                                                    //
   ////////////////////////////////////////////////////////
+  const breakpoint = useBreakpoint();
   const quotes = useQuotes();
   const isEditing = useMemo(() => quoteId !== undefined, [quoteId]);
   const [quoteToSave, setQuoteToSave] = useState<
@@ -207,91 +209,171 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
             ).toFixed(2)}{" "}
             €
           </p>
-          {/*customer info form*/}
-          <Accordion
-            elements={[
-              <CustomerForm
-                customer={quoteToSave.customer}
-                setCustomer={(customer) =>
-                  setQuoteToSave({
-                    ...quoteToSave,
-                    customer: customer,
-                    customer_id: undefined,
-                  })
-                }
-              />,
-            ]}
-            headers={["Informations du client"]}
-          />
 
+          {/*customer info form*/}
           {/*general quotes infos form*/}
-          <Accordion
-            elements={[
-              <fieldset>
-                <div>
-                  <label htmlFor="general_infos">Infos gérérales</label>
-                  <textarea
-                    name="general_infos"
-                    onChange={(e) =>
-                      setQuoteToSave({
-                        ...quoteToSave,
-                        general_infos: e.target.value,
-                      })
-                    }
-                    value={quoteToSave.general_infos}
-                  ></textarea>
-                </div>
-                <div>
-                  <label htmlFor="global_discount">Remise générale (%)</label>
-                  <input
-                    type="number"
-                    name="global_discount"
-                    value={quoteToSave.global_discount}
-                    onChange={(e) =>
-                      setQuoteToSave({
-                        ...quoteToSave,
-                        global_discount: parseFloat(e.target.value),
-                      })
-                    }
-                  />
-                </div>
-                <div>
-                  <label htmlFor="expires_at">Date d'expiration</label>
-                  <input
-                    type="date"
-                    name="expires_at"
-                    value={toFormDateString(quoteToSave.expires_at)}
-                    onChange={(e) => {
-                      setQuoteToSave({
-                        ...quoteToSave,
-                        expires_at: new Date(e.target.value),
-                      });
-                    }}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="status">Statut</label>
-                  <select
-                    name="status"
-                    value={quoteToSave.status}
-                    onChange={(e) =>
-                      setQuoteToSave({
-                        ...quoteToSave,
-                        status: e.target.value as quote_full_create["status"],
-                      })
-                    }
-                  >
-                    <option value="quote">Quote</option>
-                    <option value="draft">Draft</option>
-                    <option value="invoice">Invoice</option>
-                    <option value="validated">Validated</option>
-                  </select>
-                </div>
-              </fieldset>,
-              <MediaForm />,
-            ]}
-            headers={["informations générales", "Médias"]}
-          />
+          {breakpoint !== "lg" && (
+            <Accordion
+              elements={[
+                <CustomerForm
+                  customer={quoteToSave.customer}
+                  setCustomer={(customer) =>
+                    setQuoteToSave({
+                      ...quoteToSave,
+                      customer: customer,
+                      customer_id: undefined,
+                    })
+                  }
+                />,
+                <fieldset>
+                  <div>
+                    <label htmlFor="general_infos">Infos gérérales</label>
+                    <textarea
+                      name="general_infos"
+                      onChange={(e) =>
+                        setQuoteToSave({
+                          ...quoteToSave,
+                          general_infos: e.target.value,
+                        })
+                      }
+                      value={quoteToSave.general_infos}
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label htmlFor="global_discount">Remise générale (%)</label>
+                    <input
+                      type="number"
+                      name="global_discount"
+                      value={quoteToSave.global_discount}
+                      onChange={(e) =>
+                        setQuoteToSave({
+                          ...quoteToSave,
+                          global_discount: parseFloat(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="expires_at">Date d'expiration</label>
+                    <input
+                      type="date"
+                      name="expires_at"
+                      value={toFormDateString(quoteToSave.expires_at)}
+                      onChange={(e) => {
+                        setQuoteToSave({
+                          ...quoteToSave,
+                          expires_at: new Date(e.target.value),
+                        });
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="status">Statut</label>
+                    <select
+                      name="status"
+                      value={quoteToSave.status}
+                      onChange={(e) =>
+                        setQuoteToSave({
+                          ...quoteToSave,
+                          status: e.target.value as quote_full_create["status"],
+                        })
+                      }
+                    >
+                      <option value="quote">Quote</option>
+                      <option value="draft">Draft</option>
+                      <option value="invoice">Invoice</option>
+                      <option value="validated">Validated</option>
+                    </select>
+                  </div>
+                </fieldset>,
+                <MediaForm />,
+              ]}
+              headers={[
+                "Informations du client",
+                "informations générales",
+                "Médias",
+              ]}
+            />
+          )}
+          {breakpoint === "lg" && (
+            <div>
+              <div className="table2col">
+                {" "}
+                <CustomerForm
+                  customer={quoteToSave.customer}
+                  setCustomer={(customer) =>
+                    setQuoteToSave({
+                      ...quoteToSave,
+                      customer: customer,
+                      customer_id: undefined,
+                    })
+                  }
+                />
+                <fieldset>
+                  <div>
+                    <label htmlFor="general_infos">Infos gérérales</label>
+                    <textarea
+                      name="general_infos"
+                      onChange={(e) =>
+                        setQuoteToSave({
+                          ...quoteToSave,
+                          general_infos: e.target.value,
+                        })
+                      }
+                      value={quoteToSave.general_infos}
+                    ></textarea>
+                  </div>
+                  <div>
+                    <label htmlFor="global_discount">Remise générale (%)</label>
+                    <input
+                      type="number"
+                      name="global_discount"
+                      value={quoteToSave.global_discount}
+                      onChange={(e) =>
+                        setQuoteToSave({
+                          ...quoteToSave,
+                          global_discount: parseFloat(e.target.value),
+                        })
+                      }
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="expires_at">Date d'expiration</label>
+                    <input
+                      type="date"
+                      name="expires_at"
+                      value={toFormDateString(quoteToSave.expires_at)}
+                      onChange={(e) => {
+                        setQuoteToSave({
+                          ...quoteToSave,
+                          expires_at: new Date(e.target.value),
+                        });
+                      }}
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="status">Statut</label>
+                    <select
+                      name="status"
+                      value={quoteToSave.status}
+                      onChange={(e) =>
+                        setQuoteToSave({
+                          ...quoteToSave,
+                          status: e.target.value as quote_full_create["status"],
+                        })
+                      }
+                    >
+                      <option value="quote">Quote</option>
+                      <option value="draft">Draft</option>
+                      <option value="invoice">Invoice</option>
+                      <option value="validated">Validated</option>
+                    </select>
+                  </div>
+                </fieldset>
+              </div>
+              <MediaForm />
+            </div>
+          )}
           <button className="btn btn-primary" type="submit">
             <FontAwesomeIcon icon={faFloppyDisk} /> Enregistrer
           </button>

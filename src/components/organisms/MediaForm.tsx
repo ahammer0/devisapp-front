@@ -148,13 +148,14 @@ const Image = ({ id }: { id: number }) => {
       <img src={pathname} onClick={() => setIsActivePopup(true)} />
       <Popup isActive={isActivePopup} setIsActive={setIsActivePopup}>
         <button
+          type="button"
           className="btn btn-danger"
           onClick={() => setIsActivePopup(false)}
         >
           <FontAwesomeIcon icon={faXmark} />
         </button>
-        <img src={pathname} alt="image" />
-        <button className="btn btn-danger" onClick={handleDelete}>
+        <img className="popupImage" src={pathname} alt="image" />
+        <button type="button" className="btn btn-danger" onClick={handleDelete}>
           Supprimer
         </button>
       </Popup>
