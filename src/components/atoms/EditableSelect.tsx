@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./EditableSelect.scss";
 
 const EditableSelect = ({
   values,
@@ -14,11 +15,12 @@ const EditableSelect = ({
   label?: string;
 }) => {
   const [currentSection, setCurrentSection] = useState(defaultValue);
+  const [newSection, setNewSection] = useState("");
 
   const handleAddSection = (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
-    setCurrentSection(e.target[0].value);
-    onChange(e.target[0].value);
+    setCurrentSection(newSection);
+    onChange(newSection);
   };
   const handleChangeSection = (e: React.BaseSyntheticEvent) => {
     e.preventDefault();
@@ -30,7 +32,7 @@ const EditableSelect = ({
 
   return (
     <>
-      <form>
+      <div>
         {label && <label htmlFor="edSelect">{label}</label>}
         <select
           name="edSelect"
@@ -53,20 +55,26 @@ const EditableSelect = ({
             </option>
           )}
         </select>
-      </form>
+      </div>
       {/*add new section*/}
       {currentSection === "--Ajouter une section--" && (
-        <form onSubmit={handleAddSection}>
+        <div>
           <input
             type="text"
             name="section"
             placeholder="Nouvelle section"
             autoFocus
+            value={newSection}
+            onChange={(e) => setNewSection(e.target.value)}
           />
-          <button className="btn btn-primary" type="submit">
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={handleAddSection}
+          >
             <FontAwesomeIcon icon={faPlus} />
           </button>
-        </form>
+        </div>
       )}
     </>
   );
