@@ -2,19 +2,16 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHouse,
-  faRightToBracket,
   faDoorOpen,
   faUser,
   faNewspaper,
   faHammer,
-  faPalette,
   faList,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { resetUser, selectUser } from "../../redux/userSlice";
 import { useEffect } from "react";
 import "./Nav.scss";
-import { faGears } from "@fortawesome/free-solid-svg-icons/faGears";
 
 const Nav = ({
   isActive,
@@ -54,15 +51,6 @@ const Nav = ({
       <Link to="/" className="item">
         <FontAwesomeIcon icon={faHouse} className="icon" /> Accueil
       </Link>
-      <Link to="/admin" className="item">
-        <FontAwesomeIcon icon={faGears} className="icon" /> Admin
-      </Link>
-      {!user && (
-        <Link to="/connection" className="item">
-          <FontAwesomeIcon icon={faRightToBracket} className="icon" />
-          Connection
-        </Link>
-      )}
 
       {/* User connected */}
       {user && (
@@ -89,9 +77,6 @@ const Nav = ({
           </Link>
         </>
       )}
-      <Link to="/palette" className="item">
-        <FontAwesomeIcon icon={faPalette} className="icon" /> Palette
-      </Link>
     </div>
   );
 };

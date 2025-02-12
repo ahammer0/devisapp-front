@@ -298,7 +298,6 @@ const QuoteForm = ({ quoteId }: { quoteId?: number }) => {
           {breakpoint === "lg" && (
             <div>
               <div className="table2col">
-                {" "}
                 <CustomerForm
                   customer={quoteToSave.customer}
                   setCustomer={(customer) =>

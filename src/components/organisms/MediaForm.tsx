@@ -15,6 +15,10 @@ import Popup from "../atoms/Popup";
 import { faXmark } from "@fortawesome/free-solid-svg-icons/faXmark";
 import { quote_media } from "../../types/quotes";
 
+interface mediaWPathname extends quote_media {
+  pathname?: string;
+  data?: Blob;
+}
 const MediaForm = () => {
   const [currentFile, setCurrentFile] = useState<File | null>(null);
   const [error, setError] = useState("");
@@ -27,7 +31,7 @@ const MediaForm = () => {
     null,
   ];
   const [mediasWithPathname, setMediasWithPathname] = useState<
-    (quote_media & { pathname?: string; data?: Blob })[]
+    mediaWPathname[]
   >([]);
   const [mediaToPopup, setMediaToPopup] = useState(0);
   const [isActivePopup, setIsActivePopup] = useState(false);
@@ -40,7 +44,7 @@ const MediaForm = () => {
   };
   const handleAddImage = () => {
     if (!currentFile) return;
-    if (!quote || !("id" in quote)) return;
+    if (!quote || !("id" in quote) || !(typeof quote.id === "number")) return;
 
     addMedia(currentFile, quote.id)
       .then((res) => {

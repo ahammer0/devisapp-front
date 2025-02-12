@@ -97,113 +97,104 @@ const WorkForm = ({
   }, [isSuccess, emptyWork, isEditing]);
 
   return (
-    <>
-      <form onSubmit={handleSubmit}>
-        <div className="item">
-          <label htmlFor="name">Désignation</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={workToSave.name}
-            onChange={(e) => changeWork("name", e.target.value)}
-          />
-        </div>
+    <form onSubmit={handleSubmit} className="workForm">
+      <div className="item">
+        <label htmlFor="name">Désignation</label>
+        <input
+          type="text"
+          name="name"
+          id="name"
+          value={workToSave.name}
+          onChange={(e) => changeWork("name", e.target.value)}
+        />
+      </div>
 
-        <div className="item">
-          <label htmlFor="unit">Unité (ex: m2,kg,...)</label>
-          <input
-            type="text"
-            name="unit"
-            id="unit"
-            value={workToSave.unit}
-            onChange={(e) => changeWork("unit", e.target.value)}
-          />
-        </div>
+      <div className="item">
+        <label htmlFor="unit">Unité (ex: m2,kg,...)</label>
+        <input
+          type="text"
+          name="unit"
+          id="unit"
+          value={workToSave.unit}
+          onChange={(e) => changeWork("unit", e.target.value)}
+        />
+      </div>
 
-        <div className="item">
-          <label htmlFor="unit_price">Prix unitaire</label>
-          <input
-            type="number"
-            name="unit_price"
-            id="unit_price"
-            step="0.01"
-            value={workToSave.unit_price}
-            onChange={(e) =>
-              changeWork("unit_price", parseFloat(e.target.value))
-            }
-          />
-        </div>
+      <div className="item">
+        <label htmlFor="unit_price">Prix unitaire</label>
+        <input
+          type="number"
+          name="unit_price"
+          id="unit_price"
+          step="0.01"
+          value={workToSave.unit_price}
+          onChange={(e) => changeWork("unit_price", parseFloat(e.target.value))}
+        />
+      </div>
 
-        <div className="item">
-          <label htmlFor="unit_time">Main d' oeuvre par unité</label>
-          <input
-            type="number"
-            name="unit_time"
-            id="unit_time"
-            step="0.1"
-            value={workToSave.unit_time}
-            onChange={(e) =>
-              changeWork("unit_time", parseFloat(e.target.value))
-            }
-          />
-        </div>
+      <div className="item">
+        <label htmlFor="unit_time">Main d' oeuvre par unité</label>
+        <input
+          type="number"
+          name="unit_time"
+          id="unit_time"
+          step="0.1"
+          value={workToSave.unit_time}
+          onChange={(e) => changeWork("unit_time", parseFloat(e.target.value))}
+        />
+      </div>
 
-        <div className="item">
-          <label htmlFor="buy_price">Prix d' achat</label>
-          <input
-            type="number"
-            name="buy_price"
-            id="buy_price"
-            step="0.01"
-            value={workToSave.buy_price}
-            onChange={(e) =>
-              changeWork("buy_price", parseFloat(e.target.value))
-            }
-          />
-        </div>
+      <div className="item">
+        <label htmlFor="buy_price">Prix d' achat</label>
+        <input
+          type="number"
+          name="buy_price"
+          id="buy_price"
+          step="0.01"
+          value={workToSave.buy_price}
+          onChange={(e) => changeWork("buy_price", parseFloat(e.target.value))}
+        />
+      </div>
+      {/* <div className="flex-row items-center justify-center"> */}
+      {/*   <div> */}
+      {/*     <label htmlFor="isFavorite">Favoris</label> */}
+      {/*     <input */}
+      {/*       type="checkbox" */}
+      {/*       name="isFavorite" */}
+      {/*       id="isFavorite" */}
+      {/*       checked={workToSave.isFavorite} */}
+      {/*       onChange={(e) => changeWork("isFavorite", e.target.checked)} */}
+      {/*     /> */}
+      {/*   </div> */}
+      {/**/}
+      {/*   <div> */}
+      {/*     <label htmlFor="type">type</label> */}
+      {/*     <select */}
+      {/*       name="type" */}
+      {/*       id="type" */}
+      {/*       value={workToSave.type} */}
+      {/*       onChange={(e) => */}
+      {/*         changeWork( */}
+      {/*           "type", */}
+      {/*           e.target.value === "template" ? "template" : "custom", */}
+      {/*         ) */}
+      {/*       } */}
+      {/*     > */}
+      {/*       <option value="template">template</option> */}
+      {/*       <option value="custom">custom</option> */}
+      {/*     </select> */}
+      {/*   </div> */}
+      {/* </div> */}
 
-        <div className="flex-row items-center justify-center">
-          <div>
-            <label htmlFor="isFavorite">Favoris</label>
-            <input
-              type="checkbox"
-              name="isFavorite"
-              id="isFavorite"
-              checked={workToSave.isFavorite}
-              onChange={(e) => changeWork("isFavorite", e.target.checked)}
-            />
-          </div>
-
-          <div>
-            <label htmlFor="type">type</label>
-            <select
-              name="type"
-              id="type"
-              value={workToSave.type}
-              onChange={(e) =>
-                changeWork(
-                  "type",
-                  e.target.value === "template" ? "template" : "custom",
-                )
-              }
-            >
-              <option value="template">template</option>
-              <option value="custom">custom</option>
-            </select>
-          </div>
-        </div>
-
-        <div className="flex-row items-center justify-center">
-          <button type="submit" className="btn btn-primary">
-            Enregistrer
-          </button>
-          {error && <p className="text-danger">{error}</p>}
-          {isSaving && <p>En cours...</p>}
-          {isSuccess && <p className="text-success">Enregistré</p>}
-        </div>
-      </form>
-    </>
+      <div className="flex-row items-center justify-center">
+        <button type="submit" className="btn btn-primary">
+          Enregistrer
+        </button>
+        {error && <p className="text-danger">{error}</p>}
+        {isSaving && <p>En cours...</p>}
+        {isSuccess && <p className="text-success">Enregistré</p>}
+      </div>
+    </form>
   );
 };
 export default WorkForm;

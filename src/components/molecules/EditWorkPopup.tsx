@@ -1,31 +1,18 @@
 import { work } from "../../types/works";
 import Popup from "../atoms/Popup";
-import { useState, useEffect } from "react";
 import WorkForm from "./WorkForm";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const EditWorkPopup = ({
   workToEdit,
-  reset,
+  isActive,
+  setIsActive,
 }: {
   workToEdit: work | null;
-  reset: () => void;
+  isActive: boolean;
+  setIsActive: (a: boolean) => void;
 }) => {
-  const [isActive, setIsActive] = useState(false);
-
-  useEffect(() => {
-    if (workToEdit) {
-      setIsActive(true);
-    }
-  }, [workToEdit]);
-
-  useEffect(() => {
-    if (!isActive) {
-      reset();
-    }
-  }, [isActive, reset]);
-
   if (!workToEdit) return;
 
   return (

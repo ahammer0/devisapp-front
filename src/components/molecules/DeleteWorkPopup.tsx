@@ -1,38 +1,26 @@
 import { deleteWork } from "../../api/worksApi";
 import { work } from "../../types/works";
 import Popup from "../atoms/Popup";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import useWorks from "../../hooks/useWorks";
 
 const DeleteWorkPopup = ({
   workToDelete,
-  reset,
+  isActive,
+  setIsActive,
 }: {
   workToDelete: work | null;
-  reset: () => void;
+  isActive: boolean;
+  setIsActive: (a: boolean) => void;
 }) => {
-  const [isActive, setIsActive] = useState(false);
   const [error, setError] = useState("");
 
   const works = useWorks();
-
-  useEffect(() => {
-    if (workToDelete) {
-      setIsActive(true);
-    }
-  }, [workToDelete]);
-
-  useEffect(() => {
-    if (!isActive) {
-      reset();
-    }
-  }, [isActive, reset]);
 
   const handleDelete = () => {
     if (!workToDelete) return;
     deleteWork(workToDelete.id)
       .then(() => {
-        reset();
         works.doRefresh();
         setIsActive(false);
       })

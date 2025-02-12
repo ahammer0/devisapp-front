@@ -8,6 +8,7 @@ import {
   faHouse,
   faDoorOpen,
   faUser,
+  faList,
 } from "@fortawesome/free-solid-svg-icons";
 
 import MenuBurgerIcon from "../atoms/MenuBurgerIcon";
@@ -44,9 +45,14 @@ const Header = () => {
             </Link>
           )}
           {user && (
-            <Link to="/profile">
-              <FontAwesomeIcon icon={faUser} className="icon" />
-            </Link>
+            <>
+              <Link to="/profile">
+                <FontAwesomeIcon icon={faUser} className="icon" />
+              </Link>
+              <Link to="/quotes" className="item">
+                <FontAwesomeIcon icon={faList} className="icon" />
+              </Link>
+            </>
           )}
           {user && (
             <Link to="" onClick={handleLogout}>

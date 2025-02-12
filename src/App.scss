@@ -163,11 +163,14 @@ table {
   width: 100%;
 
   .actions {
-    text-align: center;
+    text-align: right;
   }
   th {
     text-overflow: ellipsis;
     overflow: hidden;
+    &.actions {
+      text-align: right;
+    }
   }
 }
 

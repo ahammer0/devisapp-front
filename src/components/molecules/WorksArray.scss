@@ -1,0 +1,8 @@
+.worksArray {
+  td {
+    cursor: pointer;
+    &.actions {
+      text-align: right;
+    }
+  }
+}

@@ -10,6 +10,7 @@ import {
   faMinus,
   faPen,
   faCheck,
+  faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import EditableText from "../atoms/EditableText";
 import "./QuoteDetails.scss";
@@ -179,7 +180,11 @@ const QuoteDetails = ({
   //                                                      //
   //////////////////////////////////////////////////////////
 
-  function handleClickAction(quoteElement: quote_element_create) {
+  function handleClickAction(
+    e: React.MouseEvent,
+    quoteElement: quote_element_create,
+  ) {
+    e.stopPropagation();
     setIsPopupOpen(true);
     setElToPopup(quoteElement);
   }
@@ -256,7 +261,10 @@ const QuoteDetails = ({
             <th className="actions">Actions</th>
           </tr>
           {quoteElements.map((quoteElement) => (
-            <tr key={`${quoteElement.work_id}-${quoteElement.quote_section}`}>
+            <tr
+              key={`${quoteElement.work_id}-${quoteElement.quote_section}`}
+              onClick={(e) => handleClickAction(e, quoteElement)}
+            >
               <td>
                 {
                   works.works.find((work) => work.id === quoteElement.work_id)
@@ -268,7 +276,7 @@ const QuoteDetails = ({
                 <button
                   type="button"
                   className="btn btn-secondary"
-                  onClick={() => handleClickAction(quoteElement)}
+                  onClick={(e) => handleClickAction(e, quoteElement)}
                 >
                   &bull;&bull;&bull;
                 </button>
@@ -282,28 +290,20 @@ const QuoteDetails = ({
       </p>
       <hr />
       <Popup isActive={isPopupOpen} setIsActive={setIsPopupOpen}>
-        <button
-          type="button"
-          onClick={() => setIsPopupOpen(false)}
-          className="btn btn-secondary"
-        >
-          <FontAwesomeIcon icon={faXmark} />
-        </button>
         {elToPopup && (
           <>
-            <p>
-              {elToPopup.quote_section}--
+            <h2>
               {works.works.find((work) => work.id === elToPopup.work_id)?.name}
-            </p>
-            <EditableSelect
-              defaultValue={elToPopup.quote_section}
-              onChange={(val) => changeElementSection(val)}
-              values={categories}
-              label="Changer la section"
-            />
+            </h2>
             <form>
+              <EditableSelect
+                defaultValue={elToPopup.quote_section}
+                onChange={(val) => changeElementSection(val)}
+                values={categories}
+                label="Section"
+              />
               <label>
-                Tva:
+                Tva
                 <select
                   name="vat"
                   onChange={(e) => setVat(parseInt(e.target.value))}
@@ -315,43 +315,53 @@ const QuoteDetails = ({
                   <option value="20">20%</option>
                 </select>
               </label>
+              <label htmlFor="quantity">
+                Quantité
+                <div className="flex-row">
+                  <input
+                    type="number"
+                    id="quantity"
+                    value={elToPopup.quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value))}
+                  />
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-icon"
+                    onClick={() => setQuantity(elToPopup.quantity - 1)}
+                    disabled={elToPopup.quantity === 0}
+                  >
+                    <FontAwesomeIcon icon={faMinus} />
+                  </button>
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-icon"
+                    onClick={() => setQuantity(elToPopup.quantity + 1)}
+                  >
+                    <FontAwesomeIcon icon={faPlus} />
+                  </button>
+                </div>
+              </label>
             </form>
-            <div className="flex-row items-center">
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setQuantity(elToPopup.quantity - 1)}
-                disabled={elToPopup.quantity === 0}
-              >
-                <FontAwesomeIcon icon={faMinus} />
-              </button>
-              <form>
-                <label htmlFor="quantity">Quantité</label>
-                <input
-                  type="number"
-                  id="quantity"
-                  value={elToPopup.quantity}
-                  onChange={(e) => setQuantity(parseInt(e.target.value))}
-                />
-              </form>
-              <button
-                type="button"
-                className="btn btn-primary"
-                onClick={() => setQuantity(elToPopup.quantity + 1)}
-              >
-                <FontAwesomeIcon icon={faPlus} />
-              </button>
-            </div>
-
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => rmQuoteElement()}
-            >
-              Supprimer
-            </button>
           </>
         )}
+        <div className="popupButtons">
+          <button
+            type="button"
+            className="btn btn-danger btnArrow"
+            onClick={() => rmQuoteElement()}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+          </button>
+          <div className="btnGroup">
+            <button
+              type="button"
+              onClick={() => setIsPopupOpen(false)}
+              className="btn btn-danger btnArrow"
+            >
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          </div>
+        </div>
       </Popup>
     </section>
   );
