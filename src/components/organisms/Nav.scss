@@ -13,6 +13,7 @@
   flex-direction: column;
   justify-content: start;
   align-items: stretch;
+  overflow-y: scroll;
 
   &.hide {
     max-width: 0;
@@ -39,7 +40,6 @@
     max-width: 300px;
     transition: max-width 200ms ease-in-out;
   }
-  overflow-y: scroll;
   .item {
     padding: 0.5rem 0.5rem;
     margin: 0.5rem 0.5rem;

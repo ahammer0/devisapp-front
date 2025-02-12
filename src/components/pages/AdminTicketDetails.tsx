@@ -1,13 +1,13 @@
 import MainTemplate from "../templates/MainTemplate";
 import { useState, useEffect, useActionState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { ticket } from "../../types/tickets";
+import { ticketWCompanyName } from "../../types/tickets";
 import { closeTicket, getOneTicket, respondTicket } from "../../api/adminApi";
 import { Link, useNavigate } from "react-router-dom";
 
 const AdminTicketDetails = () => {
   const params = useParams();
-  const [ticket, setTicket] = useState<ticket | null>(null);
+  const [ticket, setTicket] = useState<ticketWCompanyName | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -57,6 +57,7 @@ const AdminTicketDetails = () => {
       </p>
 
       <p>Message: {ticket.text_content}</p>
+      <p>Entreprise: {ticket.company_name}</p>
       <RespondForm
         id={ticket.id}
         placeholder={ticket.response}

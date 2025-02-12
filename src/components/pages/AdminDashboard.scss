@@ -1,0 +1,10 @@
+@use "./../../variables.scss" as *;
+.adminDashboard {
+  .content {
+    @include display-lg {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 3rem;
+    }
+  }
+}
