@@ -16,6 +16,7 @@ import { selectUser, setUser } from "../../redux/userSlice";
 import EditableText from "../atoms/EditableText";
 import { editUser } from "../../api/userApi";
 import { toFrenchDate } from "../../helpers/dateFormat";
+import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -270,7 +271,11 @@ const Profile = () => {
               </tr>
             </tbody>
           </table>
-          <div className="flex-row justify-center">
+          <div className="endButtons">
+            <Link to="/delete-account" className="btn btn-danger btn-cta">
+              <FontAwesomeIcon icon={faTrash} className="icon" />
+              Supprimer le compte
+            </Link>
             <Link to="/change-plan" className="btn btn-primary btn-cta">
               <FontAwesomeIcon icon={faNewspaper} className="icon" /> Changer
               d'abonnement

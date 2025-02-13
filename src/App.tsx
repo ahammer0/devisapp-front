@@ -13,12 +13,13 @@ import AdminLogin from "./components/pages/AdminLogin";
 import ChangePlan from "./components/pages/ChangePlan";
 import AdminDashboard from "./components/pages/AdminDashboard";
 import Tickets from "./components/pages/Tickets";
+import AdminTicketDetails from "./components/pages/AdminTicketDetails";
+import TicketDetails from "./components/pages/TicketDetails";
+import DeleteAccountConfirmation from "./components/pages/DeleteAccountConfirmation";
 import RequireAuth from "./helpers/RequireAuth";
 
 import "./reset.css";
 import "./App.scss";
-import TicketDetails from "./components/pages/TicketDetails";
-import AdminTicketDetails from "./components/pages/AdminTicketDetails";
 
 function App() {
   return (
@@ -72,6 +73,14 @@ function App() {
           element={
             <RequireAuth authLevel="user">
               <ChangePlan />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/delete-account"
+          element={
+            <RequireAuth authLevel="user">
+              <DeleteAccountConfirmation />
             </RequireAuth>
           }
         />

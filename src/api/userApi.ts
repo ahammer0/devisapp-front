@@ -78,6 +78,18 @@ export async function checkToken(): Promise<{
   }
   return res.json();
 }
+export async function deleteUser() {
+  const res = await fetch(`${api}/user`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${getToken()}`,
+    },
+  });
+  if (res.status !== 200) {
+    throw new FetchError(res);
+  }
+  return res.json();
+}
 
 export async function addCredit(
   plan: addCreditRequestBody["plan"],

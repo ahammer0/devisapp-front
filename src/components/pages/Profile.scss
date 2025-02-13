@@ -13,4 +13,13 @@
   th {
     width: 150px;
   }
+  .endButtons {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    @include display-md {
+      flex-direction: row;
+    }
+  }
 }
