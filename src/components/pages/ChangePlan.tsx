@@ -125,7 +125,7 @@ const ChangePlan = () => {
         </div>
       )}
       {displayedItem === "pay" && (
-        <>
+        <div className="pay">
           <h1>Paiement</h1>
           <button className="btn" onClick={() => setDisplayedItem("select")}>
             Retour
@@ -165,7 +165,7 @@ const ChangePlan = () => {
               </Link>
             </>
           )}
-        </>
+        </div>
       )}
     </MainTemplate>
   );

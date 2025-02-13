@@ -2,6 +2,7 @@
 
 .radioCard {
   cursor: pointer;
+  margin: 1rem 0.5rem;
   .checked {
     display: none;
     color: Var.$primary;
@@ -29,7 +30,8 @@
     @include Var.shadow-md;
     border-radius: Var.$radius-small;
     padding: 0.75rem;
-    margin: 1rem 0.5rem;
+    height: 100%;
+    width: 100%;
   }
   .label {
     font-family: bungee;
