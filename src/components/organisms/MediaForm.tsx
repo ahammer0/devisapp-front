@@ -82,6 +82,10 @@ const MediaForm = () => {
   };
 
   useEffect(() => {
+    accordionUpdate();
+  }, [accordionUpdate, currentFile]);
+
+  useEffect(() => {
     if (!quote?.quote_medias) return;
     if (quote.quote_medias.length === mediasWithPathname.length) return;
 

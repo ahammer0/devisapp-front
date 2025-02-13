@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import "./Accordion.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp } from "@fortawesome/free-solid-svg-icons";
@@ -43,9 +43,9 @@ const AccordionItem = ({
   const toggleOpen = () => {
     setIsOpen(!isOpen);
   };
-  const update = () => {
+  const update = useCallback(() => {
     setNeedsUpdate(true);
-  };
+  }, [setNeedsUpdate]);
 
   return (
     <>

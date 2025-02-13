@@ -107,7 +107,7 @@ function EditableText<T extends string | number | boolean>({
       case "number":
         return value.toString();
       default:
-        return value.toString();
+        return value?.toString();
     }
   };
 
@@ -123,7 +123,7 @@ function EditableText<T extends string | number | boolean>({
     return (
       <div className="editableText">
         <select
-          value={value.toString()}
+          value={value?.toString()}
           onChange={handleChangeSelect}
           className="editableText"
           autoFocus
