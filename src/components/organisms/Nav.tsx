@@ -8,8 +8,9 @@ import {
   faHammer,
   faList,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { resetUser, selectUser } from "../../redux/userSlice";
+import { useAppSelector } from "../../redux/hooks";
+import useLogout from "../../hooks/useLogout";
+import { selectUser } from "../../redux/userSlice";
 import { useEffect } from "react";
 import "./Nav.scss";
 
@@ -21,12 +22,7 @@ const Nav = ({
   setIsActive: (isActive: boolean) => void;
 }) => {
   const user = useAppSelector(selectUser);
-  const dispatch = useAppDispatch();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    dispatch(resetUser());
-  };
+  const logout = useLogout();
 
   //lock body scroll
   useEffect(() => {
@@ -72,7 +68,7 @@ const Nav = ({
           <Link to="/tickets" className="item">
             <FontAwesomeIcon icon={faNewspaper} className="icon" /> Tickets/SAV
           </Link>
-          <Link to="" onClick={handleLogout} className="item">
+          <Link to="#" onClick={() => logout()} className="item">
             <FontAwesomeIcon icon={faDoorOpen} className="icon" /> Deconnection
           </Link>
         </>

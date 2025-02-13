@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -13,18 +13,14 @@ import {
 
 import MenuBurgerIcon from "../atoms/MenuBurgerIcon";
 import Nav from "./Nav";
-import { selectUser, resetUser } from "../../redux/userSlice";
+import { selectUser } from "../../redux/userSlice";
 import "./Header.scss";
+import useLogout from "../../hooks/useLogout";
 
 const Header = () => {
   const [isActive, setIsActive] = useState(false);
   const user = useSelector(selectUser);
-  const dispatch = useDispatch();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    dispatch(resetUser());
-  };
+  const logout = useLogout();
 
   return (
     <header>
@@ -55,7 +51,7 @@ const Header = () => {
             </>
           )}
           {user && (
-            <Link to="" onClick={handleLogout}>
+            <Link to="" onClick={() => logout()}>
               <FontAwesomeIcon icon={faDoorOpen} className="icon" />
             </Link>
           )}
